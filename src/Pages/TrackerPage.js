@@ -1,10 +1,9 @@
 import React from 'react';
+import Banner from "../components/Banner/Banner"
 
 const TrackerPage = () => {
   return (
-  <div>
-      <h1>Hello World</h1>
-  </div>
+  <Banner />
   )
 };
 
