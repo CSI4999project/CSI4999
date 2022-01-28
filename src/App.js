@@ -1,6 +1,5 @@
 import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
-import Header from "./components/Header";
 import TrackerPage from "./Pages/TrackerPage";
 import CoinPage from "./Pages/CoinPage";
 import { makeStyles } from "@mui/styles";
@@ -20,7 +19,6 @@ function App() {
   return (
     <BrowserRouter>
       <div className={classes.App}>
-        <Header />
         <Routes>
           <Route path="/CSI4999" element={<TrackerPage />} exact />
           <Route path="/coins/:id" element={<CoinPage />} />
