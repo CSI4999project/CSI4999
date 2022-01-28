@@ -75,7 +75,7 @@ const CoinTable = () => {
       primary: {
         main: "#fff",
       },
-      type: "dark",
+      
     },
     components: {
       MuiTextField: {
@@ -204,6 +204,7 @@ const CoinTable = () => {
             display: "flex",
             justifyContent: "center",
           }}
+          color="primary"
           count={(handleSearch()?.length / 10).toFixed(0)}
           classes={{ ul: classes.pagination }}
           onChange={(_, value) => {
