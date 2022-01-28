@@ -40,17 +40,15 @@ const Banner = () => {
             style={{
               fontWeight: "bold",
               marginBottom: 15,
-              fontFamily: "Montserrat",
             }}
           >
-            Crypto Tracker
+            Top Ten Trending
           </Typography>
           <Typography
             variant="subtitle2"
             style={{
               color: "darkgrey",
               textTransform: "capitalize",
-              fontFamily: "Montserrat",
               fontSize: 20
             }}
           >

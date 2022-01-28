@@ -8,7 +8,7 @@ import { Routes } from "react-router-dom";
 function App() {
   const useStyles = makeStyles(() => ({
     App: {
-      backgroundColor: "#14161a",
+      backgroundColor: "#14161a", //#14161a
       color: "white",
       minHeight: "100vh",
     },
