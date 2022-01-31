@@ -30,6 +30,7 @@ const CoinTable = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
+  
 
   const { currency, symbol } = CryptoState();
 
@@ -135,7 +136,7 @@ const CoinTable = () => {
 
                     return (
                       <TableRow
-                        onClick={() => navigate.push(`/coins/${row.id}`)}
+                        onClick={() => navigate(`/coins/${row.id}`)}
                         className={classes.row}
                         key={row.name}
                       >
