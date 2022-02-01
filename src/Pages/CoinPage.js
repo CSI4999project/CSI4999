@@ -7,6 +7,7 @@ import CoinInfo from "../components/CoinInfo";
 import { SingleCoin } from "../config/cryptoApi";
 import { numberWithCommas } from "../components/CoinTable";
 import { CryptoState } from "../CryptoContext";
+import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 
 
 const CoinPage = () => {
@@ -78,6 +79,16 @@ const CoinPage = () => {
 
   const classes = useStyles();
 
+  const App = () => (
+    <TradingViewWidget
+      symbol={"binance:" + coin?.symbol + "usdt"}
+      theme={Themes.DARK}
+      locale="en"
+      size="100%"
+    />
+  );
+
+
   if (!coin) return <LinearProgress style={{ backgroundColor: "gold" }} />;
 
   return (
@@ -87,13 +98,12 @@ const CoinPage = () => {
           src={coin?.image.large}
           alt={coin?.name}
           height="200"
-          style={{ marginBottom: 20 }}
-        />
+          style={{ marginBottom: 20 }} />
         <Typography variant="h3" className={classes.heading}>
           {coin?.name}
         </Typography>
         <Typography variant="subtitle1" className={classes.description}>
-          {htmlparse(""+coin?.description.en.split(". ")[0])}.
+          {htmlparse("" + coin?.description.en.split(". ")[0])}.
         </Typography>
         <div className={classes.marketData}>
           <span style={{ display: "flex" }}>
@@ -148,8 +158,9 @@ const CoinPage = () => {
           </span>
         </div>
       </div>
-      <CoinInfo coin={coin} />
-    </div>
+      {/* <CoinInfo coin={coin} /> */}
+      <App></App>
+   </div>
   );
 };
 
