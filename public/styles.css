@@ -1,0 +1,57 @@
+a:visited{
+  color: inherit;
+}
+body
+{
+  background-color: #96CEB4;
+  margin : 0;
+  height: 500px;
+}
+textarea {
+  background-color: transparent;
+  display: block;
+  outline: none;
+  resize : none;
+  margin : 0 auto;
+  margin-bottom: 60px;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.2rem;
+}
+.bitcoinpic {
+  display: block;
+  margin : 0 auto;
+  width : 40%;
+}
+.forgetP {
+  color: #D9534F;
+  font-family: 'Merriweather', serif;
+  text-align: center;
+}
+.forgetPLink {
+  display: block;
+  position : relative;
+  text-decoration: none;
+  text-align: center;
+}
+.loginArea {
+  background-color : #FFEEAD;
+  border-radius: 25px;
+  font-family: 'Montserrat', sans-serif;
+  margin : 50px auto;
+  height : 700px;
+  padding: 50px 0 100px 0;
+  width : 500px;
+
+}
+.loginTitle {
+  font-family: 'Merriweather', serif;
+  font-size: 2.5rem;
+  font-weight:lighter;
+  margin-bottom: 80px;
+  text-align : center;
+}
+.uAndP {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  text-align: center;
+}
