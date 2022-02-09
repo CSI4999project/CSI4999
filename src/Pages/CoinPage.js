@@ -1,6 +1,6 @@
 import { LinearProgress, makeStyles, Typography } from "@material-ui/core";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import htmlparse from 'html-react-parser';
 import CoinInfo from "../components/CoinInfo";
@@ -8,9 +8,11 @@ import { SingleCoin } from "../config/cryptoApi";
 import { numberWithCommas } from "../components/CoinTable";
 import { CryptoState } from "../CryptoContext";
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
+import {UserContext} from '../context/userContext'
 
 
 const CoinPage = () => {
+  let msg = useContext(UserContext)
   const { id } = useParams();
   const [coin, setCoin] = useState();
 
