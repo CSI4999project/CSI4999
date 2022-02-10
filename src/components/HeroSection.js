@@ -11,10 +11,10 @@ function HeroSection(){
             <p>What are you waiting for?</p>
             <div className='hero-btns'>
                 <Button className='btns' buttonStyle='btn--outline'
-                buttonStyle='btn--large'> LETS GAME!
+                buttonSize='btn--large'> LETS GAME!
                 </Button>
                 <Button className='btns' buttonStyle='btn--primary'
-                buttonStyle='btn--large'>
+                buttonSize='btn--large' onClick={console.log('hey')}>
                     WATCH TRAILER <i className='far fa-play-circle'/> 
                 </Button>
             </div>

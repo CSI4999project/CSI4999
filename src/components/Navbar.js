@@ -1,17 +1,18 @@
 import React, {useState, useEffect} from 'react';
+import {Button} from './Button';
 import {Link} from 'react-router-dom';
 import './Navbar.css';
-import {Button} from './Button';
+
 
 function Navbar(){
-    const [click, setClick] = useState(false);
+    const[click, setClick] = useState(false);
     const[button, setButton] = useState(true);
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
 
     const showButton = () => {
-        if(window.innerwidth <= 960) {
+        if(window.innerWidth <= 960) {
             setButton(false);
         }else{
             setButton(true);
@@ -28,12 +29,13 @@ function Navbar(){
         <>
             <nav className='navbar'>
                 <div className='navbar-container'>
-                    <Link to='/' className='navbar-logo'onClick={closeMobileMenu}>
-                        Lets get this Money!<i class='fab fa-type3'/>
+                    <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
+                        CryptoLearn
+                        <i class='fab fa-typo3' />
                     </Link>
-                    <div className='menu-icon' onClick={handleClick}>
-                        <i className={click ? 'fas fa-times' : 'fas fa-bars'}/>
-                    </div>
+                <div className='menu-icon' onClick={handleClick}>
+                    <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
+                </div>
                     <ul className={click ? 'nav-menu active' : 'nav-menu'}>
                         <li className='nav-item'>
                             <Link to='/' className='nav-links' onClick={closeMobileMenu}>
@@ -41,13 +43,13 @@ function Navbar(){
                             </Link>
                         </li>
                         <li className='nav-item'>
-                            <Link to='/services' className='nav-links' onClick={closeMobileMenu}>
-                                Services
+                            <Link to='/crypto' className='nav-links' onClick={closeMobileMenu}>
+                                Crypto
                             </Link>
                         </li>
                         <li className='nav-item'>
-                            <Link to='/products' className='nav-links' onClick={closeMobileMenu}>
-                                Products
+                            <Link to='/games' className='nav-links' onClick={closeMobileMenu}>
+                                Games
                             </Link>
                         </li>
                         <li>

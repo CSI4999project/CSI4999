@@ -6,9 +6,8 @@
 }
 
 .home,
-.about,
-.cyrypto,
-.game,
+.crypto,
+.games,
 .sign-up {
   display: flex;
   height: 90vh;
@@ -17,7 +16,7 @@
   font-size: 3rem;
 }
 
-.about {
+.crypto {
   background-image: url('./images/img-2.jpg');
   background-position: center;
   background-size: cover;
@@ -26,7 +25,7 @@
   font-size: 100px;
 }
 
-.crypto {
+.games {
   background-image: url('./images/img-1.jpg');
   background-position: center;
   background-size: fill;
