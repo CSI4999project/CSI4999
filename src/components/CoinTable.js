@@ -97,26 +97,28 @@ const CoinTable = () => {
         <Typography variant="h4" style={{ margin: 18 }}>
           Cryptocurrency prices by market cap
         </Typography>
-
         <TextField
           //sx={{ input: { color: 'white' } }}
           label="Search"
           variant="outlined"
-          style={{ marginBottom: 20, width: "100%" }}
+          style={{ marginBottom: 20, width: "100%", backgroundColor: "#14161a"}}
           onChange={(e) => setSearch(e.target.value)}
+          InputLabelProps={{
+            style: { color: '#fff' },
+          }}
         />
         <TableContainer>
           {loading ? (
             <LinearProgress style={{ backgroundColor: "gold" }} />
           ) : (
             <Table>
-              <TableHead style={{ backgroundColor: "#EEBC1D" }}>
+              <TableHead style={{ backgroundColor: "#14161a" }}>
                 <TableRow>
                   {["Coin", "Price", "24 Hour Change", "Market Cap"].map(
                     (head) => (
                       <TableCell
                         style={{
-                          color: "black",
+                          color: "white",
                           fontWeight: "700",
                         }}
                         key={head}
