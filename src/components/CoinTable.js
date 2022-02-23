@@ -98,7 +98,7 @@ const CoinTable = () => {
           Cryptocurrency prices by market cap
         </Typography>
         <TextField
-          //sx={{ input: { color: 'white' } }}
+          sx={{ input: { color: 'white' } }}
           label="Search"
           variant="outlined"
           style={{ marginBottom: 20, width: "100%", backgroundColor: "#14161a"}}

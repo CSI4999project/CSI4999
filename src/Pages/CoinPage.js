@@ -81,7 +81,7 @@ const CoinPage = () => {
 
   const App = () => (
     <TradingViewWidget
-      symbol={"binance:" + coin?.symbol + "usdt"}
+      symbol={"coinbase:" + coin?.symbol + "usd"}
       theme={Themes.DARK}
       locale="en"
       size="100%"
