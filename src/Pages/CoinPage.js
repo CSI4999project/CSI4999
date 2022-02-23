@@ -14,9 +14,10 @@ const CoinPage = () => {
   const { id } = useParams();
   const [coin, setCoin] = useState();
   const { currency, symbol } = CryptoState();
+  const [price, displayPrice] = useState('');
+  const [amount, displayAmount] = useState('');
   const fetchCoin = async () => {
     const { data } = await axios.get(SingleCoin(id));
-
     setCoin(data);
   };
 
@@ -26,7 +27,12 @@ const CoinPage = () => {
 
   const useStyles = makeStyles((theme) => ({
   }));
-
+  const typeButton = {
+    borderColor : ""
+  }
+  function buyButton() {
+    typeButton.borderColor  = "red"
+  }
   const classes = useStyles();
 
   const App = () => (
@@ -96,9 +102,10 @@ const CoinPage = () => {
       <App></App>
       </div>
    </div>
-    <div className = "tradingBlock">
+    <div style = {typeButton} className = "tradingBlock">
    <h2 className = "tradeHeader">Trade</h2>
-   <Button style = {{marginTop: "3px"}} variant="contained" color="Success">Buy</Button>
+   <p className = "desc">Buy or Sell</p>
+   <Button onClick = {function(){buyButton()}} style = {{marginTop: "3px"}} variant="contained" color="Success">Buy</Button>
    <Button style = {{marginLeft : "5px", marginTop: "3px"}} variant = "contained" color = "Error">Sell</Button>
    <p className = "desc">Type of Order</p>
    <FormControl fullWidth>
@@ -111,10 +118,14 @@ const CoinPage = () => {
       <MenuItem value = {"Stop-Limit"}>Stop Limit</MenuItem>
     </Select>
    <p className = "desc">Price:</p>
-   <TextField variant = "outlined"  placeholder = "ex: 12.00" className = "transactionAmount" autoWidth></TextField>
+   <TextField variant = "outlined"  placeholder = "ex: 12.00" className = "transactionAmount" onChange= {(e) => displayPrice(e.target.value)}  autoWidth></TextField>
    <p className = "desc">Amount:</p>
-   <TextField variant = "outlined" placeholder = "ex. 120.00" className = "transactionAmount" autoWidth></TextField> 
-   <p className = "totalEquation">12.00USD x 120.00 = 2,400USD</p></FormControl>
+   <TextField variant = "outlined" placeholder = "ex. 120.00" className = "transactionAmount" onChange={(e) => displayAmount(e.target.value)} autoWidth></TextField>
+   <p className = "desc">Total</p> 
+   <p className = "totalEquation">${price} x ${amount} = ${numberWithCommas((price * amount).toFixed(3))}</p>
+   <Button variant = "contained" style = {{marginTop : "3px"}}>Place Order</Button>
+   </FormControl>
+   <p></p>
     </div>  
    </div>
   );

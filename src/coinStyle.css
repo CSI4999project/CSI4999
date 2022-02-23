@@ -52,7 +52,7 @@ body {
 }
 .tradeHeader {
     border-bottom: solid;
-    border-width: 2px;
+    border-width: 4px;
     border-color: green;
     padding-bottom: 20px;
     font-size: 2rem;
@@ -61,9 +61,9 @@ body {
 .tradingBlock {
     border : solid;
     border-color:green;
-    border-width: 2px;
+    border-width: 4px;
     display : inline-block;
-    height : 400px;
+    height : 470px;
     width : 300px;
     position: relative;
     margin : 0 auto;
