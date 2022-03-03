@@ -28,17 +28,15 @@ const CoinPage = () => {
   const useStyles = makeStyles((theme) => ({
   }));
   const typeButton = {
-    borderColor : ""
-  }
-  function buyButton() {
-    typeButton.borderColor  = "red"
+    borderColor : "",
+    backgroundColor :  ""
   }
   const classes = useStyles();
 
   const App = () => (
     <TradingViewWidget
       autosize
-      symbol={"binance:" + coin?.symbol + "usd"}
+      symbol={coin?.symbol + "usd"}
       theme={Themes.DARK}
       locale="en"
     />
@@ -105,7 +103,7 @@ const CoinPage = () => {
     <div style = {typeButton} className = "tradingBlock">
    <h2 className = "tradeHeader">Trade</h2>
    <p className = "desc">Buy or Sell</p>
-   <Button onClick = {function(){buyButton()}} style = {{marginTop: "3px"}} variant="contained" color="Success">Buy</Button>
+   <Button onClick = {() => {typeButton.backgroundColor = "red"}} style = {{marginTop: "3px"}} variant="contained" color="Success">Buy</Button>
    <Button style = {{marginLeft : "5px", marginTop: "3px"}} variant = "contained" color = "Error">Sell</Button>
    <p className = "desc">Type of Order</p>
    <FormControl fullWidth>
@@ -122,7 +120,7 @@ const CoinPage = () => {
    <p className = "desc">Amount:</p>
    <TextField variant = "outlined" placeholder = "ex. 120.00" className = "transactionAmount" onChange={(e) => displayAmount(e.target.value)} autoWidth></TextField>
    <p className = "desc">Total</p> 
-   <p className = "totalEquation">${price} x ${amount} = ${numberWithCommas((price * amount).toFixed(3))}</p>
+   <p className = "totalEquation">(${price} x ${amount}) = ${numberWithCommas((price * amount).toFixed(3))}</p>
    <Button variant = "contained" style = {{marginTop : "3px"}}>Place Order</Button>
    </FormControl>
    <p></p>
