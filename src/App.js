@@ -10,7 +10,6 @@ import Navbar from './components/Navbar';
 function App() {
   const useStyles = makeStyles(() => ({
     App: {
-      backgroundColor: "#14161a", //#14161a
       color: "white",
       minHeight: "100vh",
     },

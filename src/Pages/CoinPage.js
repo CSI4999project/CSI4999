@@ -1,24 +1,23 @@
-import { LinearProgress, makeStyles, Typography } from "@material-ui/core";
+import { Button, handleChange, Grid, InputLabel, FormControl, TextField, LinearProgress, makeStyles, MenuItem, Select, Typography } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import htmlparse from 'html-react-parser';
-import CoinInfo from "../components/CoinInfo";
 import { SingleCoin } from "../config/cryptoApi";
 import { numberWithCommas } from "../components/CoinTable";
 import { CryptoState } from "../CryptoContext";
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
+import '../coinStyle.css';
 
 
 const CoinPage = () => {
   const { id } = useParams();
   const [coin, setCoin] = useState();
-
   const { currency, symbol } = CryptoState();
-
+  const [price, displayPrice] = useState('');
+  const [amount, displayAmount] = useState('');
   const fetchCoin = async () => {
     const { data } = await axios.get(SingleCoin(id));
-
     setCoin(data);
   };
 
@@ -27,139 +26,106 @@ const CoinPage = () => {
   }, []);
 
   const useStyles = makeStyles((theme) => ({
-    container: {
-      display: "flex",
-      [theme.breakpoints.down("md")]: {
-        flexDirection: "column",
-        alignItems: "center",
-      },
-    },
-    sidebar: {
-      width: "30%",
-      [theme.breakpoints.down("md")]: {
-        width: "100%",
-      },
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      marginTop: 25,
-      borderRight: "2px solid grey",
-    },
-    heading: {
-      fontWeight: "bold",
-      marginBottom: 20,
-      fontFamily: "Montserrat",
-    },
-    description: {
-      width: "100%",
-      fontFamily: "Montserrat",
-      padding: 25,
-      paddingBottom: 15,
-      paddingTop: 0,
-      textAlign: "justify",
-    },
-    marketData: {
-      alignSelf: "start",
-      padding: 25,
-      paddingTop: 10,
-      width: "100%",
-      [theme.breakpoints.down("md")]: {
-        display: "flex",
-        justifyContent: "space-around",
-      },
-      [theme.breakpoints.down("sm")]: {
-        flexDirection: "column",
-        alignItems: "center",
-      },
-      [theme.breakpoints.down("xs")]: {
-        alignItems: "start",
-      },
-    },
   }));
-
+  const typeButton = {
+    borderColor : "",
+    backgroundColor :  ""
+  }
   const classes = useStyles();
 
   const App = () => (
     <TradingViewWidget
-      symbol={"coinbase:" + coin?.symbol + "usd"}
+      symbol={coin?.symbol + "usd"}
+      autosize
+      symbol={coin?.symbol + "usd"}
       theme={Themes.DARK}
       locale="en"
-      size="100%"
     />
   );
+  const transactionType = "Buy";
 
 
   if (!coin) return <LinearProgress style={{ backgroundColor: "gold" }} />;
 
   return (
-    <div className={classes.container}>
-      <div className={classes.sidebar}>
+    <div className = "page">
+    <div className = "description">
+      <div className = "coin">
         <img
+          className = "coinImage"
           src={coin?.image.large}
-          alt={coin?.name}
-          height="200"
-          style={{ marginBottom: 20 }} />
-        <Typography variant="h3" className={classes.heading}>
+          alt={coin?.name}/>
+        <h3 className = "coinHeader">
           {coin?.name}
-        </Typography>
-        <Typography variant="subtitle1" className={classes.description}>
+        </h3>
+        <p className = "coinDescription" style = {{
+        }}>
           {htmlparse("" + coin?.description.en.split(". ")[0])}.
-        </Typography>
-        <div className={classes.marketData}>
-          <span style={{ display: "flex" }}>
-            <Typography variant="h5" className={classes.heading}>
+        </p>
+        <div>
+            <h3 className = "stats">
               Rank:
-            </Typography>
-            &nbsp; &nbsp;
-            <Typography
-              variant="h5"
-              style={{
-                fontFamily: "Montserrat",
-              }}
+            </h3>
+            <h3 className = "statFacts"
             >
               {numberWithCommas(coin?.market_cap_rank)}
-            </Typography>
-          </span>
-
+            </h3>
           <span style={{ display: "flex" }}>
-            <Typography variant="h5" className={classes.heading}>
+            <h3 className = "stats">
               Current Price:
-            </Typography>
-            &nbsp; &nbsp;
-            <Typography
-              variant="h5"
-              style={{
-                fontFamily: "Montserrat",
-              }}
+            </h3>
+            <h3 className = "statFacts"
             >
-              {symbol}{" "}
+              {symbol}
               {numberWithCommas(
                 coin?.market_data.current_price[currency.toLowerCase()]
               )}
-            </Typography>
+            </h3>
           </span>
           <span style={{ display: "flex" }}>
-            <Typography variant="h5" className={classes.heading}>
-              Market Cap:
-            </Typography>
-            &nbsp; &nbsp;
-            <Typography
-              variant="h5"
-              style={{
-                fontFamily: "Montserrat",
-              }}
+            <h3 className = "stats">
+              Market Cap: 
+            </h3>
+            <h3 className = "statFacts"
             >
-              {symbol}{" "}
+              {symbol}
               {numberWithCommas(
                 coin?.market_data.market_cap[currency.toLowerCase()]
                   .toString()
               )}
-            </Typography>
+            </h3>
           </span>
         </div>
       </div>
-      {/* <CoinInfo coin={coin} /> */}
+      <div className = "chartWidget">
       <App></App>
+      </div>
+   </div>
+    <div style = {typeButton} className = "tradingBlock">
+   <h2 className = "tradeHeader">Trade</h2>
+   <p className = "desc">Buy or Sell</p>
+   <Button onClick = {() => {typeButton.backgroundColor = "red"}} style = {{marginTop: "3px"}} variant="contained" color="Success">Buy</Button>
+   <Button style = {{marginLeft : "5px", marginTop: "3px"}} variant = "contained" color = "Error">Sell</Button>
+   <p className = "desc">Type of Order</p>
+   <FormControl fullWidth>
+    <Select
+      className = "transactionType"
+      variant = "outlined"
+      label = "limit"
+      autoWidth>
+      <MenuItem value = {"Limit"}> Limit</MenuItem>
+      <MenuItem value = {"Stop-Limit"}>Stop Limit</MenuItem>
+    </Select>
+   <p className = "desc">Price:</p>
+   <TextField variant = "outlined"  placeholder = "ex: 12.00" className = "transactionAmount" onChange= {(e) => displayPrice(e.target.value)}  autoWidth></TextField>
+   <p className = "desc">Amount:</p>
+   <TextField variant = "outlined" placeholder = "ex. 120.00" className = "transactionAmount" onChange={(e) => displayAmount(e.target.value)} autoWidth></TextField>
+   <p className = "desc">Total</p> 
+   <p className = "totalEquation">(${price} x ${amount}) = ${numberWithCommas((price * amount).toFixed(3))}</p>
+   <Button variant = "contained" style = {{marginTop : "3px"}}>Place Order</Button>
+   </FormControl>
+   <p></p>
+    </div>  
    </div>
   );
 };
