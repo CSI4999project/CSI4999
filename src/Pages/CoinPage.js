@@ -37,7 +37,6 @@ const CoinPage = () => {
     <TradingViewWidget
       symbol={coin?.symbol + "usd"}
       autosize
-      symbol={coin?.symbol + "usd"}
       theme={Themes.DARK}
       locale="en"
     />
