@@ -6,6 +6,7 @@ import Portfolio from "./Pages/Portfolio";
 import { makeStyles } from "@mui/styles";
 import { Routes } from "react-router-dom";
 import Navbar from './components/Navbar';
+import GameCards from "./Pages/GameCardsDisplay";
 
 function App() {
   const useStyles = makeStyles(() => ({
@@ -26,6 +27,7 @@ function App() {
           <Route path="/CSI4999" element={<TrackerPage />} exact />
           <Route path="/coins/:id" element={<CoinPage />} />
           <Route path="/portfolio" element={<Portfolio />} exact/>
+          <Route path="/games" element={<GameCards />} exact/>
         </Routes>
       </div>
     </BrowserRouter>
