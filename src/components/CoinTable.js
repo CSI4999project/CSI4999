@@ -29,7 +29,7 @@ const CoinTable = () => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   
 
   const { currency, symbol } = CryptoState();

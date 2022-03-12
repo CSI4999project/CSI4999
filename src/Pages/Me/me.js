@@ -1,18 +1,24 @@
 import {React, useContext }from 'react';
 import { UserContext } from '../../context/userContext';
 import '../Me/me.css'
-import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 const Me = () => {
     //get currently logged in user
     let {user, setUser} = useContext(UserContext)
-    const navigate = useNavigate()
+    
 
     //logout function delete cookie session and redirect to login
     const logout = async () =>{
+      axios({
+        method: "POST",
+        withCredentials: true,
+        url: "http://localhost:4000/logout",
+      }).then((res) => {
         setUser('')
-        document.cookie = "user= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
         navigate('/login')
+      });
+        
     }
   return (
     

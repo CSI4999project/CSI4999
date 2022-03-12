@@ -29,8 +29,10 @@ const Login = () => {
       withCredentials: true,
       url: "http://localhost:4000/login",
     }).then((res) => {
-      if(res.data === 'Seccessfully Authenticated'){
-        setUser(cookies.get('user'))
+      console.log(res.data['login'] == 'Successfully Authenticated')
+      if(res.data['login'] === 'Successfully Authenticated'){
+        setUser(res.data['user'])
+        console.log(user)
         navigate('/CSI4999')
       } else{
         setError('Wrong Email or Password')
@@ -48,7 +50,7 @@ const Login = () => {
         <br></br>
         <label >
           Email:
-          <br></br><input className='form' type="text" name="name" onChange={(e)=> setEmail(e.target.value)}/>
+          <br></br><input className='form' type="email" name="name" onChange={(e)=> setEmail(e.target.value)}/>
         </label>
         <br></br>
         <label>

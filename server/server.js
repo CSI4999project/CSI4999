@@ -40,15 +40,6 @@ app.use(passport.session());
 require("./passportConfig")(passport, connection);
 
 
-
-
-
-
-
-
-
-
-
 // Routes
 
 app.post("/login", (req, res, next) =>{
@@ -56,33 +47,32 @@ app.post("/login", (req, res, next) =>{
         if(err) throw err;
         if(!user) res.send("Wrong Email or Password");
         else{
-            req.login(user, (err)=>{
-                if(err) throw console.log(err);
-                res.cookie('user', {
-                    isLoggedIn: true,
-                    id: req.user['USER_ID'],
-                    username: req.user['USER_NAME']
-                }, {maxAge:3600000})
-                res.send("Seccessfully Authenticated");
-            })
+            // })
+            req.logIn(user, (err) => {
+                if (err) throw err;
+                res.send({
+                    login: "Successfully Authenticated",
+                    user: {
+                        id: req.user[0]['USER_ID'],
+                        username: req.user[0]['USER_NAME'],
+                        email: req.user[0]['USER_EMAIL']
+                      }});
+            });
         }
     })(req, res, next)
 })
 
-app.get('/logout', (req, res) =>{
-    console.log(req.header.cookie)
-    req.logOut();
-    res.send('loggedOut')
-})
+
 
 
 app.post("/register", (req, res) =>{
     //Check if user exists
     connection.execute('SELECT USER_EMAIL from Users WHERE USER_EMAIL = ?', [req.body['email']], async (err, results,fields) =>{
         //if user exists return
+        if (err) throw err;
         if(results[0] !== undefined){
             res.send('User With Email Already Exists')
-        } else{
+        } else if(!results[0]){
             // if new user add user to database and return message
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
             connection.execute('INSERT INTO Users (USER_EMAIL, USER_NAME, USER_PASSWORD) VALUES (?, ?, ?)',
@@ -94,6 +84,25 @@ app.post("/register", (req, res) =>{
 })
 
 
+    app.get("/user", (req, res) => {
+        try{
+            
+            console.log(req.user)
+            console.log('gfgdgfdgd')
+            res.send(req.user);
+        }  catch{
+            console.log('fdf')
+            res.send('')
+        }
+         // The req.user stores the entire user that has been authenticated inside of it.
+    });
+
+  app.post('/logout', (req, res) =>{
+    console.log(req.user)
+    req.logOut();
+    console.log(req.user);
+    res.send('logged Out')
+  })
 
 app.listen(4000, () =>{
     console.log('Server Started')
