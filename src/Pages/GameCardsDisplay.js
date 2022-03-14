@@ -3,20 +3,19 @@ import EducationGameCard from "../components/EducationGameCard";
 import PublicGameCard from "../components/PublicGameCard";
 import Grid from "@material-ui/core/Grid";
 
-const GameCards = (props) => {
-  const { classes } = props;
-
+const GameCards = () => {
   return (
-    <div className="row" style={{ "white-space": "nowrap" }}>
+    <div className="row" style={{ whiteSpace: "nowrap" }}>
       <Grid
         container
         spacing={0}
         direction="column"
         alignItems="center"
-        justify="center"
+        //justify="center"
         style={{ minHeight: "100vh" }}
+        display="flex"
       >
-        <Grid item sd={3}>
+        <Grid>
           <PublicGameCard /> <EducationGameCard />
         </Grid>
       </Grid>
