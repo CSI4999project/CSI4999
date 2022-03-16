@@ -31,7 +31,7 @@ function Navbar(){
                 <div className='navbar-container'>
                     <Link to='/CSI4999' className='navbar-logo' onClick={closeMobileMenu}>
                         CryptoLearn
-                        <i class='fab fa-typo3' />
+                        <i className='fab fa-typo3' />
                     </Link>
                 <div className='menu-icon' onClick={handleClick}>
                     <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
@@ -48,13 +48,18 @@ function Navbar(){
                             </Link>
                         </li>
                         <li className='nav-item'>
-                            <Link to='/games' className='nav-links' onClick={closeMobileMenu}>
-                                Group
+                            <Link to='/me' className='nav-links' onClick={closeMobileMenu}>
+                                Profile
                             </Link>
                         </li>
                         <li>
-                            <Link to='/sign-up' className='nav-links-mobile' onClick={closeMobileMenu}>
-                                Sign Up
+                            <Link to='/login' className='nav-links-mobile' onClick={closeMobileMenu}>
+                                Login
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to='/register' className='nav-links-mobile' onClick={closeMobileMenu}>
+                                Register
                             </Link>
                         </li>
                     </ul>
