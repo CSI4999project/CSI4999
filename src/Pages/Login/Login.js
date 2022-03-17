@@ -24,6 +24,7 @@ const Login = () => {
       data: {
         email: email,
         password: password,
+        //username: userName
       },
       withCredentials: true,
       url: "http://localhost:4000/login",
@@ -33,6 +34,8 @@ const Login = () => {
         setUser(res.data["user"]);
         console.log(user);
         navigate("/CSI4999");
+        // localStorage.setItem("username", userName);
+        // localStorage.setItem("password", password);
       } else {
         setError("Wrong Email or Password");
       }

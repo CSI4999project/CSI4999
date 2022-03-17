@@ -16,44 +16,33 @@ const Register = () => {
       "Private-Key": "76fab49d-b1b9-4293-a5c3-1f7e63236443",
     };
 
-    // post request to create user
-    try {
-      await axios
-        .post(
+    axios
+      .all([
+        axios.post(
           "https://api.chatengine.io/users/",
           { username: userName, secret: password }, // Body object
           { headers: authObject } // Headers object
-        )
-        .then((r) => console.log(r));
-        
-      // login the user
-      localStorage.setItem("username", userName);
-      localStorage.setItem("password", password);
+        ),
+        axios.post("http://localhost:4000/register", {
+          email: email,
+          password: password,
+          username: userName,
+        }),
+      ])
+      .then((res) => {
+        if (res.data === "User With Email Already Exists") {
+          setError("User With Email Already Exists");
+          console.log(res);
+        } else {
+          navigate("/login");
+        }
+      });
 
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-      setError("");
-    }
-
-    axios({
-      method: "POST",
-      data: {
-        email: email,
-        password: password,
-        username: userName,
-      },
-      withCredentials: true,
-      url: "http://localhost:4000/register",
-    }).then((res) => {
-      if (res.data === "User With Email Already Exists") {
-        setError("User With Email Already Exists");
-        console.log(res);
-      } else {
-        navigate("/login");
-      }
-    });
+    // login the user
+    localStorage.setItem("username", userName);
+    localStorage.setItem("password", password);
   };
+
   return (
     <div className="center">
       <h1>Register</h1>
