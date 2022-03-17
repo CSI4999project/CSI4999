@@ -33,7 +33,7 @@ const Register = () => {
       window.location.reload();
     } catch (error) {
       console.log(error);
-      setError("Incorrect credentials, try again");
+      setError("");
     }
 
     axios({

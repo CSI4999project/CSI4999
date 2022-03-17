@@ -12,7 +12,7 @@ import '../src/Pages/Login/Login.css'
 import { UserContext } from "./context/userContext";
 import axios from 'axios'
 import Navbar from './components/Navbar';
-import Chat from './components/Chat'
+import Chat from './Pages/Chat/Chat'
 
 function App() {
   //Get current user from COOKIES
