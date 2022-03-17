@@ -7,7 +7,6 @@ const Me = () => {
     //get currently logged in user
     let {user, setUser} = useContext(UserContext)
     
-
     //logout function delete cookie session and redirect to login
     const logout = async () =>{
       axios({
