@@ -27,7 +27,6 @@ const Me = () => {
           Logout
         </button>
       </div>
-
       {JSON.stringify(user)}
     </div>
   );

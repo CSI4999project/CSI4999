@@ -16,27 +16,29 @@ const Register = () => {
       "Private-Key": "76fab49d-b1b9-4293-a5c3-1f7e63236443",
     };
 
-    axios
-      .all([
-        axios.post(
-          "https://api.chatengine.io/users/",
-          { username: userName, secret: password }, // Body object
-          { headers: authObject } // Headers object
-        ),
-        axios("http://localhost:4000/register", {
-          email: email,
-          password: password,
-          username: userName,
-        }),
-      ])
-      .then((res) => {
-        if (res.data === "User With Email Already Exists") {
-          setError("User With Email Already Exists");
-          console.log(res);
-        } else {
-          navigate("/login");
-        }
-      });
+    axios({
+      method: "POST",
+      data: {
+        email: email,
+        password: password,
+        username: userName,
+      },
+      withCredentials: true,
+      url: "http://localhost:4000/register",
+    }).then((res) => {
+      if (res.data === "User With Email Already Exists") {
+        setError("User With Email Already Exists");
+        console.log(res);
+      } else {
+        navigate("/login");
+      }
+    });
+
+    axios.post(
+      "https://api.chatengine.io/users/",
+      { username: userName, secret: password }, // Body object
+      { headers: authObject } // Headers object
+    )
 
     // Set user's info into local storage
     // (This is temporary until I figure out how to pull from the DB to log the user into the chat engine
