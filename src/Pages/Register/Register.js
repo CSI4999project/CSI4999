@@ -11,7 +11,7 @@ const Register = () => {
   let [userName, setUserName] = useState("");
   let [errorMessage, setError] = useState("");
 
-  var register = async () => {
+  var register = () => {
     const authObject = {
       "Private-Key": "76fab49d-b1b9-4293-a5c3-1f7e63236443",
     };
@@ -23,7 +23,7 @@ const Register = () => {
           { username: userName, secret: password }, // Body object
           { headers: authObject } // Headers object
         ),
-        axios.post("http://localhost:4000/register", {
+        axios("http://localhost:4000/register", {
           email: email,
           password: password,
           username: userName,
@@ -38,7 +38,8 @@ const Register = () => {
         }
       });
 
-    // login the user
+    // Set user's info into local storage
+    // (This is temporary until I figure out how to pull from the DB to log the user into the chat engine
     localStorage.setItem("username", userName);
     localStorage.setItem("password", password);
   };
