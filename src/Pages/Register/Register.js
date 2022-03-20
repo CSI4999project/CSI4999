@@ -62,7 +62,7 @@ const Register = () => {
         </label>
         <br></br>
         <label>
-          Usename:
+          Username:
           <br></br>
           <input
             className="form"

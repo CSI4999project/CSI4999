@@ -1,6 +1,7 @@
 import React from "react";
 import { ChatEngine } from "react-chat-engine";
 import ChatFeed from "../../components/ChatFeed";
+import Login from "../Login/Login";
 import "./ChatStyles.css";
 
 const projectID = "30b4e465-4a50-4211-96fe-c5cacba94eeb";

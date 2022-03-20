@@ -11,6 +11,7 @@ const Login = () => {
   // States of email and password
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
+  let [userName, setUserName] = useState("");
   let [errorMessage, setError] = useState("");
 
   // State of User that we got from UserContext.Provider in App.js
@@ -24,7 +25,7 @@ const Login = () => {
       data: {
         email: email,
         password: password,
-        //username: userName
+        username: userName
       },
       withCredentials: true,
       url: "http://localhost:4000/login",
@@ -49,7 +50,7 @@ const Login = () => {
         {errorMessage === "" ? null : <p>{errorMessage}</p>}
         <br></br>
         <label>
-          Email:
+          Username:
           <br></br>
           <input
             className="form"
