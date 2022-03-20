@@ -1,6 +1,0 @@
-HOSTNAMEDB: admin.chdcakgzgqvk.us-east-2.rds.amazonaws.com
-DATABASE: "admin"
-USER: "admin"
-PASSWORD: "CSI4999Project"
-DBPORT: 3306
-SECRET: "SECRETCODE"

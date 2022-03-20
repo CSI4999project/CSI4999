@@ -6,6 +6,7 @@ import CoinPage from "./Pages/CoinPage";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
 import Portfolio from "./Pages/Portfolio";
+import TeacherPage from "./Pages/TeacherPage";
 import Me from "./Pages/Me/me";
 import { makeStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
@@ -57,6 +58,7 @@ function App() {
             <Route path="login" element={user ? <Navigate to='/CSI4999'/> : <Login/>} />
             <Route path="register" element={user? <Navigate to='/CSI4999'/>  : <Register/>} />
             <Route path="/portfolio" element={user ? <Portfolio /> : <Navigate to='/login'/>} exact/>
+            <Route path="/Students" element={user ? <TeacherPage /> : <Navigate to='/login'/>} exact/>
           </Routes>
         </div>
       </BrowserRouter>

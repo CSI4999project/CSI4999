@@ -104,6 +104,12 @@ app.post("/register", (req, res) =>{
     res.send('logged Out')
   })
 
+  app.get("/Students", (req, res) => {
+      connection.execute('SELECT * FROM Users INNER JOIN MEMBERS on Users.USER_ID = MEMBERS.USER_ID where GROUP_ID = (select PARTY_ID from PARTY where OWNER_ID = 16)', (err, result) => {
+          res.send(result);
+      });
+    });
+
 app.listen(4000, () =>{
     console.log('Server Started')
 })
