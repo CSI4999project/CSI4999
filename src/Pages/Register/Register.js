@@ -14,7 +14,7 @@ const Register = () => {
 
   var register = () => {
     const authObject = {
-      "Private-Key": process.env.chat_engine_private_key,
+      "Private-Key": "76fab49d-b1b9-4293-a5c3-1f7e63236443",
     };
 
     axios({
