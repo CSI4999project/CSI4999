@@ -33,8 +33,8 @@ const Login = () => {
         setUser(res.data["user"]);
         console.log(user);
         navigate("/CSI4999");
-        // localStorage.setItem("username", userName);
-        // localStorage.setItem("password", password);
+        //localStorage.setItem("username", email);
+        //localStorage.setItem("password", password);
       } else {
         setError("Wrong Email or Password");
       }

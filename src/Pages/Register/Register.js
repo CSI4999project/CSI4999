@@ -10,10 +10,11 @@ const Register = () => {
   let [password, setPassword] = useState("");
   let [userName, setUserName] = useState("");
   let [errorMessage, setError] = useState("");
+  let [error2, setError2] = useState("");
 
   var register = () => {
     const authObject = {
-      "Private-Key": "76fab49d-b1b9-4293-a5c3-1f7e63236443",
+      "Private-Key": process.env.chat_engine_private_key,
     };
 
     axios({
@@ -38,10 +39,13 @@ const Register = () => {
       "https://api.chatengine.io/users/",
       { username: userName, secret: password }, // Body object
       { headers: authObject } // Headers object
-    )
+    ).catch((error) => {
+      console.log(error)
+      setError2("Oops, something went wrong with the chat engine server. Please try again.");
+    })
 
     // Set user's info into local storage
-    // (This is temporary until I figure out how to pull from the DB to log the user into the chat engine
+    // (This is temporary until I figure out how to pull from the DB to log the user into the chat engine)
     localStorage.setItem("username", userName);
     localStorage.setItem("password", password);
   };
@@ -51,6 +55,7 @@ const Register = () => {
       <h1>Register</h1>
       <form>
         {errorMessage === "" ? null : <p>{errorMessage}</p>}
+        {error2 === "" ? null : <p>{error2}</p>}
         <br></br>
         <label>
           Email:
