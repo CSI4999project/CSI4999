@@ -57,6 +57,11 @@ function Navbar(){
                                 Profile
                             </Link>
                         </li>
+                        <li className='nav-item'>
+                            <Link to='/chat' className='nav-links' onClick={closeMobileMenu}>
+                                Chat
+                            </Link>
+                        </li>
                         <li>
                             <Link to='/login' className='nav-links-mobile' onClick={closeMobileMenu}>
                                 Login

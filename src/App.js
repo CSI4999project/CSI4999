@@ -1,5 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-
 import "./App.css";
 import TrackerPage from "./Pages/TrackerPage";
 import CoinPage from "./Pages/CoinPage";
@@ -14,7 +13,7 @@ import '../src/Pages/Login/Login.css'
 import { UserContext } from "./context/userContext";
 import axios from 'axios'
 import Navbar from './components/Navbar';
-
+import Chat from './components/Chat'
 
 function App() {
   //Get current user from COOKIES
@@ -59,6 +58,7 @@ function App() {
             <Route path="register" element={user? <Navigate to='/CSI4999'/>  : <Register/>} />
             <Route path="/portfolio" element={user ? <Portfolio /> : <Navigate to='/login'/>} exact/>
             <Route path="/Students" element={user ? <TeacherPage /> : <Navigate to='/login'/>} exact/>
+            <Route path="/chat" element={user ? <Chat /> : <Navigate to='/login'/>} exact/>
           </Routes>
         </div>
       </BrowserRouter>
