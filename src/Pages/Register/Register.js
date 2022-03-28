@@ -12,6 +12,7 @@ const Register = () => {
   let [password, setPassword] = useState('')
   let [userName, setUserName] = useState('')
   let [errorMessage, setError] = useState('')
+  let [userType, setUserType] = useState('Instructor')
 
   var register = () =>{
     axios({
@@ -19,7 +20,8 @@ const Register = () => {
       data: {
         email: email,
         password: password,
-        username: userName
+        username: userName,
+        usertype: userType,
       },
       withCredentials: true,
       url: "http://localhost:4000/register",
@@ -40,22 +42,40 @@ const Register = () => {
         {errorMessage === '' ? null : <p>{errorMessage}</p>}
         <br></br>
         <label >
-          Email:
-          <br></br><input className='form' type="text" name="email" onChange={(e)=> setEmail(e.target.value)}/>
+        <br></br>
+        <h3>Email:</h3>
+        <br></br>
+          <input className='formReg' type="text" name="email" onChange={(e)=> setEmail(e.target.value)}/>
         </label>
         <br></br>
         <label >
-          Usename:
-          <br></br><input className='form' type="text" name="username" onChange={(e)=> setUserName(e.target.value)}/>
+        <br></br>
+        <h3>Username:</h3>
+        <br></br>
+          <input className='formReg' type="text" name="username" onChange={(e)=> setUserName(e.target.value)}/>
         </label>
         <br></br>
         <label>
-          Password:
+        <br></br>
+        <h3>Password:</h3>
           <br></br>
-          <input className='form' type="password" name="password" onChange={(e)=> setPassword(e.target.value)}/>
+          <input className='formReg' type="password" name="password" onChange={(e)=> setPassword(e.target.value)}/>
         </label>
         <br></br>
-        <input type="button" value="Sign Up"  className='form' onClick={register}/>
+
+        <label >
+          <br></br>
+          <h3>Sign Up as:</h3>
+          <br></br>
+                <select className='formReg' id="Type" onChange={(e)=>setUserType(e.target.value)}>
+                  <option value="Instructor">Instructor</option>
+                  <option value="User">Learner</option>
+               </select>
+          </label>
+        <br></br>
+
+
+        <input type="button" value="Sign Up"  className='formReg submit' onClick={register}/>
     </form>
 
     

@@ -16,9 +16,11 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import { findByDisplayValue } from "@testing-library/react";
 import { Pagination } from "@mui/material";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 const TeacherPage = () => {
-
+    const navigate = useNavigate();
     const [studentsList, setStudentsList] = useState([]);
 
     //This is the Axios call using that url. The /Students is important here this lets Axios know were grabbing
@@ -109,15 +111,16 @@ const TeacherPage = () => {
                   key={studentsList.val}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   className={classes.row}
+                  
                 >
                   <TableCell className={classes.tableCellFont} component="th" scope="row">
                   {val.USER_NAME}
                   </TableCell>
-                  <TableCell className={classes.tableCellFont} align="right">Richard</TableCell>
-                  <TableCell className={classes.tableCellFont} align="right">Ray</TableCell>
-                  <TableCell className={classes.tableCellFont} align="right">{val.USER_EMAIL}</TableCell>
-                  <TableCell className={classes.tableCellFont} align="right">
-                    <button>Chat</button> | <button>Delete</button></TableCell>
+                  <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio')}>Richard</TableCell>
+                  <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio')}>Ray</TableCell>
+                  <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio')}>{val.USER_EMAIL}</TableCell>
+                  <TableCell className={classes.tableCellFont} align="right" >
+                    <button onClick ={() => navigate('/Chat')}>Chat</button> | <button>Delete</button></TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -90,7 +90,7 @@ export default function BasicTable() {
     <div>
     <Container style={{ textAlign: "center" }}>
       <Typography variant="h4" style={{ padding: 30 }}>
-          My Portfolio
+          Portfolio
         </Typography>
         <div style={{margin: 30}}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

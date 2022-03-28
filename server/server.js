@@ -55,7 +55,8 @@ app.post("/login", (req, res, next) =>{
                     user: {
                         id: req.user[0]['USER_ID'],
                         username: req.user[0]['USER_NAME'],
-                        email: req.user[0]['USER_EMAIL']
+                        email: req.user[0]['USER_EMAIL'],
+                        type: req.user[0]['USER_TYPE'],
                       }});
             });
         }
@@ -75,8 +76,14 @@ app.post("/register", (req, res) =>{
         } else if(!results[0]){
             // if new user add user to database and return message
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
-            connection.execute('INSERT INTO Users (USER_EMAIL, USER_NAME, USER_PASSWORD) VALUES (?, ?, ?)',
-                [req.body['email'], req.body['username'], hashedPassword], (err, results, fields) =>{
+            connection.execute('INSERT INTO Users (USER_EMAIL, USER_NAME, USER_PASSWORD, USER_TYPE) VALUES (?, ?, ?, ?)',
+                [req.body['email'], req.body['username'], hashedPassword, req.body['usertype']], (err, results, fields) =>{
+                    if(req.body['usertype'] === 'Instructor'){
+                        connection.execute('SELECT USER_ID FROM Users WHERE USER_EMAIL = ?', [req.body['email']],(err, results,fields) =>{
+                            connection.execute('INSERT INTO PARTY (OWNER_ID, PARTY_CODE, PARTY_NAME) VALUES (?, ?, ?)',
+                            [results[0]['USER_ID'], Date.now(), 'random'])
+                        })
+                    } 
                     res.send('User Created')
                 })
         }
@@ -87,8 +94,6 @@ app.post("/register", (req, res) =>{
     app.get("/user", (req, res) => {
         try{
             
-            console.log(req.user)
-            console.log('gfgdgfdgd')
             res.send(req.user);
         }  catch{
             console.log('fdf')
@@ -98,9 +103,7 @@ app.post("/register", (req, res) =>{
     });
 
   app.post('/logout', (req, res) =>{
-    console.log(req.user)
     req.logOut();
-    console.log(req.user);
     res.send('logged Out')
   })
 

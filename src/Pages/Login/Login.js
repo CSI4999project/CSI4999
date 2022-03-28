@@ -49,17 +49,21 @@ const Login = () => {
         {errorMessage === '' ? null : <p>{errorMessage}</p>}
         <br></br>
         <label >
-          Email:
-          <br></br><input className='form' type="email" name="name" onChange={(e)=> setEmail(e.target.value)}/>
-        </label>
-        <br></br>
-        <label>
-          Password:
+          <h3>Email:</h3>
           <br></br>
-          <input className='form' type="password" name="password" onChange={(e)=> setPassword(e.target.value)}/>
+          <input className='formReg' type="email" name="name" onChange={(e)=> setEmail(e.target.value)}/>
         </label>
         <br></br>
-        <input type="button" value="Login"  className='form' onClick={login}/>
+        <span className='space'></span>
+
+        <label>
+        <br></br>
+        <h3>Password:</h3>
+          <br></br>
+          <input className='formReg' type="password" name="password" onChange={(e)=> setPassword(e.target.value)}/>
+        </label>
+        <br></br>
+        <input type="button" value="Login"  className='formReg submit' onClick={login}/>
     </form>
 
     

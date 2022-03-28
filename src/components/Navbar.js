@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Button} from './Button';
 import {Link} from 'react-router-dom';
+import { UserContext } from '../context/userContext';
 import './Navbar.css';
 
 
 function Navbar(){
+    let {user, setUser} = useContext(UserContext)
     const[click, setClick] = useState(false);
     const[button, setButton] = useState(true);
 
@@ -25,12 +27,16 @@ function Navbar(){
 
     window.addEventListener('resize', showButton);
 
+
+
+    console.log(user.type)
+    console.log('from navbar')
     return(
         <>
             <nav className='navbar'>
                 <div className='navbar-container'>
                     <Link to='/CSI4999' className='navbar-logo' onClick={closeMobileMenu}>
-                        CryptoLearn
+                        idkCrypto
                         <i className='fab fa-typo3' />
                     </Link>
                 <div className='menu-icon' onClick={handleClick}>
@@ -42,26 +48,46 @@ function Navbar(){
                                 Home
                             </Link>
                         </li>
-                        <li className='nav-item'>
-                            <Link to='/Portfolio' className='nav-links' onClick={closeMobileMenu}>
-                                Portfolio
-                            </Link>
-                        </li>
+                        {
+                            user?.type == 'User'
+                            ?
+                            <li className='nav-item'>
+                                <Link to='/Portfolio' className='nav-links' onClick={closeMobileMenu}>
+                                    Portfolio
+                                </Link>
+                            </li>
+                            :
+                            ''
+                        }
+                        
+                        {
+                            user?.type == 'Instructor' 
+                            ?
                         <li className='nav-item'>
                             <Link to='/Students' className='nav-links' onClick={closeMobileMenu}>
                                 Students
                             </Link>
                         </li>
+                            :
+                            ''
+                        }
+                        
+                        { user ? 
                         <li className='nav-item'>
                             <Link to='/me' className='nav-links' onClick={closeMobileMenu}>
                                 Profile
                             </Link>
-                        </li>
+                        </li> : ''}
+                        
+                        { user ? 
                         <li className='nav-item'>
                             <Link to='/chat' className='nav-links' onClick={closeMobileMenu}>
                                 Chat
                             </Link>
-                        </li>
+                        </li> : ''}
+
+
+                        
                         <li>
                             <Link to='/login' className='nav-links-mobile' onClick={closeMobileMenu}>
                                 Login
@@ -73,6 +99,7 @@ function Navbar(){
                             </Link>
                         </li>
                     </ul>
+                    
                     {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
                 </div>
             </nav>
