@@ -6,6 +6,7 @@ import htmlparse from 'html-react-parser';
 import { SingleCoin } from "../config/cryptoApi";
 import { numberWithCommas } from "../components/CoinTable";
 import { CryptoState } from "../CryptoContext";
+import TradingBlock from "../components/TradingBlock";
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import '../coinStyle.css';
 
@@ -13,9 +14,6 @@ const CoinPage = () => {
   const { id } = useParams();
   const [coin, setCoin] = useState();
   const { currency, symbol } = CryptoState();
-  const [price, displayPrice] = useState();
-  const [amount, displayAmount] = useState('');
-  const [fontColor, setFont] = useState("#");
   const fetchCoin = async () => {
     const { data } = await axios.get(SingleCoin(id));
     setCoin(data);
@@ -25,14 +23,6 @@ const CoinPage = () => {
   }, []);
   const useStyles = makeStyles((theme) => ({
   }));
-    const typeButton = {
-    color : fontColor
-  }
-  
-  const setStyle = (fontColor) => {
-    displayPrice(coin?.market_data.current_price[currency.toLowerCase()]);
-    setFont(fontColor);
-  }
   const classes = useStyles();
   const App = () => (
     <TradingViewWidget
@@ -100,30 +90,7 @@ const CoinPage = () => {
       <App></App>
       </div>
    </div>
-    <div style = {typeButton} className = "tradingBlock">
-   <h2 className = "tradeHeader">Trade</h2>
-   <p className = "desc">Buy or Sell</p>
-   <Button onClick = {() => {setStyle("#519259")}}  color = "primary" style = {{marginTop: "3px"}} variant="contained">Buy</Button>
-   <Button onClick = {() => {setStyle("#B33030")}} color = "primary" style = {{marginLeft : "5px", marginTop: "3px"}} variant = "contained">Sell</Button>
-   <p className = "desc">Type of Order</p>
-   <FormControl fullWidth>
-    <Select
-      className = "transactionType"
-      variant = "outlined"
-      label = "limit"
-      >
-      <MenuItem value = {"Limit"}> Limit</MenuItem>
-      <MenuItem value = {"Stop-Limit"}>Stop Limit</MenuItem>
-    </Select>
-   <p className = "desc">Price:</p>
-   <TextField variant = "outlined"  placeholder = "ex: 12.00" defaultValue = {coin?.market_data.current_price[currency.toLowerCase()]} className = "transactionAmount" onChange= {(e) => displayPrice(e.target.value)}  ></TextField>
-   <p className = "desc">Amount:</p>
-   <TextField variant = "outlined" placeholder = "ex. 120.00" className = "transactionAmount" onChange={(e) => displayAmount(e.target.value)}></TextField>
-   <p className = "desc">Total:</p> 
-   <p className = "totalEquation">(${price} x {amount}) = ${numberWithCommas((price * amount).toFixed(3))}</p>
-   <Button color = "primary" variant = "contained" style = {{marginTop : "3px"}}>Record Order</Button>
-   </FormControl>
-    </div>  
+   <TradingBlock></TradingBlock> 
    </div>
   );
 };

@@ -30,13 +30,13 @@ body {
 .desc{
 }
 .description {
-    padding : 50px;
+    padding: 0 50px;
     display : inline-block;
     position : relative;
     right : 40px;
-    width : 70%;
 }
 .page {
+    display: block;
 }
 .stats {
     display: inline-block;
@@ -58,13 +58,10 @@ body {
     text-align : center;
 }
 .tradingBlock {
-    display : inline-block;
+    display : block;
     height : 470px;
-    width : 300px;
     position: relative;
-    margin : 0 auto;
-    bottom: 300px;
-    border-radius : 15px;
+    max-width: 1050px;
 }
 .transactionType{
     background-color : #30475E;
