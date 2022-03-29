@@ -7,14 +7,15 @@ import { SingleCoin } from "../config/cryptoApi";
 import { numberWithCommas } from "../components/CoinTable";
 import { CryptoState } from "../CryptoContext";
 import TradingBlock from "../components/TradingBlock";
-import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import '../coinStyle.css';
 
-const StopLimit = () => {
+const StopLimit = (props) => {
+    const [stopPrice, displayStopPrice] = useState();
     return(
         <div>
         <p className = "desc">Stop Limit:</p>
-        <TextField variant = "outlined" placeholder = "ex. 120.00" className = "transactionAmount"></TextField>
+        <TextField onChange = { (e) => displayStopPrice(e.target.value)} variant = "outlined" placeholder = "ex. 120.00" className = "transactionAmount"></TextField>
+        <p>{stopPrice}</p>
         </div>
     );
 }

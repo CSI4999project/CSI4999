@@ -29,6 +29,7 @@ const TradingBlock = () => {
     displayPrice(coin?.market_data.current_price[currency.toLowerCase()]);
     setFont(fontColor);
   }
+
     const useVisibilityToggler = (component, visibility = false) => {
         const [visible, setVisibility] = useState(() => visibility);
         return [visible ? component : null, (v) => setVisibility ((v) => (!v))];
@@ -51,6 +52,7 @@ const TradingBlock = () => {
         <p className = "totalEquation">(${price} x {amount}) = ${numberWithCommas((price * amount).toFixed(3))}</p>
         <Button color = "primary" variant = "contained" style = {{marginTop : "3px", width: "250px"}}>Record Order</Button>
         </FormControl>
+        <p></p>
         </div>); 
     }
     export default TradingBlock;
