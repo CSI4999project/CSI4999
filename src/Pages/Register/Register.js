@@ -14,7 +14,7 @@ const Register = () => {
 
   var register = () => {
     const authObject = {
-      "Private-Key": "76fab49d-b1b9-4293-a5c3-1f7e63236443",
+      "Private-Key": process.env.REACT_APP_PRIVATE_KEY,
     };
 
     axios({
