@@ -37,17 +37,12 @@ const Register = () => {
 
     axios.post(
       "https://api.chatengine.io/users/",
-      { username: userName, secret: password }, // Body object
+      { username: userName, secret: process.env.REACT_APP_CHAT_PASSWORD}, // Body object
       { headers: authObject } // Headers object
     ).catch((error) => {
       console.log(error)
       setError2("Oops, something went wrong with the chat engine server. Please try again.");
     })
-
-    // Set user's info into local storage
-    // (This is temporary until I figure out how to pull from the DB to log the user into the chat engine)
-    localStorage.setItem("username", userName);
-    localStorage.setItem("password", password);
   };
 
   return (
