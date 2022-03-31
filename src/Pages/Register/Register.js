@@ -6,11 +6,17 @@ import { useNavigate } from "react-router-dom";
 const Register = () => {
   const navigate = useNavigate();
   // States of email and password
-  let [email, setEmail] = useState('')
-  let [password, setPassword] = useState('')
-  let [userName, setUserName] = useState('')
-  let [errorMessage, setError] = useState('')
-  let [userType, setUserType] = useState('Instructor')
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
+  let [userName, setUserName] = useState("");
+  let [errorMessage, setError] = useState("");
+  let [userType, setUserType] = useState("Instructor");
+  let [error2, setError2] = useState("");
+
+  var register = () => {
+    const authObject = {
+      "Private-Key": process.env.REACT_APP_PRIVATE_KEY,
+    };
 
     axios({
       method: "POST",
@@ -39,7 +45,7 @@ const Register = () => {
       console.log(error)
       setError2("Oops, something went wrong with the chat engine server. Please try again.");
     })
-  
+  };
 
   return (
     <div className="center">
@@ -48,46 +54,66 @@ const Register = () => {
         {errorMessage === "" ? null : <p>{errorMessage}</p>}
         {error2 === "" ? null : <p>{error2}</p>}
         <br></br>
-        <label >
-        <br></br>
-        <h3>Email:</h3>
-        <br></br>
-          <input className='formReg' type="text" name="email" onChange={(e)=> setEmail(e.target.value)}/>
-        </label>
-        <br></br>
-        <label >
-        <br></br>
-        <h3>Username:</h3>
-        <br></br>
-          <input className='formReg' type="text" name="username" onChange={(e)=> setUserName(e.target.value)}/>
+        <label>
+          <br></br>
+          <h3>Email:</h3>
+          <br></br>
+          <input
+            className="formReg"
+            type="text"
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </label>
         <br></br>
         <label>
-        <br></br>
-        <h3>Password:</h3>
           <br></br>
-          <input className='formReg' type="password" name="password" onChange={(e)=> setPassword(e.target.value)}/>
+          <h3>Username:</h3>
+          <br></br>
+          <input
+            className="formReg"
+            type="text"
+            name="username"
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </label>
+        <br></br>
+        <label>
+          <br></br>
+          <h3>Password:</h3>
+          <br></br>
+          <input
+            className="formReg"
+            type="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </label>
         <br></br>
 
-        <label >
+        <label>
           <br></br>
           <h3>Sign Up as:</h3>
           <br></br>
-                <select className='formReg' id="Type" onChange={(e)=>setUserType(e.target.value)}>
-                  <option value="Instructor">Instructor</option>
-                  <option value="User">Learner</option>
-               </select>
-          </label>
+          <select
+            className="formReg"
+            id="Type"
+            onChange={(e) => setUserType(e.target.value)}
+          >
+            <option value="Instructor">Instructor</option>
+            <option value="User">Learner</option>
+          </select>
+        </label>
         <br></br>
 
-
-        <input type="button" value="Sign Up"  className='formReg submit' onClick={register}/>
-    </form>
-
-    
+        <input
+          type="button"
+          value="Sign Up"
+          className="formReg submit"
+          onClick={register}
+        />
+      </form>
     </div>
   );
-
-  };
+};
 export default Register;
