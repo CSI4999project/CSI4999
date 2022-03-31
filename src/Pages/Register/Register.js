@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import "./Register.css";
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-
   const navigate = useNavigate();
   // States of email and password
   let [email, setEmail] = useState('')
@@ -14,9 +12,8 @@ const Register = () => {
   let [errorMessage, setError] = useState('')
   let [userType, setUserType] = useState('Instructor')
 
-  var register = () =>{
     axios({
-      method:"POST",
+      method: "POST",
       data: {
         email: email,
         password: password,
@@ -25,21 +22,31 @@ const Register = () => {
       },
       withCredentials: true,
       url: "http://localhost:4000/register",
-    }).then((res) =>{
-        if(res.data ==='User With Email Already Exists'){
-            setError('User With Email Already Exists')
-            console.log(res)
-        } else{
-            navigate('/login')
-        }
-    }
-    )
-  }
+    }).then((res) => {
+      if (res.data === "User With Email Already Exists") {
+        setError("User With Email Already Exists");
+        console.log(res);
+      } else {
+        navigate("/login");
+      }
+    });
+
+    axios.post(
+      "https://api.chatengine.io/users/",
+      { username: userName, secret: process.env.REACT_APP_CHAT_PASSWORD}, // Body object
+      { headers: authObject } // Headers object
+    ).catch((error) => {
+      console.log(error)
+      setError2("Oops, something went wrong with the chat engine server. Please try again.");
+    })
+  
+
   return (
-    <div className='center'>
+    <div className="center">
       <h1>Register</h1>
-      <form >
-        {errorMessage === '' ? null : <p>{errorMessage}</p>}
+      <form>
+        {errorMessage === "" ? null : <p>{errorMessage}</p>}
+        {error2 === "" ? null : <p>{error2}</p>}
         <br></br>
         <label >
         <br></br>
@@ -80,7 +87,7 @@ const Register = () => {
 
     
     </div>
-  )
-};
+  );
 
+  };
 export default Register;
