@@ -95,8 +95,8 @@
   .chat-subtitle {
     color: #7554a0;
     font-weight: 600;
-    font-size: 12px;
-    padding-top: 4px;
+    font-size: 24px;
+    padding-top: 2px;
   }
   
   .message-row {
@@ -290,4 +290,17 @@
   .button:hover span:after {
     opacity: 1;
     right: 0;
+  }
+  .create-new-chat {
+    width: 65%;
+    padding: 12px 20px;
+    margin: 8px 8px;
+    box-sizing: border-box;
+  }
+  .dm-button {
+    background-color: #7554a0;
+    color: white;
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: bold;
   }
