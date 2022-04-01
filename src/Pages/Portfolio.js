@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import Axios from "axios";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -15,18 +16,20 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import { findByDisplayValue } from "@testing-library/react";
 import { Pagination } from "@mui/material";
+import { numberWithCommas } from "../components/CoinTable";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+const PortfolioPage = () => {
 
-const rows = [
-  createData('Ethereum', '$ 3,146.89', '2.5%', '0.145567 ETH', '+$5.05'),
-  createData('Cardano', '$ 1.10', '3.4%', '137.45 ADA', '+$12.07'),
-  createData('Bitcoin', '$ 44,223', '2%', '0.005433 BTC', '+$6.67'),
-  createData('Solana', '$ 103.57', '3%', '12.06 SOL', '+$4.45'),
-  createData('xrp', '$ 0.83', '12%', '498.456 XRP', '+$27.56'),
-];
+const [portfolioList, setPortfolioList] = useState([]);
+
+useEffect(() =>{
+  Axios.get("http://localhost:4000/Portfolio").then((response) =>{
+  console.log(response.data);
+  setPortfolioList(response.data);
+  })
+}, [])
+
+
 const useStyles = makeStyles((theme) => ({
   gridClassName: {
     boxShadow: "2px 2px 4px rgb(255 238 51 / 100%)",
@@ -83,9 +86,7 @@ const Item = styled(Paper)(({ theme }) => ({
   elevation: 8
 
 }));
-
-export default function BasicTable() {
-  const classes = useStyles();
+ const classes = useStyles();
   return (
     <div>
     <Container style={{ textAlign: "center" }}>
@@ -120,25 +121,27 @@ export default function BasicTable() {
           <TableRow className={classes.row}>
             <TableCell className={classes.tableHeadFont}>Coin</TableCell>
             <TableCell className={classes.tableHeadFont} align="right">Price</TableCell>
-            <TableCell className={classes.tableHeadFont} align="right">24h</TableCell>
+            <TableCell className={classes.tableHeadFont} align="right">USD</TableCell>
             <TableCell className={classes.tableHeadFont} align="right">Holdings</TableCell>
+            <TableCell className={classes.tableHeadFont} align="right">24h</TableCell>
             <TableCell className={classes.tableHeadFont} align="right">P/L</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {portfolioList.map((row) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               className={classes.row}
             >
               <TableCell className={classes.tableCellFont} component="th" scope="row">
-                {row.name}
+                {row.CURRENCY_NAME}
               </TableCell>
-              <TableCell className={classes.tableCellFont} align="right">{row.calories}</TableCell>
-              <TableCell className={classes.tableCellFont2} align="right">{row.fat}</TableCell>
-              <TableCell className={classes.tableCellFont} align="right">{row.carbs}</TableCell>
-              <TableCell className={classes.tableCellFont} align="right">{row.protein}</TableCell>
+              <TableCell className={classes.tableCellFont} align="right">idkyet</TableCell>
+              <TableCell className={classes.tableCellFont} align="right">${numberWithCommas(row.DOLLAR_AMOUNT)}</TableCell>
+              <TableCell className={classes.tableCellFont} align="right">{row.Currency_Amount}</TableCell>
+              <TableCell className={classes.tableCellFont2} align="right">2.5%</TableCell>
+              <TableCell className={classes.tableCellFont} align="right">idkyet</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -164,4 +167,4 @@ export default function BasicTable() {
   );
 }
 
-
+export default PortfolioPage;

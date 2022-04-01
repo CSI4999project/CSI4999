@@ -118,6 +118,12 @@ app.post("/register", (req, res) =>{
       });
     });
 
+    app.get("/Portfolio", (req, res) => {
+        connection.execute('SELECT * FROM CURRENCY_OWNED where USER_ID = 71', (err, result) => {
+            res.send(result);
+        });
+      });
+
 app.listen(4000, () =>{
     console.log('Server Started')
 })
