@@ -117,6 +117,10 @@ app.post("/register", (req, res) =>{
           res.send(result);
       });
     });
+    app.post("/coins", (req, res) => {
+        connection.execute('INSERT into CURRENCY_OWNED (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type) values (?, ?, ?, ?, ?, ?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type']]);
+        res.send("im depressed");
+    })
 
     app.get("/Portfolio", (req, res) => {
         connection.execute('SELECT * FROM CURRENCY_OWNED where USER_ID = 71', (err, result) => {
