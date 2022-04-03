@@ -1,6 +1,7 @@
 import { React, useContext, useState } from "react";
 import { ChatEngine, getOrCreateChat } from "react-chat-engine";
 import ChatFeed from "../../components/ChatFeed";
+import { TextField } from '@mui/material';
 import "./ChatStyles.css";
 import { UserContext } from "../../context/userContext";
 
@@ -27,7 +28,7 @@ const Chat = () => {
           onChange={(e) => setUsername(e.target.value)}
         />
         <button className="dm-button" onClick={() => createDirectChat(creds)}>
-          Create Chat
+          Start Chat
         </button>
       </div>
     );
