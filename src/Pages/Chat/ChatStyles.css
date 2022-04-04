@@ -32,6 +32,10 @@
   .ce-chat-form-container {
     padding-bottom: 20px !important;
   }
+
+  .ce-chat-feed-column {
+    background-color: #222831;
+  }
   
   .ce-text-input {
     border-radius: 6px !important;
