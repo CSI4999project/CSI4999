@@ -17,10 +17,26 @@ import { styled } from '@mui/material/styles';
 import { findByDisplayValue } from "@testing-library/react";
 import { Pagination } from "@mui/material";
 import { numberWithCommas } from "../components/CoinTable";
+import TradeHistory from "../components/TradeHistory";
+import { SingleCoin } from "../config/cryptoApi";
+
 
 const PortfolioPage = () => {
 
 const [portfolioList, setPortfolioList] = useState([]);
+const [tradeHistory, setTradeHistory] = useState([]);
+const [coin, setCoin] = useState();
+
+const array = ["ethereum", "bitcoin"];
+
+
+const fetchCoin = async () => {
+  const { data } = await Axios.get(SingleCoin('bitcoin'));
+  setCoin(data);
+};
+useEffect(() => {
+  fetchCoin();
+}, []);
 
 useEffect(() =>{
   Axios.get("http://localhost:4000/Portfolio").then((response) =>{
@@ -28,6 +44,7 @@ useEffect(() =>{
   setPortfolioList(response.data);
   })
 }, [])
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +65,11 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#131111",
     },
   },
+  row2: {
+    backgroundColor: "#16171a",
+    cursor: "pointer",
+    borderColor: "black"
+    },
   boxFont: {
     fontSize: "20px", 
     color: "green",
@@ -71,11 +93,13 @@ const useStyles = makeStyles((theme) => ({
 
   tableCellFont: {
     fontSize: "15px",
-    color: "white"
+    color: "white",
+    borderColor: "black"
   },
   tableCellFont2: {
     fontSize: "15px",
-    color: "green"
+    color: "green",
+    borderColor: "black"
   }
 }));
 const Item = styled(Paper)(({ theme }) => ({
@@ -118,7 +142,7 @@ const Item = styled(Paper)(({ theme }) => ({
     <TableContainer style={{margin: 30}} component={Paper}>
       <Table sx={{minWidth: 350 }} aria-label="simple table">
         <TableHead>
-          <TableRow className={classes.row}>
+          <TableRow className={classes.row2}>
             <TableCell className={classes.tableHeadFont}>Coin</TableCell>
             <TableCell className={classes.tableHeadFont} align="right">Price</TableCell>
             <TableCell className={classes.tableHeadFont} align="right">USD</TableCell>
@@ -137,7 +161,8 @@ const Item = styled(Paper)(({ theme }) => ({
               <TableCell className={classes.tableCellFont} component="th" scope="row">
                 {row.CURRENCY_NAME}
               </TableCell>
-              <TableCell className={classes.tableCellFont} align="right">idkyet</TableCell>
+              {/* //{array.map((reforwardRef))} */}
+              <TableCell className={classes.tableCellFont} align="right">id</TableCell>
               <TableCell className={classes.tableCellFont} align="right">${numberWithCommas(row.DOLLAR_AMOUNT)}</TableCell>
               <TableCell className={classes.tableCellFont} align="right">{row.Currency_Amount}</TableCell>
               <TableCell className={classes.tableCellFont2} align="right">2.5%</TableCell>
@@ -158,11 +183,18 @@ const Item = styled(Paper)(({ theme }) => ({
           count={10}
           classes={{ ul: classes.pagination }}
           // onChange={(_, value) => {
-          //   // setPage(value);
+          //    setPage(value);
           //   window.scroll(0, 450);
           // }}
         />
     </Container>
+    <div style={{margin: 30}}>
+    <Typography variant="h4" style={{ textAlign: "center", padding: 30 }}>
+          Trade History
+        </Typography>
+<TradeHistory></TradeHistory>
+
+    </div>
     </div>
   );
 }
