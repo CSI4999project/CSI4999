@@ -39,7 +39,7 @@ const Register = () => {
 
     axios.post(
       "https://api.chatengine.io/users/",
-      { username: userName, secret: process.env.REACT_APP_CHAT_PASSWORD}, // Body object
+      { username: userName, secret: process.env.REACT_APP_CHAT_PASSWORD, email: email}, // Body object
       { headers: authObject } // Headers object
     ).catch((error) => {
       console.log(error)
