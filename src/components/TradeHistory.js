@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import Axios from "axios";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -17,19 +17,25 @@ import { styled } from '@mui/material/styles';
 import { findByDisplayValue } from "@testing-library/react";
 import { Pagination } from "@mui/material";
 import { numberWithCommas } from "./CoinTable";
+import {UserContext} from '../context/userContext';
 
 
 const TradeHistory = () => {
 
-
+  let {user, setUser} = useContext(UserContext);
   const [tradeHistory, setTradeHistory] = useState([]);
 
   useEffect(() =>{
-    Axios.get("http://localhost:4000/Portfolio2").then((response) =>{
-    console.log(response.data);
-    setTradeHistory(response.data);
-    })
-  }, [])
+    Axios({
+      method:"POST",
+      data:{
+        userID: user.id
+      },
+      url: "http://localhost:4000/Portfolio2"}).then((response) =>{
+  console.log(response.data);
+  setTradeHistory(response.data);
+  })
+}, [])
 
     function createData(name, calories, fat, carbs, protein) {
         return { name, calories, fat, carbs, protein };

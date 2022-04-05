@@ -133,14 +133,15 @@ app.post("/register", (req, res) =>{
          res.send("im depressed");
     })
 
-    app.get("/Portfolio", (req, res) => {
-        connection.execute('SELECT * FROM CURRENCY_OWNED where USER_ID = 71', (err, result) => {
+    app.post("/Portfolio", (req, res) => {
+        console.log(req.body.userID);
+        connection.execute('SELECT * FROM CURRENCY_OWNED where USER_ID = ?', [req.body['userID']], (err, result) => {
             res.send(result);
         });
       });
 
-      app.get("/Portfolio2", (req, res) => {
-        connection.execute('SELECT * FROM TRANSACTIONS where USER_ID = 71', (err, result) => {
+      app.post("/Portfolio2", (req, res) => {
+        connection.execute('SELECT * FROM TRANSACTIONS where USER_ID = ?', [req.body['userID']], (err, result) => {
             res.send(result);
         });
       });

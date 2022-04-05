@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import Axios from "axios";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -19,10 +19,12 @@ import { Pagination } from "@mui/material";
 import { numberWithCommas } from "../components/CoinTable";
 import TradeHistory from "../components/TradeHistory";
 import { SingleCoin } from "../config/cryptoApi";
+import {UserContext} from '../context/userContext';
+
 
 
 const PortfolioPage = () => {
-
+  let {user, setUser} = useContext(UserContext);
 const [portfolioList, setPortfolioList] = useState([]);
 const [tradeHistory, setTradeHistory] = useState([]);
 const [coin, setCoin] = useState();
@@ -39,12 +41,16 @@ useEffect(() => {
 }, []);
 
 useEffect(() =>{
-  Axios.get("http://localhost:4000/Portfolio").then((response) =>{
+    Axios({
+      method:"POST",
+      data:{
+        userID: user.id
+      },
+      url: "http://localhost:4000/Portfolio"}).then((response) =>{
   console.log(response.data);
   setPortfolioList(response.data);
   })
 }, [])
-
 
 
 const useStyles = makeStyles((theme) => ({
