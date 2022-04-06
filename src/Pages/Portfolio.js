@@ -18,27 +18,18 @@ import { findByDisplayValue } from "@testing-library/react";
 import { Pagination } from "@mui/material";
 import { numberWithCommas } from "../components/CoinTable";
 import TradeHistory from "../components/TradeHistory";
-import { SingleCoin } from "../config/cryptoApi";
+import { PortfolioPrices} from "../config/cryptoApi";
 import {UserContext} from '../context/userContext';
 
 
 
 const PortfolioPage = () => {
-  let {user, setUser} = useContext(UserContext);
+let {user, setUser} = useContext(UserContext);
 const [portfolioList, setPortfolioList] = useState([]);
 const [tradeHistory, setTradeHistory] = useState([]);
-const [coin, setCoin] = useState();
+const [namesArray, setNames] = useState([]);
 
-const array = ["ethereum", "bitcoin"];
-
-
-const fetchCoin = async () => {
-  const { data } = await Axios.get(SingleCoin('bitcoin'));
-  setCoin(data);
-};
-useEffect(() => {
-  fetchCoin();
-}, []);
+let array = [];
 
 useEffect(() =>{
     Axios({
@@ -51,6 +42,22 @@ useEffect(() =>{
   setPortfolioList(response.data);
   })
 }, [])
+
+const putNamesOfCoinsInArray = () => {
+  const doubled = portfolioList.forEach((number) => array.push(number.CURRENCY_FULLNAME));
+}
+console.log(portfolioList);
+
+// const fetchCoin = async () => {
+//   putNamesOfCoinsInArray();
+//   let names = array.toString();
+//   const { data } = await Axios.get(PortfolioPrices(names));
+//   console.log(data);
+// };
+// useEffect(() =>{
+// }, [])
+// fetchCoin();
+
 
 
 const useStyles = makeStyles((theme) => ({

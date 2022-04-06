@@ -52,7 +52,8 @@ const TradingBlock = () => {
           CurrencyName: coin?.symbol.toUpperCase(),
           DollarAmount: amount,
           Currency_price: price,
-          Currency_Owned: totalToken
+          Currency_Owned: totalToken,
+          fullname: coin?.id
         },
         url: "http://localhost:4000/coins"})
     }
