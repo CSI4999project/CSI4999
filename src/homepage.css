@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo&family=Montserrat&display=swap');
 *{
     z-index: 5;
+}
+.body {
+  height:100vh;
 }
 img{
     height:225px;
@@ -11,34 +15,13 @@ img{
     margin-top: 100px;
     text-align: center;
 }
-.cardButton {
-    background-color: #00AFC1;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-  }
-.card {
-    display: inline-block;
-    margin-right: 90px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-  }
-  
-  .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 70, 0.2);
-  }
-  
-  .container {
-    padding: 2px 16px;
-  }
   .header {
-    font-size: 5rem;
+    color: #ffff;
+    font-family: "Monteserrat", sans-serif;
+    font-size: 7rem;
     text-align: center;
     padding-top: 200px;
+    z-index: 1;
   }
   .top{
       height:40vh;
@@ -50,6 +33,6 @@ img{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.3;
+    opacity: 0.5;
     z-index: 0;
 }

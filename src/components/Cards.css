@@ -1,11 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo&family=Montserrat&display=swap');
 .cards {
   padding: 4rem;
+  font-family: 'Exo', serif;
   background: #131111;
 }
 
 h1 {
   text-align: center;
   color: #fff;
+  font-size: 2.5rem;
 }
 
 .cards__container {
