@@ -15,27 +15,7 @@ const HomePage = () => {
       </video>
     <div className = "top">
         <h1 className = "header">Welcome</h1>
-        </div>
-    <div className = "bottom">
-    <div className="card">
-    <img src={classroom} alt="Avatar"/>
-  <div className="container">
-    <button className = "cardButton">Join Classroom</button>
-  </div>
-</div>
-    <div className="card">
-    <img src={Tracker} alt="Avatar"/>
-  <div className="container">
-    <button className = "cardButton">View Tracker</button>
-  </div>
-</div>
-    <div className="card">
-    <img src={Portfolio} alt="Avatar"/>
-  <div className="container">
-    <button className = "cardButton">View Portfolio</button>
-  </div>
-</div>
-    </div>        
+        </div>       
 </div>)
 }
 export default HomePage;

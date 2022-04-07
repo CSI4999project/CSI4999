@@ -9,7 +9,6 @@ function Home(){
     return(
         <>
         <HomePage></HomePage>
-        <TopSection/>
         <Cards />
         <Footer/>
         </>

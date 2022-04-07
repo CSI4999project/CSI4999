@@ -13,7 +13,6 @@ function Cards() {
         <div className='cards'>
             <h1> </h1>
             <div className='cards'>
-            <h1>WARNING! Remember this is a simulation, so results may be different when trading with real money. ALWAYS make sure to do you research before investing!!</h1>
             </div>
             <div className='cards'>
                 <h1>Check Out Our Amenities!</h1>
@@ -24,7 +23,7 @@ function Cards() {
                        <CardItem src={Tracker}
                         text='See whats top of the market with our cryto tracker.'
                         label='Tracker'
-                        path='/TrackerPage'/>
+                        path='/Tracker'/>
                         <CardItem src={Trade}
                         text='Make a Simluated Trade.'
                         label='Trade'

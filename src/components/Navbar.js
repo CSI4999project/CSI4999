@@ -48,7 +48,7 @@ function Navbar(){
                             </Link>
                         </li>
                         <li className='nav-item'>
-                            <Link to='/TrackerPage' className='nav-links' onClick={closeMobileMenu}>
+                            <Link to='/Tracker' className='nav-links' onClick={closeMobileMenu}>
                                 Tracker
                             </Link>
                         </li>
