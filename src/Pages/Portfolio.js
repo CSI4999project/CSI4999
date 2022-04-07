@@ -24,12 +24,13 @@ import {UserContext} from '../context/userContext';
 
 
 
+
 const PortfolioPage = () => {
 let {user, setUser} = useContext(UserContext);
 const [portfolioList, setPortfolioList] = useState([]);
 const [tradeHistory, setTradeHistory] = useState([]);
-const [namesArray, setNames] = useState([{}]);
-const [loading, setLoading] = useState(false);
+const [namesArray, setNames] = useState([]);
+const [isLoading, setLoading] = useState(true);
 const delay = ms => new Promise(res => setTimeout(res, ms));
 let array = [];
 
@@ -41,60 +42,19 @@ useEffect(() =>{
         userID: user.id
       },
       url: "http://localhost:4000/Portfolio"}).then((response) =>{
-  console.log(response.data);
+        console.log(response.data);
   setPortfolioList(response.data);
   const doubled = (response.data).forEach((number) => array.push(number.CURRENCY_FULLNAME));
   }).then((res) => {
     Axios({
       method:"GET",
       url: `https://api.coingecko.com/api/v3/simple/price?ids=${array}&vs_currencies=usd`}).then(response =>{
+        console.log(response.data);
         setNames(response.data);
-  console.log(response.data);
+        setLoading(false);
   })
     })
-}, )
-
-console.log(namesArray);
-// const putNamesOfCoinsInArray = () => {
-   //const doubled = portfolioList.forEach((number) => array.push(number.CURRENCY_FULLNAME));
-// }
-
-// putNamesOfCoinsInArray();
-// const fetchCoin = async () => {
-//   setLoading(true);
-//   putNamesOfCoinsInArray();
-//   let names = array.toString();
-//   const { data } = await Axios.get(PortfolioPrices(names));
-//   setNames(data);
-//   setLoading(false);
-// };
-// useEffect(() =>{
-//   fetchCoin();
-// }, [portfolioList])
-
-// console.log(namesArray.bitcoin)
-// const yourFunction1 = async () => {
-//   await delay(5000);
-// //useEffect(() =>{
-//   //putNamesOfCoinsInArray();
-//   let names = array.toString();
-//   Axios({
-//     method:"GET",
-//     url: "https://api.coingecko.com/api/v3/simple/price?ids="+names+"&vs_currencies=usd"}).then(response =>{
-// console.log(response.data);
-// setNames(response.data);
-// })
-// //}, [portfolioList])
-// };
-
-// // const yourFunction = async (hi) => {
-// //   await delay(5000);
-// //   console.log(namesArray.bitcoin.usd);
-// // };
-// useEffect(() =>{
-//   delay(5000);
-//   yourFunction1();
-// }, [portfolioList])
+}, [])
 
 
 
@@ -163,7 +123,9 @@ const Item = styled(Paper)(({ theme }) => ({
 
 }));
  const classes = useStyles();
-   
+ if (isLoading) {
+  return <div className="App">Loading...</div>;
+}
   return (
     <div>
     <Container style={{ textAlign: "center" }}>
@@ -215,8 +177,8 @@ const Item = styled(Paper)(({ theme }) => ({
                 {row.CURRENCY_NAME}
               </TableCell>
               {/* //{array.map((reforwardRef))} */}
-              <TableCell className={classes.tableCellFont} align="right">id</TableCell>
-              <TableCell className={classes.tableCellFont} align="right">${numberWithCommas(row.DOLLAR_AMOUNT)}</TableCell>
+              <TableCell className={classes.tableCellFont} align="right">${numberWithCommas((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2))}</TableCell>
+              <TableCell className={classes.tableCellFont} align="right">${numberWithCommas(((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2))}</TableCell>
               <TableCell className={classes.tableCellFont} align="right">{row.Currency_Amount}</TableCell>
               <TableCell className={classes.tableCellFont2} align="right">2.5%</TableCell>
               <TableCell className={classes.tableCellFont} align="right">idkyet</TableCell>
