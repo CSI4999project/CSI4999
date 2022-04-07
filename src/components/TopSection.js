@@ -2,12 +2,10 @@ import React from 'react';
 import'../App.css';
 import {Button} from './Button';
 import './TopSection.css';
-import HomeVideo from './videos/dots_lines_background.mp4';
 
 function TopSection(){
     return(
         <div className='top-container'>
-            <video src={HomeVideo} autoPlay loop muted />
             <h1>Welcome to IDKCrypto</h1>
             <p>Join Now!!</p>
             <div className='top-btns'>
