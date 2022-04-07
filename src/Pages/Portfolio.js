@@ -7,6 +7,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import { LinearProgress } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import TableContainer from "@material-ui/core/TableContainer";
 import Container from "@material-ui/core/Container"
@@ -28,7 +29,8 @@ let {user, setUser} = useContext(UserContext);
 const [portfolioList, setPortfolioList] = useState([]);
 const [tradeHistory, setTradeHistory] = useState([]);
 const [namesArray, setNames] = useState([]);
-
+const [loading, setLoading] = useState(false);
+const delay = ms => new Promise(res => setTimeout(res, ms));
 let array = [];
 
 useEffect(() =>{
@@ -46,19 +48,40 @@ useEffect(() =>{
 const putNamesOfCoinsInArray = () => {
   const doubled = portfolioList.forEach((number) => array.push(number.CURRENCY_FULLNAME));
 }
-console.log(portfolioList);
 
 // const fetchCoin = async () => {
+//   setLoading(true);
 //   putNamesOfCoinsInArray();
 //   let names = array.toString();
 //   const { data } = await Axios.get(PortfolioPrices(names));
-//   console.log(data);
+//   setNames(data);
+//   setLoading(false);
 // };
 // useEffect(() =>{
-// }, [])
-// fetchCoin();
+//   fetchCoin();
+// }, [portfolioList])
 
+// console.log(namesArray.bitcoin)
 
+useEffect(() =>{
+  putNamesOfCoinsInArray();
+  let names = array.toString();
+  Axios({
+    method:"GET",
+    url: PortfolioPrices(names)}).then((response) =>{
+console.log(response);
+setNames(response);
+})
+}, [portfolioList])
+
+const yourFunction = async () => {
+  await delay(5000);
+
+  console.log(namesArray.data.bitcoin.usd);
+  
+};
+
+yourFunction();
 
 const useStyles = makeStyles((theme) => ({
   gridClassName: {
