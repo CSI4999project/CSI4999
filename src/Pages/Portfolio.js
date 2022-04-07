@@ -28,10 +28,11 @@ const PortfolioPage = () => {
 let {user, setUser} = useContext(UserContext);
 const [portfolioList, setPortfolioList] = useState([]);
 const [tradeHistory, setTradeHistory] = useState([]);
-const [namesArray, setNames] = useState([]);
+const [namesArray, setNames] = useState([{}]);
 const [loading, setLoading] = useState(false);
 const delay = ms => new Promise(res => setTimeout(res, ms));
 let array = [];
+
 
 useEffect(() =>{
     Axios({
@@ -42,13 +43,23 @@ useEffect(() =>{
       url: "http://localhost:4000/Portfolio"}).then((response) =>{
   console.log(response.data);
   setPortfolioList(response.data);
+  const doubled = (response.data).forEach((number) => array.push(number.CURRENCY_FULLNAME));
+  }).then((res) => {
+    Axios({
+      method:"GET",
+      url: `https://api.coingecko.com/api/v3/simple/price?ids=${array}&vs_currencies=usd`}).then(response =>{
+        setNames(response.data);
+  console.log(response.data);
   })
-}, [])
+    })
+}, )
 
-const putNamesOfCoinsInArray = () => {
-  const doubled = portfolioList.forEach((number) => array.push(number.CURRENCY_FULLNAME));
-}
+console.log(namesArray);
+// const putNamesOfCoinsInArray = () => {
+   //const doubled = portfolioList.forEach((number) => array.push(number.CURRENCY_FULLNAME));
+// }
 
+// putNamesOfCoinsInArray();
 // const fetchCoin = async () => {
 //   setLoading(true);
 //   putNamesOfCoinsInArray();
@@ -62,26 +73,31 @@ const putNamesOfCoinsInArray = () => {
 // }, [portfolioList])
 
 // console.log(namesArray.bitcoin)
+// const yourFunction1 = async () => {
+//   await delay(5000);
+// //useEffect(() =>{
+//   //putNamesOfCoinsInArray();
+//   let names = array.toString();
+//   Axios({
+//     method:"GET",
+//     url: "https://api.coingecko.com/api/v3/simple/price?ids="+names+"&vs_currencies=usd"}).then(response =>{
+// console.log(response.data);
+// setNames(response.data);
+// })
+// //}, [portfolioList])
+// };
 
-useEffect(() =>{
-  putNamesOfCoinsInArray();
-  let names = array.toString();
-  Axios({
-    method:"GET",
-    url: PortfolioPrices(names)}).then((response) =>{
-console.log(response);
-setNames(response);
-})
-}, [portfolioList])
+// // const yourFunction = async (hi) => {
+// //   await delay(5000);
+// //   console.log(namesArray.bitcoin.usd);
+// // };
+// useEffect(() =>{
+//   delay(5000);
+//   yourFunction1();
+// }, [portfolioList])
 
-const yourFunction = async () => {
-  await delay(5000);
 
-  console.log(namesArray.data.bitcoin.usd);
-  
-};
 
-yourFunction();
 
 const useStyles = makeStyles((theme) => ({
   gridClassName: {
@@ -147,6 +163,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 }));
  const classes = useStyles();
+   
   return (
     <div>
     <Container style={{ textAlign: "center" }}>
@@ -232,7 +249,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
     </div>
     </div>
-  );
+        );
+ 
 }
 
 export default PortfolioPage;
