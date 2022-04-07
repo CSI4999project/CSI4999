@@ -1,5 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-
 import "./App.css";
 import TrackerPage from "./Pages/TrackerPage";
 import CoinPage from "./Pages/CoinPage";
@@ -14,8 +13,7 @@ import '../src/Pages/Login/Login.css'
 import { UserContext } from "./context/userContext";
 import axios from 'axios'
 import Navbar from './components/Navbar';
-import Home from "./Pages/Home";
-
+import Chat from './Pages/Chat/Chat'
 
 function App() {
   //Get current user from COOKIES
@@ -34,7 +32,6 @@ function App() {
   }, [])
   const useStyles = makeStyles(() => ({
     App: {
-      backgroundColor: "#14161a", //#14161a
       color: "white",
       minHeight: "100vh",
     },
@@ -54,13 +51,13 @@ function App() {
           <Routes>
               {/* IF USER IS LOGGED IN RENDER A PAGE ELSE REDIRECT TO A LINK */}
             <Route path="/me" element={user ? <Me /> : <Navigate to='/login'/>} />
-            <Route path="/CSI4999" element={user ? <Home/> : <Navigate to='/login'/>} exact />
-            <Route path="/TrackerPage" element={user ? <TrackerPage/> : <Navigate to='/login'/>} exact />
+            <Route path="/CSI4999" element={user ? <TrackerPage/> : <Navigate to='/login'/>} exact />
             <Route path="/coins/:id" element={user? <CoinPage/> : <Navigate to='/login'/>} />
             <Route path="login" element={user ? <Navigate to='/CSI4999'/> : <Login/>} />
             <Route path="register" element={user? <Navigate to='/CSI4999'/>  : <Register/>} />
             <Route path="/portfolio" element={user ? <Portfolio /> : <Navigate to='/login'/>} exact/>
             <Route path="/Students" element={user ? <TeacherPage /> : <Navigate to='/login'/>} exact/>
+            <Route path="/chat" element={user ? <Chat /> : <Navigate to='/login'/>} exact/>
           </Routes>
         </div>
       </BrowserRouter>

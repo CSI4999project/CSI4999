@@ -1,12 +1,26 @@
-
-.center{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
+.formReg {
+  height: 35px;
+  width: 35vh;
 
-.form{
-    height:35px;
+  font-size: large;
+  font-weight: bold;
+}
+
+.space {
+  margin-top: 2rem;
+}
+
+.submit {
+  width: 10vh;
+  margin-top: 5rem;
+  margin-left: 12.5vh;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }

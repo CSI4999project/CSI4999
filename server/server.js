@@ -55,7 +55,8 @@ app.post("/login", (req, res, next) =>{
                     user: {
                         id: req.user[0]['USER_ID'],
                         username: req.user[0]['USER_NAME'],
-                        email: req.user[0]['USER_EMAIL']
+                        email: req.user[0]['USER_EMAIL'],
+                        type: req.user[0]['USER_TYPE'],
                       }});
             });
         }
@@ -75,8 +76,14 @@ app.post("/register", (req, res) =>{
         } else if(!results[0]){
             // if new user add user to database and return message
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
-            connection.execute('INSERT INTO Users (USER_EMAIL, USER_NAME, USER_PASSWORD) VALUES (?, ?, ?)',
-                [req.body['email'], req.body['username'], hashedPassword], (err, results, fields) =>{
+            connection.execute('INSERT INTO Users (USER_EMAIL, USER_NAME, USER_PASSWORD, USER_TYPE) VALUES (?, ?, ?, ?)',
+                [req.body['email'], req.body['username'], hashedPassword, req.body['usertype']], (err, results, fields) =>{
+                    if(req.body['usertype'] === 'Instructor'){
+                        connection.execute('SELECT USER_ID FROM Users WHERE USER_EMAIL = ?', [req.body['email']],(err, results,fields) =>{
+                            connection.execute('INSERT INTO PARTY (OWNER_ID, PARTY_CODE, PARTY_NAME) VALUES (?, ?, ?)',
+                            [results[0]['USER_ID'], Date.now(), 'random'])
+                        })
+                    } 
                     res.send('User Created')
                 })
         }
@@ -87,8 +94,6 @@ app.post("/register", (req, res) =>{
     app.get("/user", (req, res) => {
         try{
             
-            console.log(req.user)
-            console.log('gfgdgfdgd')
             res.send(req.user);
         }  catch{
             console.log('fdf')
@@ -98,17 +103,48 @@ app.post("/register", (req, res) =>{
     });
 
   app.post('/logout', (req, res) =>{
-    console.log(req.user)
     req.logOut();
-    console.log(req.user);
     res.send('logged Out')
   })
 
+  //Using get request, "/Students" is the page where i want the request to execute. 
+  //So when you click on students tab it takes you to localhost/Students and thats when this executes
+  //Then i use connection.execute to make a mysql command to get the data that i need from database.
+  //res.send(result) im just sending the results i get. Now i need to make an axios call on Students page to see these results
+  //Go to TeacherPage.js to see Axios call
   app.get("/Students", (req, res) => {
       connection.execute('SELECT * FROM Users INNER JOIN MEMBERS on Users.USER_ID = MEMBERS.USER_ID where GROUP_ID = (select PARTY_ID from PARTY where OWNER_ID = 16)', (err, result) => {
           res.send(result);
       });
     });
+    app.post("/coins", (req, res) => {
+        connection.execute('SELECT * from CURRENCY_OWNED where USER_ID = ? and CURRENCY_NAME = ?', [req.body['userID'], req.body['CurrencyName']],(err, results, fields) =>{
+            console.log(results);
+            if(results.length === 0){
+                console.log('inside here')
+                connection.execute('INSERT into CURRENCY_OWNED (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, CURRENCY_FULLNAME) values (?, ?, ?, ?, ?, ?, ?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['fullname']]);
+                connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type) values (?, ?, ?, ?, ?, ?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type']]);
+            } else{
+                connection.execute('UPDATE CURRENCY_OWNED set CURRENCY_AMOUNT = CURRENCY_AMOUNT + ? where USER_ID = ? and CURRENCY_NAME = ?', [req.body['Currency_Owned'], req.body['userID'], req.body['CurrencyName'] ])
+                connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type) values (?, ?, ?, ?, ?, ?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type']]);
+            }
+        })
+        // 
+         res.send("im depressed");
+    })
+
+    app.post("/Portfolio", (req, res) => {
+        console.log(req.body.userID);
+        connection.execute('SELECT * FROM CURRENCY_OWNED where USER_ID = ?', [req.body['userID']], (err, result) => {
+            res.send(result);
+        });
+      });
+
+      app.post("/Portfolio2", (req, res) => {
+        connection.execute('SELECT * FROM TRANSACTIONS where USER_ID = ?', [req.body['userID']], (err, result) => {
+            res.send(result);
+        });
+      });
 
 app.listen(4000, () =>{
     console.log('Server Started')

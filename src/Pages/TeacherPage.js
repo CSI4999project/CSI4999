@@ -16,11 +16,16 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import { findByDisplayValue } from "@testing-library/react";
 import { Pagination } from "@mui/material";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 const TeacherPage = () => {
-
+    const navigate = useNavigate();
     const [studentsList, setStudentsList] = useState([]);
 
+    //This is the Axios call using that url. The /Students is important here this lets Axios know were grabbing
+    //the get request we made in server.js
+    //All im doing is getting the response, console logging it, then putting it in setStudentsList array that i made above.
     useEffect(() =>{
         Axios.get("http://localhost:4000/Students").then((response) =>{
         console.log(response.data);
@@ -28,18 +33,6 @@ const TeacherPage = () => {
         })
     }, [])
 
-
-    function createData(name, calories, fat, carbs, protein) {
-      return { name, calories, fat, carbs, protein };
-    }
-    
-    const rows = [
-      createData('Ethereum', '$ 3,146.89', '2.5%', '0.145567 ETH', '+$5.05'),
-      createData('Cardano', '$ 1.10', '3.4%', '137.45 ADA', '+$12.07'),
-      createData('Bitcoin', '$ 44,223', '2%', '0.005433 BTC', '+$6.67'),
-      createData('Solana', '$ 103.57', '3%', '12.06 SOL', '+$4.45'),
-      createData('xrp', '$ 0.83', '12%', '498.456 XRP', '+$27.56'),
-    ];
     const useStyles = makeStyles((theme) => ({
       gridClassName: {
         boxShadow: "2px 2px 4px rgb(255 238 51 / 100%)",
@@ -118,15 +111,16 @@ const TeacherPage = () => {
                   key={studentsList.val}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   className={classes.row}
+                  
                 >
                   <TableCell className={classes.tableCellFont} component="th" scope="row">
                   {val.USER_NAME}
                   </TableCell>
-                  <TableCell className={classes.tableCellFont} align="right">Richard</TableCell>
-                  <TableCell className={classes.tableCellFont} align="right">Ray</TableCell>
-                  <TableCell className={classes.tableCellFont} align="right">{val.USER_EMAIL}</TableCell>
-                  <TableCell className={classes.tableCellFont} align="right">
-                    <button>Chat</button> | <button>Delete</button></TableCell>
+                  <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio')}>Richard</TableCell>
+                  <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio')}>Ray</TableCell>
+                  <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio')}>{val.USER_EMAIL}</TableCell>
+                  <TableCell className={classes.tableCellFont} align="right" >
+                    <button onClick ={() => navigate('/Chat')}>Chat</button> | <button>Delete</button></TableCell>
                 </TableRow>
               ))}
             </TableBody>
