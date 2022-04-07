@@ -14,7 +14,7 @@ import '../src/Pages/Login/Login.css'
 import { UserContext } from "./context/userContext";
 import axios from 'axios'
 import Navbar from './components/Navbar';
-import UserHome from "./Pages/UserHome";
+import Home from "./Pages/Home";
 
 
 function App() {
@@ -54,7 +54,7 @@ function App() {
           <Routes>
               {/* IF USER IS LOGGED IN RENDER A PAGE ELSE REDIRECT TO A LINK */}
             <Route path="/me" element={user ? <Me /> : <Navigate to='/login'/>} />
-            <Route path="/CSI4999" element={user ? <UserHome/> : <Navigate to='/login'/>} exact />
+            <Route path="/CSI4999" element={user ? <Home/> : <Navigate to='/login'/>} exact />
             <Route path="/TrackerPage" element={user ? <TrackerPage/> : <Navigate to='/login'/>} exact />
             <Route path="/coins/:id" element={user? <CoinPage/> : <Navigate to='/login'/>} />
             <Route path="login" element={user ? <Navigate to='/CSI4999'/> : <Login/>} />

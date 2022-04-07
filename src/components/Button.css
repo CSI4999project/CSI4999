@@ -1,6 +1,6 @@
-/* :root{
+:root{
     --primary: #fff;
-} */
+} 
 
 .btn{
     padding: 8px 20px;
@@ -34,8 +34,10 @@
     font-size: 20px;
 }
 
-.btn--medium:hover, .btn--large:hover{
-    background: #fff;
-    color: #242424;
-    transition: all 0.3s ease-out;
+.btn--large:hover,
+.btn--medium:hover {
+  transition: all 0.3s ease-out;
+  background: #fff;
+  color: #242424;
+  transition: 250ms;
 }

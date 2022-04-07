@@ -2,18 +2,20 @@ import React from 'react';
 import'../App.css';
 import {Button} from './Button';
 import './TopSection.css';
+import HomeVideo from './videos/dots_lines_background.mp4';
 
 function TopSection(){
     return(
         <div className='top-container'>
-            <h1>LEARNING AWAITS</h1>
+            <video src={HomeVideo} autoPlay loop muted />
+            <h1>Welcome to IDKCrypto</h1>
             <p>Join Now!!</p>
-            <div class="top-btn">
-                <Button classNAme='btns' buttonStyle='btn--outline' buttonSize='btn--large'>
-                    Join a Classroom
+            <div className='top-btns'>
+                <Button className='btn' buttonStyle='btn--outline' buttonSize='btn--large'>
+                    Become an Instructor
                 </Button>
-                <Button classNAme='btns' buttonStyle='btn--primary' buttonSize='btn--large'>
-                    Make a Trade
+                <Button className='btn' buttonStyle='btn--primary' buttonSize='btn--large'>
+                    Sign up as a User 
                 </Button>
             </div>
         </div>

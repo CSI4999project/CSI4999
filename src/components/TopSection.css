@@ -1,6 +1,13 @@
- 
+video {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: -1;
+}
+
   .top-container {
-    background: url('../components/Images/Home.jpg') center center/cover no-repeat; 
+    /*background: url('../components/Images/Home.jpg') center center/cover no-repeat;*/ 
     height: 100vh;
     width: 100%;
     display: flex;
