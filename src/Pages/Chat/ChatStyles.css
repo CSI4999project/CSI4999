@@ -206,13 +206,13 @@
   .send-icon {
     top: 1px;
     position: relative;
-    
+    font-size: 16px;
   }
   
   .picture-icon {
     top: 1px;
     position: relative;
-    font-size: 14px;
+    font-size: 18px;
     color: white;
   }
   
