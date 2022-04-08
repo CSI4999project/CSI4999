@@ -7,13 +7,15 @@ import Register from "./Pages/Register/Register";
 import Portfolio from "./Pages/Portfolio";
 import TeacherPage from "./Pages/TeacherPage";
 import Me from "./Pages/Me/me";
+import Home from "./Pages/Home.js"
 import { makeStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
 import '../src/Pages/Login/Login.css'
 import { UserContext } from "./context/userContext";
 import axios from 'axios'
 import Navbar from './components/Navbar';
-import Chat from './Pages/Chat/Chat'
+import Chat from './Pages/Chat/Chat';
+
 
 function App() {
   //Get current user from COOKIES
@@ -51,7 +53,8 @@ function App() {
           <Routes>
               {/* IF USER IS LOGGED IN RENDER A PAGE ELSE REDIRECT TO A LINK */}
             <Route path="/me" element={user ? <Me /> : <Navigate to='/login'/>} />
-            <Route path="/CSI4999" element={user ? <TrackerPage/> : <Navigate to='/login'/>} exact />
+            <Route path="/CSI4999" element={user ? <Home/> : <Navigate to='/login'/>} exact />
+            <Route path="/Tracker" element={user ? <TrackerPage/> : <Navigate to='/login'/>} exact />
             <Route path="/coins/:id" element={user? <CoinPage/> : <Navigate to='/login'/>} />
             <Route path="login" element={user ? <Navigate to='/CSI4999'/> : <Login/>} />
             <Route path="register" element={user? <Navigate to='/CSI4999'/>  : <Register/>} />

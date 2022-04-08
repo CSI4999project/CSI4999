@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import Axios from "axios";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,16 +18,21 @@ import { findByDisplayValue } from "@testing-library/react";
 import { Pagination } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from "../context/userContext";
 
 const TeacherPage = () => {
     const navigate = useNavigate();
     const [studentsList, setStudentsList] = useState([]);
+    let {user, setUser} = useContext(UserContext)
 
+    
     //This is the Axios call using that url. The /Students is important here this lets Axios know were grabbing
     //the get request we made in server.js
     //All im doing is getting the response, console logging it, then putting it in setStudentsList array that i made above.
     useEffect(() =>{
-        Axios.get("http://localhost:4000/Students").then((response) =>{
+      
+        
+        Axios.post("http://localhost:4000/Students", {id: user.id}).then((response) =>{
         console.log(response.data);
         setStudentsList(response.data);
         })

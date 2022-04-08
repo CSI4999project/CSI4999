@@ -112,8 +112,9 @@ app.post("/register", (req, res) =>{
   //Then i use connection.execute to make a mysql command to get the data that i need from database.
   //res.send(result) im just sending the results i get. Now i need to make an axios call on Students page to see these results
   //Go to TeacherPage.js to see Axios call
-  app.get("/Students", (req, res) => {
-      connection.execute('SELECT * FROM Users INNER JOIN MEMBERS on Users.USER_ID = MEMBERS.USER_ID where GROUP_ID = (select PARTY_ID from PARTY where OWNER_ID = 16)', (err, result) => {
+  app.post("/Students", (req, res) => {
+      connection.execute('SELECT * FROM Users INNER JOIN MEMBERS on Users.USER_ID = MEMBERS.USER_ID where GROUP_ID = (select PARTY_ID from PARTY where OWNER_ID = ?)',[req.body.id], (err, result) => {
+          console.log(result)
           res.send(result);
       });
     });
@@ -147,6 +148,12 @@ app.post("/register", (req, res) =>{
         });
       });
 
+    //   app.post('/OwnerID', (req, res) =>{
+    //       console.log(req.body.id)
+    //       connection.execute('SELECT OWNER_ID from PARTY where PARTY_ID = (select GROUP_ID from MEMBERS WHERE USER_ID = ?)', [req.body.id], (err, res) => {
+    //           console.log(res)
+    //       })
+    //   })
 app.listen(4000, () =>{
     console.log('Server Started')
 })

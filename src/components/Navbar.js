@@ -48,6 +48,11 @@ function Navbar(){
                                 Home
                             </Link>
                         </li>
+                        <li className='nav-item'>
+                            <Link to='/Tracker' className='nav-links' onClick={closeMobileMenu}>
+                                Tracker
+                            </Link>
+                        </li>
                         {
                             user?.type == 'User'
                             ?
