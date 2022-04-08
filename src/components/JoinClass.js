@@ -11,14 +11,21 @@ const JoinClass = () => {
           Join Class
         </Typography>
         <TextField
-          sx={{ input: { color: 'white' } }}
+          sx={{ input: { color: "white" } }}
           label="Enter Class Code"
           variant="outlined"
-          style={{ marginBottom: 20, width: "40%", backgroundColor: "#14161a"}}
+          style={{ marginBottom: 20, width: "40%", backgroundColor: "#14161a" }}
           InputLabelProps={{
-            style: { color: '#fff' },
+            style: { color: "#fff" },
           }}
         />
+      </Container>
+      <Container style={{ textAlign: "center" }}>
+        <button
+          style={{ backgroundColor: "white", fontSize: "22px", padding: "5px", borderColor: 'white' }}
+        >
+          Submit
+        </button>
       </Container>
     </div>
   );
