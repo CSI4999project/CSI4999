@@ -181,7 +181,7 @@ const Item = styled(Paper)(({ theme }) => ({
               <TableCell className={classes.tableCellFont} align="right">${numberWithCommas(((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2))}</TableCell>
               <TableCell className={classes.tableCellFont} align="right">{row.Currency_Amount}</TableCell>
               <TableCell className={classes.tableCellFont2} align="right">2.5%</TableCell>
-              <TableCell className={classes.tableCellFont} align="right">idkyet</TableCell>
+              <TableCell className={classes.tableCellFont} align="right">${numberWithCommas(((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2))}</TableCell>
             </TableRow>
           ))}
         </TableBody>
