@@ -1,4 +1,4 @@
-import { Button, handleChange, Grid, InputLabel, FormControl, TextField, LinearProgress, makeStyles, MenuItem, Select, Typography } from "@material-ui/core";
+import { Button, Modal, handleChange, Grid, InputLabel, FormControl, TextField, LinearProgress, makeStyles, MenuItem, Select, Typography } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
@@ -17,8 +17,14 @@ const TradingBlock = () => {
     const {currency, symbol} = CryptoState();
     const [price, displayPrice] = useState();
     const [amount, displayAmount] = useState('');
+    const [error, setError] = useState();
+    const [currencyOwned, setOwned] = useState();
     const [fontColor, setFont] = useState("#");
     const [type, setType] = useState();
+    const [open, setOpen] = useState(false);
+    const [plusOrMinus, setPlusOrMinus] = useState();
+    const handleOpen = () => {setOpen(true)};
+    const handleClose = () => {setOpen(false)};
     const fetchCoin = async () => {
         const { data } = await axios.get(SingleCoin(id));
         setCoin(data);
@@ -29,14 +35,45 @@ const TradingBlock = () => {
     const typeButton = {
     color : fontColor
   }
+  useEffect(()=>{
+    axios.post('http://localhost:4000/Portfolio', {userID: user.id}).then((res) =>{
+      let arr = [];
+      (res.data).forEach((number) => arr.push([number.CURRENCY_FULLNAME, number.Currency_Amount, number.DOLLAR_AMOUNT]));
+      console.log(arr);
+      setOwned(arr);
+    })
+  }, [])
+  const checkType = () => {
+    if(type == 0) handleOpen();
+    if(type == 1) errorMessage();
+  }
+  const errorMessage = () => {
+    let f = 1;
+    let r = 1;
+    for (let i = 0; i < currencyOwned.length; i++) {
+      if(currencyOwned[i][0] == coin?.id.toLowerCase()) r = 2;
+    }
+    if(r == 1) {setError(true); return;}
+    for (let i = 0; i < currencyOwned.length; i++) {
+      if(currencyOwned[i][0] == coin?.id.toLowerCase()) {
+        if(Number(amount) > Number(currencyOwned[i][2])) {
+          f = 2;
+        }
+      }
+    }
+    f == 2 ? setError(true) : handleOpen();
+  }
     const setStyle = (fontColor) => {
     displayPrice(coin?.market_data.current_price[currency.toLowerCase()]);
     setFont(fontColor);
   }
-
     const useVisibilityToggler = (component, visibility = false) => {
         const [visible, setVisibility] = useState(() => visibility);
         return [visible ? component : null, (v) => setVisibility ((v) => (!v))];
+    }
+    const showPrice = () => {
+      if(type == true) setPlusOrMinus("-");
+      if(type == false) setPlusOrMinus("+");
     }
     let totalToken = (amount/price).toFixed(6);
     const [StopLimitShow, toggleVisibility] = useVisibilityToggler(<StopLimit func = {displayStopPrice}></StopLimit>, false);
@@ -56,9 +93,8 @@ const TradingBlock = () => {
           fullname: coin?.id
         },
         url: "http://localhost:4000/coins"})
+        setOpen(false)
     }
-
-  
     return(
         <div style = {typeButton} className = "tradingBlock">
         <p className = "desc">Buy or Sell</p>
@@ -73,9 +109,28 @@ const TradingBlock = () => {
         <TextField variant = "outlined" placeholder = "ex. 120.00" className = "transactionAmount" onChange={(e) => displayAmount(e.target.value)}></TextField>
         <p className = "desc">Total:</p> 
         <p className = "totalEquation">(${amount} / ${price}) = {(amount / price).toFixed(6)} {coin?.symbol.toUpperCase()}</p>
-        <Button onClick = {() => {axiosCall()}} color = "primary" variant = "contained" style = {{marginTop : "3px", width: "250px"}}>Record Order</Button>
+        <Button onClick = {() => {checkType(); showPrice();}} color = "primary" variant = "contained" style = {{marginTop : "3px", width: "250px"}}>Record Order</Button>
         </FormControl>
         <p>{stopPrice}</p>
+        <Modal 
+         open = {open}
+         onClose = {handleClose}>
+         <div className = "popUp">
+         <h2>Are you sure you would like to record this order?</h2>
+         <Button onClick = {() => {axiosCall(); setOpen(false);}} color = "primary" style = {{marginTop: "3px"}} variant="contained">Yes</Button>
+         <Button onClick = {() => {setOpen(false)}} color ="primary" style = {{marginLeft: "10px"}} variant="contained">Cancel</Button>
+         <p>{plusOrMinus}{(amount / price).toFixed(6)} {coin?.symbol.toUpperCase()}</p>
+         </div>
+         </Modal>
+         <Modal 
+         open = {error}>
+         <div className = "popUp">
+         <h2>The amount you are attempting to sell exceeds available holdings</h2>
+         <Button onClick = {() => {setError(false)}} color ="primary" style = {{marginLeft: "10px"}} variant="contained">Cancel</Button>
+         </div>
+         </Modal>
+
+
         </div>); 
     }
     export default TradingBlock;
