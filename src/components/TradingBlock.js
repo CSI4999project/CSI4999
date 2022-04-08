@@ -1,4 +1,4 @@
-import { Button, handleChange, Grid, InputLabel, FormControl, TextField, LinearProgress, makeStyles, MenuItem, Select, Typography } from "@material-ui/core";
+import { Button, Modal, handleChange, Grid, InputLabel, FormControl, TextField, LinearProgress, makeStyles, MenuItem, Select, Typography } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
@@ -19,6 +19,10 @@ const TradingBlock = () => {
     const [amount, displayAmount] = useState('');
     const [fontColor, setFont] = useState("#");
     const [type, setType] = useState();
+    const [open, setOpen] = useState(false);
+    const [plusOrMinus, setPlusOrMinus] = useState();
+    const handleOpen = () => {setOpen(true)};
+    const handleClose = () => {setOpen(false)};
     const fetchCoin = async () => {
         const { data } = await axios.get(SingleCoin(id));
         setCoin(data);
@@ -33,10 +37,13 @@ const TradingBlock = () => {
     displayPrice(coin?.market_data.current_price[currency.toLowerCase()]);
     setFont(fontColor);
   }
-
     const useVisibilityToggler = (component, visibility = false) => {
         const [visible, setVisibility] = useState(() => visibility);
         return [visible ? component : null, (v) => setVisibility ((v) => (!v))];
+    }
+    const showPrice = () => {
+      if(type == true) setPlusOrMinus("-");
+      if(type == false) setPlusOrMinus("+");
     }
     let totalToken = (amount/price).toFixed(6);
     const [StopLimitShow, toggleVisibility] = useVisibilityToggler(<StopLimit func = {displayStopPrice}></StopLimit>, false);
@@ -56,6 +63,7 @@ const TradingBlock = () => {
           fullname: coin?.id
         },
         url: "http://localhost:4000/coins"})
+        setOpen(false)
     }
 
   
@@ -73,9 +81,20 @@ const TradingBlock = () => {
         <TextField variant = "outlined" placeholder = "ex. 120.00" className = "transactionAmount" onChange={(e) => displayAmount(e.target.value)}></TextField>
         <p className = "desc">Total:</p> 
         <p className = "totalEquation">(${amount} / ${price}) = {(amount / price).toFixed(6)} {coin?.symbol.toUpperCase()}</p>
-        <Button onClick = {() => {axiosCall()}} color = "primary" variant = "contained" style = {{marginTop : "3px", width: "250px"}}>Record Order</Button>
+        <Button onClick = {() => {handleOpen(); showPrice();}} color = "primary" variant = "contained" style = {{marginTop : "3px", width: "250px"}}>Record Order</Button>
         </FormControl>
         <p>{stopPrice}</p>
+        <Modal 
+         open = {open}
+         onClose = {handleClose}>
+         <div className = "popUp">
+         <h2>Are you sure you would like to record this order?</h2>
+         <Button onClick = {() => {setAxios()}} color = "primary" style = {{marginTop: "3px"}} variant="contained">Yes</Button>
+         <Button onClick = {() => {setOpen(false)}} color ="primary" style = {{marginLeft: "10px"}} variant="contained">Cancel</Button>
+         <p>{plusOrMinus}{(amount / price).toFixed(6)} {coin?.symbol.toUpperCase()}</p>
+         </div>
+         </Modal>
+
         </div>); 
     }
     export default TradingBlock;
