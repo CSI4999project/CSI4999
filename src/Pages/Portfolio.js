@@ -56,9 +56,6 @@ useEffect(() =>{
     })
 }, [])
 
-
-
-
 const useStyles = makeStyles((theme) => ({
   gridClassName: {
     boxShadow: "2px 2px 4px rgb(255 238 51 / 100%)",
@@ -127,7 +124,7 @@ const Item = styled(Paper)(({ theme }) => ({
   return <div className="App">Loading...</div>;
 }
   return (
-    <div>
+        <div>
     <Container style={{ textAlign: "center" }}>
       <Typography variant="h4" style={{ padding: 30 }}>
           Portfolio
@@ -136,7 +133,7 @@ const Item = styled(Paper)(({ theme }) => ({
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={2}>
             <Item className={classes.gridClassName} style={{padding: 15}}>
-              <div className={classes.boxFont2}>$1,030</div>
+              <div className={classes.boxFont2}>$0</div>
               <div className={classes.boxFontUnder}>Total Balance</div>
           </Item>
           </Grid>
