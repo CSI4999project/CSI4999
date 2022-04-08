@@ -30,6 +30,7 @@ let {user, setUser} = useContext(UserContext);
 const [portfolioList, setPortfolioList] = useState([]);
 const [tradeHistory, setTradeHistory] = useState([]);
 const [namesArray, setNames] = useState([]);
+const [totalBalance, setTotalBalance] = useState(0);
 const [isLoading, setLoading] = useState(true);
 const delay = ms => new Promise(res => setTimeout(res, ms));
 let array = [];
@@ -56,6 +57,30 @@ useEffect(() =>{
     })
 }, [])
 
+useEffect(() =>{
+  async function fetchName(){
+    var coinList = [];
+    var total = 0;
+    Axios.post("http://localhost:4000/Portfolio", {userID: user.id}).then(async (coins) =>{
+      
+      const doubled = (coins.data).forEach((number) => coinList.push([number.CURRENCY_FULLNAME, number.Currency_Amount]));
+      var names = coinList.map(function(value,index) { return value[0]; });
+      let price = await Axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${names}&vs_currencies=usd`)
+      coinList.sort((a, b) => a[0].localeCompare(b[0]))
+      if(coinList.length > 0){
+        for(let i = 0; i< coinList.length; i++){
+          total += coinList[i][1] * price.data[coinList[i][0]].usd
+        }
+        setTotalBalance(total)
+      }
+      
+    })
+    
+    
+    
+  }
+  fetchName();
+}, [])
 const useStyles = makeStyles((theme) => ({
   gridClassName: {
     boxShadow: "2px 2px 4px rgb(255 238 51 / 100%)",
@@ -133,7 +158,7 @@ const Item = styled(Paper)(({ theme }) => ({
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={2}>
             <Item className={classes.gridClassName} style={{padding: 15}}>
-              <div className={classes.boxFont2}>$0</div>
+              <div className={classes.boxFont2}>${totalBalance.toFixed(2)}</div>
               <div className={classes.boxFontUnder}>Total Balance</div>
           </Item>
           </Grid>
