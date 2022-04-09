@@ -31,6 +31,7 @@ const [portfolioList, setPortfolioList] = useState([]);
 const [tradeHistory, setTradeHistory] = useState([]);
 const [namesArray, setNames] = useState([]);
 const [totalBalance, setTotalBalance] = useState(0);
+const [totalProfitLoss, setTotalProfitLoss] = useState(0);
 const [isLoading, setLoading] = useState(true);
 const delay = ms => new Promise(res => setTimeout(res, ms));
 let array = [];
@@ -61,17 +62,20 @@ useEffect(() =>{
   async function fetchName(){
     var coinList = [];
     var total = 0;
+    var totalPL = 0;
     Axios.post("http://localhost:4000/Portfolio", {userID: user.id}).then(async (coins) =>{
       
-      const doubled = (coins.data).forEach((number) => coinList.push([number.CURRENCY_FULLNAME, number.Currency_Amount]));
+      const doubled = (coins.data).forEach((number) => coinList.push([number.CURRENCY_FULLNAME, number.Currency_Amount, number.DOLLAR_AMOUNT]));
       var names = coinList.map(function(value,index) { return value[0]; });
       let price = await Axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${names}&vs_currencies=usd`)
       coinList.sort((a, b) => a[0].localeCompare(b[0]))
       if(coinList.length > 0){
         for(let i = 0; i< coinList.length; i++){
           total += coinList[i][1] * price.data[coinList[i][0]].usd
+          totalPL += ((coinList[i][1] * price.data[coinList[i][0]].usd) - coinList[i][2])
         }
         setTotalBalance(total)
+        setTotalProfitLoss(totalPL)
       }
       
     })
@@ -158,19 +162,13 @@ const Item = styled(Paper)(({ theme }) => ({
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={2}>
             <Item className={classes.gridClassName} style={{padding: 15}}>
-              <div className={classes.boxFont2}>${totalBalance.toFixed(2)}</div>
+              <div className={classes.boxFont2}>${numberWithCommas(totalBalance.toFixed(2))}</div>
               <div className={classes.boxFontUnder}>Total Balance</div>
-          </Item>
-          </Grid>
-          <Grid item xs={2.5}>
-            <Item className={classes.gridClassName} style={{padding: 15}}>
-              <div className={classes.boxFont}>+$32.90</div>
-              <div className={classes.boxFontUnder}>24h portfolio change</div>
           </Item>
           </Grid>
           <Grid item xs={2}>
             <Item className={classes.gridClassName} style={{padding: 15}}>
-              <div className={classes.boxFont}>+$69.42</div>
+              <div className={classes.boxFont}>${numberWithCommas(totalProfitLoss.toFixed(2))}</div>
               <div className={classes.boxFontUnder}>Total Profit Loss</div>
           </Item>
           </Grid>
@@ -184,7 +182,6 @@ const Item = styled(Paper)(({ theme }) => ({
             <TableCell className={classes.tableHeadFont} align="right">Price</TableCell>
             <TableCell className={classes.tableHeadFont} align="right">USD</TableCell>
             <TableCell className={classes.tableHeadFont} align="right">Holdings</TableCell>
-            <TableCell className={classes.tableHeadFont} align="right">24h</TableCell>
             <TableCell className={classes.tableHeadFont} align="right">P/L</TableCell>
           </TableRow>
         </TableHead>
@@ -202,8 +199,7 @@ const Item = styled(Paper)(({ theme }) => ({
               <TableCell className={classes.tableCellFont} align="right">${numberWithCommas((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2))}</TableCell>
               <TableCell className={classes.tableCellFont} align="right">${numberWithCommas(((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2))}</TableCell>
               <TableCell className={classes.tableCellFont} align="right">{row.Currency_Amount}</TableCell>
-              <TableCell className={classes.tableCellFont2} align="right">2.5%</TableCell>
-              <TableCell className={classes.tableCellFont} align="right">${((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2) > 0 ? "+"+(numberWithCommas(((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2))) : (numberWithCommas(((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2)))}</TableCell>
+              <TableCell className={classes.tableCellFont} style={{color: ((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2) > 0 ? "rgb(14, 203, 129)" : "red"}} align="right">${((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2) > 0 ? "+"+(numberWithCommas(((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2))) : (numberWithCommas(((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2)))}</TableCell>
             </TableRow>
           ))}
         </TableBody>
