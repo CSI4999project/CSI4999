@@ -168,7 +168,7 @@ const Item = styled(Paper)(({ theme }) => ({
           </Grid>
           <Grid item xs={2}>
             <Item className={classes.gridClassName} style={{padding: 15}}>
-              <div className={classes.boxFont}>${numberWithCommas(totalProfitLoss.toFixed(2))}</div>
+              <div className={classes.boxFont} style={{color: totalProfitLoss.toFixed(2) > 0 ? "rgb(14, 203, 129)" : "red"}}> ${numberWithCommas(totalProfitLoss.toFixed(2))}</div>
               <div className={classes.boxFontUnder}>Total Profit Loss</div>
           </Item>
           </Grid>
