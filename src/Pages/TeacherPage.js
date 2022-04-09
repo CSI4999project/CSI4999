@@ -24,7 +24,7 @@ const TeacherPage = () => {
     const navigate = useNavigate();
     const [studentsList, setStudentsList] = useState([]);
     let {user, setUser} = useContext(UserContext)
-
+    let [code, setCode] = useState('')
     
     //This is the Axios call using that url. The /Students is important here this lets Axios know were grabbing
     //the get request we made in server.js
@@ -36,6 +36,13 @@ const TeacherPage = () => {
         console.log(response.data);
         setStudentsList(response.data);
         })
+    }, [])
+
+    useEffect(() =>{
+      Axios.post('http://localhost:4000/getCode', {id: user.id}).then((res) =>{
+        console.log(res.data)
+        setCode(res.data)
+      })
     }, [])
 
     const useStyles = makeStyles((theme) => ({
@@ -98,7 +105,10 @@ const TeacherPage = () => {
         <Container style={{ textAlign: "center" }}>
           <Typography variant="h4" style={{ padding: 30 }}>
               My Students
-            </Typography>
+          </Typography>
+          <Typography  style={{float: "right"}}>
+              Class Code: {code}
+          </Typography>
         <TableContainer style={{margin: 30}} component={Paper}>
           <Table sx={{minWidth: 350 }} aria-label="simple table">
             <TableHead>

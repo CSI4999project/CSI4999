@@ -21,12 +21,14 @@ import { numberWithCommas } from "../components/CoinTable";
 import TradeHistory from "../components/TradeHistory";
 import { PortfolioPrices} from "../config/cryptoApi";
 import {UserContext} from '../context/userContext';
-
+import axios from "axios";
+import JoinClass from "../components/JoinClass";
 
 
 
 const PortfolioPage = () => {
 let {user, setUser} = useContext(UserContext);
+const [isMember, setMember] = useState([])
 const [portfolioList, setPortfolioList] = useState([]);
 const [tradeHistory, setTradeHistory] = useState([]);
 const [namesArray, setNames] = useState([]);
@@ -80,10 +82,15 @@ useEffect(() =>{
       
     })
     
-    
-    
   }
   fetchName();
+}, [])
+
+
+useEffect(() =>{
+  axios.post('http://localhost:4000/isMember', {userID: user.id}).then((res) =>{
+    setMember(res.data)
+  })
 }, [])
 const useStyles = makeStyles((theme) => ({
   gridClassName: {
@@ -152,84 +159,90 @@ const Item = styled(Paper)(({ theme }) => ({
  if (isLoading) {
   return <div className="App">Loading...</div>;
 }
+
+if(isMember.length == 0){
+  return <JoinClass id= {user.id}></JoinClass>
+} else{
   return (
-        <div>
-    <Container style={{ textAlign: "center" }}>
-      <Typography variant="h4" style={{ padding: 30 }}>
-          Portfolio
-        </Typography>
-        <div style={{margin: 30}}>
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={2}>
-            <Item className={classes.gridClassName} style={{padding: 15}}>
-              <div className={classes.boxFont2}>${numberWithCommas(totalBalance.toFixed(2))}</div>
-              <div className={classes.boxFontUnder}>Total Balance</div>
-          </Item>
-          </Grid>
-          <Grid item xs={2}>
-            <Item className={classes.gridClassName} style={{padding: 15}}>
-              <div className={classes.boxFont} style={{color: totalProfitLoss.toFixed(2) > 0 ? "rgb(14, 203, 129)" : "red"}}> ${numberWithCommas(totalProfitLoss.toFixed(2))}</div>
-              <div className={classes.boxFontUnder}>Total Profit Loss</div>
-          </Item>
-          </Grid>
-          </Grid>
-      </div>
-    <TableContainer style={{margin: 30}} component={Paper}>
-      <Table sx={{minWidth: 350 }} aria-label="simple table">
-        <TableHead>
-          <TableRow className={classes.row2}>
-            <TableCell className={classes.tableHeadFont}>Coin</TableCell>
-            <TableCell className={classes.tableHeadFont} align="right">Price</TableCell>
-            <TableCell className={classes.tableHeadFont} align="right">USD</TableCell>
-            <TableCell className={classes.tableHeadFont} align="right">Holdings</TableCell>
-            <TableCell className={classes.tableHeadFont} align="right">P/L</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {portfolioList.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              className={classes.row}
-            >
-              <TableCell className={classes.tableCellFont} component="th" scope="row">
-                {row.CURRENCY_NAME}
-              </TableCell>
-              {/* //{array.map((reforwardRef))} */}
-              <TableCell className={classes.tableCellFont} align="right">${numberWithCommas((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2))}</TableCell>
-              <TableCell className={classes.tableCellFont} align="right">${numberWithCommas(((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2))}</TableCell>
-              <TableCell className={classes.tableCellFont} align="right">{row.Currency_Amount}</TableCell>
-              <TableCell className={classes.tableCellFont} style={{color: ((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2) > 0 ? "rgb(14, 203, 129)" : "red"}} align="right">${((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2) > 0 ? "+"+(numberWithCommas(((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2))) : (numberWithCommas(((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2)))}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    <Pagination
-          style={{
-            padding: 20,
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-          }}
-          color="primary"
-          count={10}
-          classes={{ ul: classes.pagination }}
-          // onChange={(_, value) => {
-          //    setPage(value);
-          //   window.scroll(0, 450);
-          // }}
-        />
-    </Container>
+    <div>
+<Container style={{ textAlign: "center" }}>
+  <Typography variant="h4" style={{ padding: 30 }}>
+      Portfolio
+    </Typography>
     <div style={{margin: 30}}>
-    <Typography variant="h4" style={{ textAlign: "center", padding: 30 }}>
-          Trade History
-        </Typography>
+    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Grid item xs={2}>
+        <Item className={classes.gridClassName} style={{padding: 15}}>
+          <div className={classes.boxFont2}>${numberWithCommas(totalBalance.toFixed(2))}</div>
+          <div className={classes.boxFontUnder}>Total Balance</div>
+      </Item>
+      </Grid>
+      <Grid item xs={2}>
+        <Item className={classes.gridClassName} style={{padding: 15}}>
+          <div className={classes.boxFont} style={{color: totalProfitLoss.toFixed(2) > 0 ? "rgb(14, 203, 129)" : "red"}}> ${numberWithCommas(totalProfitLoss.toFixed(2))}</div>
+          <div className={classes.boxFontUnder}>Total Profit Loss</div>
+      </Item>
+      </Grid>
+      </Grid>
+  </div>
+<TableContainer style={{margin: 30}} component={Paper}>
+  <Table sx={{minWidth: 350 }} aria-label="simple table">
+    <TableHead>
+      <TableRow className={classes.row2}>
+        <TableCell className={classes.tableHeadFont}>Coin</TableCell>
+        <TableCell className={classes.tableHeadFont} align="right">Price</TableCell>
+        <TableCell className={classes.tableHeadFont} align="right">USD</TableCell>
+        <TableCell className={classes.tableHeadFont} align="right">Holdings</TableCell>
+        <TableCell className={classes.tableHeadFont} align="right">P/L</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      {portfolioList.map((row) => (
+        <TableRow
+          key={row.name}
+          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+          className={classes.row}
+        >
+          <TableCell className={classes.tableCellFont} component="th" scope="row">
+            {row.CURRENCY_NAME}
+          </TableCell>
+          {/* //{array.map((reforwardRef))} */}
+          <TableCell className={classes.tableCellFont} align="right">${numberWithCommas((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2))}</TableCell>
+          <TableCell className={classes.tableCellFont} align="right">${numberWithCommas(((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2))}</TableCell>
+          <TableCell className={classes.tableCellFont} align="right">{row.Currency_Amount}</TableCell>
+          <TableCell className={classes.tableCellFont} style={{color: ((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2) > 0 ? "rgb(14, 203, 129)" : "red"}} align="right">${((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2) > 0 ? "+"+(numberWithCommas(((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2))) : (numberWithCommas(((((namesArray[row.CURRENCY_FULLNAME].usd).toFixed(2) * row.Currency_Amount).toFixed(2)) - row.DOLLAR_AMOUNT).toFixed(2)))}</TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table>
+</TableContainer>
+<Pagination
+      style={{
+        padding: 20,
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+      }}
+      color="primary"
+      count={10}
+      classes={{ ul: classes.pagination }}
+      // onChange={(_, value) => {
+      //    setPage(value);
+      //   window.scroll(0, 450);
+      // }}
+    />
+</Container>
+<div style={{margin: 30}}>
+<Typography variant="h4" style={{ textAlign: "center", padding: 30 }}>
+      Trade History
+    </Typography>
 <TradeHistory></TradeHistory>
 
-    </div>
-    </div>
-        );
+</div>
+</div>
+    );
+}
+  
  
 }
 
