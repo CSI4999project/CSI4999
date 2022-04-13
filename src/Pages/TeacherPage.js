@@ -131,9 +131,9 @@ const TeacherPage = () => {
                   <TableCell className={classes.tableCellFont} component="th" scope="row">
                   {val.USER_NAME}
                   </TableCell>
-                  <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio')}>Richard</TableCell>
-                  <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio')}>Ray</TableCell>
-                  <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio')}>{val.USER_EMAIL}</TableCell>
+                  <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio', {state: {id: val.USER_ID}})}>Richard</TableCell>
+                  <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio', {state: {id: val.USER_ID}})}>Ray</TableCell>
+                  <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio', {state: {id: val.USER_ID}} )}>{val.USER_EMAIL}</TableCell>
                   <TableCell className={classes.tableCellFont} align="right" >
                     <button onClick ={() => navigate('/Chat')}>Chat</button> | <button>Delete</button></TableCell>
                 </TableRow>

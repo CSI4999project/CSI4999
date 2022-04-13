@@ -20,16 +20,17 @@ import { numberWithCommas } from "./CoinTable";
 import {UserContext} from '../context/userContext';
 
 
-const TradeHistory = () => {
+const TradeHistory = (props) => {
 
   let {user, setUser} = useContext(UserContext);
   const [tradeHistory, setTradeHistory] = useState([]);
 
+  const id = user.type == 'Instructor' ? props.id : user.id;
   useEffect(() =>{
     Axios({
       method:"POST",
       data:{
-        userID: user.id
+        userID: id
       },
       url: "http://localhost:4000/Portfolio2"}).then((response) =>{
   console.log(response.data);

@@ -23,7 +23,7 @@ import { PortfolioPrices} from "../config/cryptoApi";
 import {UserContext} from '../context/userContext';
 import axios from "axios";
 import JoinClass from "../components/JoinClass";
-
+import {useLocation} from 'react-router-dom';
 
 
 const PortfolioPage = () => {
@@ -38,12 +38,15 @@ const [isLoading, setLoading] = useState(true);
 const delay = ms => new Promise(res => setTimeout(res, ms));
 let array = [];
 
-
+const location = useLocation();
+console.log('this is props')
+console.log()
+const id = user.type == 'Instructor' ? location.state.id : user.id;
 useEffect(() =>{
     Axios({
       method:"POST",
       data:{
-        userID: user.id
+        userID: id
       },
       url: "http://localhost:4000/Portfolio"}).then((response) =>{
         console.log(response.data);
@@ -65,7 +68,7 @@ useEffect(() =>{
     var coinList = [];
     var total = 0;
     var totalPL = 0;
-    Axios.post("http://localhost:4000/Portfolio", {userID: user.id}).then(async (coins) =>{
+    Axios.post("http://localhost:4000/Portfolio", {userID: id}).then(async (coins) =>{
       
       const doubled = (coins.data).forEach((number) => coinList.push([number.CURRENCY_FULLNAME, number.Currency_Amount, number.DOLLAR_AMOUNT]));
       var names = coinList.map(function(value,index) { return value[0]; });
@@ -88,7 +91,7 @@ useEffect(() =>{
 
 
 useEffect(() =>{
-  axios.post('http://localhost:4000/isMember', {userID: user.id}).then((res) =>{
+  axios.post('http://localhost:4000/isMember', {userID: id}).then((res) =>{
     setMember(res.data)
   })
 }, [])
@@ -160,7 +163,7 @@ const Item = styled(Paper)(({ theme }) => ({
   return <div className="App">Loading...</div>;
 }
 
-if(isMember.length == 0){
+if(isMember.length == 0 && user.type !== 'Instructor'){
   return <JoinClass id= {user.id}></JoinClass>
 } else{
   return (
@@ -236,7 +239,7 @@ if(isMember.length == 0){
 <Typography variant="h4" style={{ textAlign: "center", padding: 30 }}>
       Trade History
     </Typography>
-<TradeHistory></TradeHistory>
+<TradeHistory id={id}></TradeHistory>
 
 </div>
 </div>
