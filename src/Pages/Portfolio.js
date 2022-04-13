@@ -170,7 +170,7 @@ if(isMember.length == 0 && user.type !== 'Instructor'){
     <div>
 <Container style={{ textAlign: "center" }}>
   <Typography variant="h4" style={{ padding: 30 }}>
-      Portfolio
+      {user.username}'s Portfolio
     </Typography>
     <div style={{margin: 30}}>
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
