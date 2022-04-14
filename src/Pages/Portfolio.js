@@ -21,6 +21,7 @@ import { numberWithCommas } from "../components/CoinTable";
 import TradeHistory from "../components/TradeHistory";
 import { PortfolioPrices} from "../config/cryptoApi";
 import {UserContext} from '../context/userContext';
+import StopShow from '../components/StopShow';
 
 
 
@@ -205,6 +206,10 @@ const Item = styled(Paper)(({ theme }) => ({
           Trade History
         </Typography>
 <TradeHistory></TradeHistory>
+    <Typography variant="h4" style={{ textAlign: "center", padding: 30 }}>
+          Pending
+        </Typography>
+        <StopShow></StopShow>
 
     </div>
     </div>

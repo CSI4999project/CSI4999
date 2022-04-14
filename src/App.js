@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import Button from '@mui/material/Button';
 import "./App.css";
 import TrackerPage from "./Pages/TrackerPage";
 import CoinPage from "./Pages/CoinPage";

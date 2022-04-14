@@ -1,4 +1,6 @@
-import { Button, Modal, handleChange, Grid, InputLabel, FormControl, TextField, LinearProgress, makeStyles, MenuItem, Select, Typography } from "@material-ui/core";
+import { handleChange, Grid, InputLabel, FormControl, TextField, LinearProgress, makeStyles, MenuItem, Select, Typography } from "@material-ui/core";
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
@@ -9,13 +11,15 @@ import { CryptoState } from "../CryptoContext";
 import StopLimit from "./StopLimit";
 import {UserContext} from '../context/userContext';
 import '../coinStyle.css';
+import { display } from "@mui/system";
 const TradingBlock = () => {
     let {user, setUser} = useContext(UserContext);
-    const [stopPrice, displayStopPrice] = useState();
+    const [stopPrice, displayStopPrice] = useState(0);
     const { id } = useParams();
     const [coin, setCoin] = useState();
     const {currency, symbol} = CryptoState();
     const [price, displayPrice] = useState();
+    const [executed, setExecuted] = useState(false);
     const [amount, displayAmount] = useState('');
     const [error, setError] = useState();
     const [currencyOwned, setOwned] = useState();
@@ -25,6 +29,7 @@ const TradingBlock = () => {
     const [plusOrMinus, setPlusOrMinus] = useState();
     const handleOpen = () => {setOpen(true)};
     const handleClose = () => {setOpen(false)};
+    const [visible, setVisibility] = useState(false);
     const fetchCoin = async () => {
         const { data } = await axios.get(SingleCoin(id));
         setCoin(data);
@@ -33,7 +38,8 @@ const TradingBlock = () => {
         fetchCoin();
       }, []);
     const typeButton = {
-    color : fontColor
+    color : fontColor,
+    zIndex : 5
   }
   useEffect(()=>{
     axios.post('http://localhost:4000/Portfolio', {userID: user.id}).then((res) =>{
@@ -68,7 +74,6 @@ const TradingBlock = () => {
     setFont(fontColor);
   }
     const useVisibilityToggler = (component, visibility = false) => {
-        const [visible, setVisibility] = useState(() => visibility);
         return [visible ? component : null, (v) => setVisibility ((v) => (!v))];
     }
     const showPrice = () => {
@@ -76,11 +81,31 @@ const TradingBlock = () => {
       if(type == false) setPlusOrMinus("+");
     }
     let totalToken = (amount/price).toFixed(6);
-    const [StopLimitShow, toggleVisibility] = useVisibilityToggler(<StopLimit func = {displayStopPrice}></StopLimit>, false);
-    console.log(totalToken);
-    if (!coin) return <LinearProgress style={{ backgroundColor: "gold" }} />;
+    const [StopLimitShow, toggleVisibility] = useVisibilityToggler(<StopLimit func = {displayStopPrice} setExecuted = {setExecuted}></StopLimit>, false);
+
+    if (!coin) return <LinearProgress style={{ backgroundColor: "gold" }} />
 
     const axiosCall = () => {
+      if(visible == false) {
+        axios({
+          method:"POST",
+          data:{
+            userID: user.id,
+            Type : type,
+            CurrencyName: coin?.symbol.toUpperCase(),
+            DollarAmount: amount,
+            Currency_price: price,
+            Currency_Owned: totalToken,
+            fullname: coin?.id,
+            stopPrice: 0,
+            executed: 1
+            
+          },
+          url: "http://localhost:4000/coins"})
+      }
+      else {
+      alert("run");
+      console.log(stopPrice);
       axios({
         method:"POST",
         data:{
@@ -90,16 +115,22 @@ const TradingBlock = () => {
           DollarAmount: amount,
           Currency_price: price,
           Currency_Owned: totalToken,
-          fullname: coin?.id
+          fullname: coin?.id,
+          stopPrice: stopPrice,
+          executed: executed
+          
         },
         url: "http://localhost:4000/coins"})
-        setOpen(false)
+        setOpen(false) 
+      }
     }
+    console.log(visible);
+    console.log(stopPrice);
     return(
         <div style = {typeButton} className = "tradingBlock">
         <p className = "desc">Buy or Sell</p>
-        <Button onClick = {() => {setStyle("#519259"); setType(0);}}  color = "primary" style = {{marginTop: "3px"}} variant="contained">Buy</Button>
-        <Button onClick = {() => {setStyle("#B33030"); setType(1);}} color = "primary" style = {{marginLeft : "5px", marginTop: "3px"}} variant = "contained">Sell</Button>
+        <Button onClick = {() => {setStyle("#519259"); setType(0);}}  color = "success" style = {{marginTop: "3px"}} variant="contained">Buy</Button>
+        <Button onClick = {() => {setStyle("#B33030"); setType(1);}} color = "error" style = {{marginLeft : "5px", marginTop: "3px"}} variant = "contained">Sell</Button>
         <Button onClick = {toggleVisibility} color = "primary" variant = "contained" style = {{marginLeft : "5px", marginTop: "3px"}}>Toggle Stop</Button>
         <FormControl fullWidth>
         {StopLimitShow}

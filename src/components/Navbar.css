@@ -16,6 +16,7 @@
   align-items: center;
   height: 80px;
   max-width: 1500px;
+  z-index: 30;
 }
 
 .navbar-logo {
@@ -60,7 +61,6 @@
 
 .nav-links:hover {
   border-bottom: 4px solid #fff;
-  transition: all 0.2s ease-out;
 }
 
 .fa-bars {

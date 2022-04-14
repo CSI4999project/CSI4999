@@ -22,6 +22,11 @@ body {
     display: flex;
     margin-bottom: 20;
 }
+.checkbox {
+    height: 20px;
+    margin-left: 10px;
+    width: 20px;
+}
 .chartWidget {
     display : inline-block;
     height : 600px;
@@ -34,6 +39,7 @@ body {
     position : relative;
     right : 40px;
     width : 100%;
+    z-index: 4;
 }
 .page {
     display: block;
@@ -44,7 +50,7 @@ body {
     position: absolute;
     height: 200px;
     padding:30px;
-    top: 60%;
+    top : 40%;
     left: 50%;
     width: 400px;
 

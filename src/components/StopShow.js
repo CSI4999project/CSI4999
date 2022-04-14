@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
+import Button from '@mui/material/Button';
 import Axios from "axios";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,14 +25,31 @@ const TradeHistory = () => {
 
   let {user, setUser} = useContext(UserContext);
   const [tradeHistory, setTradeHistory] = useState([]);
+  const axiosCall = (row) => {
+      console.log(row);
+    Axios({
+        method:"POST",
+        data:{
+          TRANSACTION_ID: row.TRANSACTION_ID,
+          userID: row.USER_ID,
+          CURRENCY_NAME: row.CURRENCY_NAME,
+          DOLLAR_AMOUNT: row.DOLLAR_AMOUNT,
+          CURRENCY_PRICE : row.CURRENCY_PRICE,
+          Currency_Amount : row.Currency_Amount,
+          TYPE: row.Type,
+          Filled: 1,
+          STOP_LIMIT: row.STOP_LIMIT
 
+        },
+        url: "http://localhost:4000/Portfolio4"})
+  }
   useEffect(() =>{
     Axios({
       method:"POST",
       data:{
         userID: user.id
       },
-      url: "http://localhost:4000/Portfolio2"}).then((response) =>{
+      url: "http://localhost:4000/Portfolio3"}).then((response) =>{
   console.log(response.data);
   setTradeHistory(response.data);
   })
@@ -69,6 +87,7 @@ const TradeHistory = () => {
         },
       }));
       const classes = useStyles();
+
     return (
       <div>
         <Container>
@@ -83,6 +102,7 @@ const TradeHistory = () => {
               <TableCell className={classes.headFont} align="right">Transaction Amount</TableCell>
               <TableCell className={classes.headFont} align="right">Total</TableCell>
               <TableCell className={classes.headFont} align="right">Stop Limit</TableCell>
+              <TableCell className={classes.headFont} align="right">Execute?</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -100,7 +120,9 @@ const TradeHistory = () => {
                 <TableCell className={classes.kms} align="right">{numberWithCommas((Number(row.CURRENCY_PRICE)).toFixed(2))}</TableCell>
                 <TableCell className={classes.kms} align="right">{row.Currency_Amount}</TableCell>
                 <TableCell className={classes.kms} align="right">${numberWithCommas(row.DOLLAR_AMOUNT)}</TableCell>
-                <TableCell className={classes.kms} align="right">{row.STOP_LIMIT == 0 ? null : row.STOP_LIMIT}</TableCell>
+                <TableCell className={classes.kms} align="right">{row.STOP_LIMIT}</TableCell>
+                <TableCell className={classes.kms} align="right"><Button onClick = {() => {axiosCall(row)}}>Execute</Button></TableCell>
+                
               </TableRow>
             ))}
           </TableBody>
