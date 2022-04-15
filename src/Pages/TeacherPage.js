@@ -135,7 +135,7 @@ const TeacherPage = () => {
                   <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio', {state: {id: val.USER_ID}})}>Ray</TableCell>
                   <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio', {state: {id: val.USER_ID}} )}>{val.USER_EMAIL}</TableCell>
                   <TableCell className={classes.tableCellFont} align="right" >
-                    <button onClick ={() => navigate('/Chat')}>Chat</button> | <button>Delete</button></TableCell>
+                    <button onClick ={() => navigate('/Chat',{state: {name: val.USER_NAME}})}>Chat</button> | <button>Delete</button></TableCell>
                 </TableRow>
               ))}
             </TableBody>
