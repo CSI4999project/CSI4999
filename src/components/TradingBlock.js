@@ -143,7 +143,11 @@ const TradingBlock = () => {
     }
     console.log(visible);
     console.log(stopPrice);
-    return(
+
+    if(user.type == 'Instructor'){
+      return (<div></div>)
+    } else{
+      return(
         <div style = {typeButton} className = "tradingBlock">
         <p className = "desc">Buy or Sell</p>
         <Button onClick = {() => {setStyle("#519259"); setType(0);}}  color = "success" style = {{marginTop: "3px"}} variant="contained">Buy</Button>
@@ -180,5 +184,7 @@ const TradingBlock = () => {
 
 
         </div>); 
+    }
+    
     }
     export default TradingBlock;

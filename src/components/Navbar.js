@@ -3,7 +3,7 @@ import {Button} from './Button';
 import {Link} from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 import './Navbar.css';
-
+import axios from 'axios';
 
 function Navbar(){
     let {user, setUser} = useContext(UserContext)
@@ -25,6 +25,15 @@ function Navbar(){
         showButton();
     }, []);
 
+    const logout = async () => {
+        axios({
+          method: "POST",
+          withCredentials: true,
+          url: "http://localhost:4000/logout",
+        }).then((res) => {
+          setUser("");
+        });
+      };
     window.addEventListener('resize', showButton);
 
 
@@ -92,20 +101,33 @@ function Navbar(){
                         </li> : ''}
 
 
+                        {user?
                         
-                        <li>
-                            <Link to='/login' className='nav-links-mobile' onClick={closeMobileMenu}>
-                                Login
+                            null
+                        :
+                            <li>
+                                <Link to='/login' className='nav-links-mobile' onClick={closeMobileMenu}>
+                                    Login
+                                </Link>
+                            </li>
+                        }
+                        
+                        {user?
+                        
+                            <Link to='/login' className='nav-links-mobile' onClick={() => {logout(); closeMobileMenu();}}>
+                                Logout
                             </Link>
-                        </li>
+                    :
                         <li>
                             <Link to='/register' className='nav-links-mobile' onClick={closeMobileMenu}>
                                 Register
                             </Link>
                         </li>
+                    }
+                        
                     </ul>
                     
-                    {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
+                    {button && <Button buttonStyle='btn--outline' user={user} setUser={setUser}>{user ? "LOGOUT" : 'SIGN UP'}</Button>}
                 </div>
             </nav>
         </>
