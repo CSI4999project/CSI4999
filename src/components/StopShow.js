@@ -27,21 +27,29 @@ const TradeHistory = () => {
   const [tradeHistory, setTradeHistory] = useState([]);
   const axiosCall = (row) => {
       console.log(row);
-    Axios({
-        method:"POST",
-        data:{
-          TRANSACTION_ID: row.TRANSACTION_ID,
-          userID: row.USER_ID,
-          CURRENCY_NAME: row.CURRENCY_NAME,
-          DOLLAR_AMOUNT: row.DOLLAR_AMOUNT,
-          CURRENCY_PRICE : row.CURRENCY_PRICE,
-          Currency_Amount : row.Currency_Amount,
-          TYPE: row.Type,
-          Filled: 1,
-          STOP_LIMIT: row.STOP_LIMIT
-
-        },
-        url: "http://localhost:4000/Portfolio4"})
+      Axios({
+        method:"GET",
+        url: `https://api.coingecko.com/api/v3/simple/price?ids=${row.CURRENCY_FULLNAME}&vs_currencies=usd`}).then(res =>{
+          console.log()
+          Axios({
+            method:"POST",
+            data:{
+              TRANSACTION_ID: row.TRANSACTION_ID,
+              userID: row.USER_ID,
+              CURRENCY_NAME: row.CURRENCY_NAME,
+              DOLLAR_AMOUNT: row.DOLLAR_AMOUNT,
+              CURRENCY_PRICE : row.CURRENCY_PRICE,
+              Currency_Amount : row.Currency_Amount,
+              TYPE: row.Type,
+              FULLNAME: row.CURRENCY_FULLNAME,
+              Filled: 1,
+              STOP_LIMIT: row.STOP_LIMIT,
+              PRICE_AT_EXECUTION: res.data[row.CURRENCY_FULLNAME].usd
+    
+            },
+            url: "http://localhost:4000/Portfolio4"})
+        })
+    
   }
   useEffect(() =>{
     Axios({

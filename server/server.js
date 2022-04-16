@@ -151,23 +151,25 @@ app.post("/register", (req, res) =>{
                     connection.execute('INSERT into CURRENCY_OWNED (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, CURRENCY_FULLNAME) values (?, ?, ?, ?, ?, ?, ?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['fullname']]);
                 }
                 console.log('inside here')
-                connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, Filled, STOP_LIMIT) values (?, ?, ?, ?, ?, ?, ?, ?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['Filled'], req.body['stopPrice']]);
+                connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, Filled, STOP_LIMIT, CURRENCY_FULLNAME) values (?, ?, ?, ?, ?, ?, ?, ?, ?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['Filled'], req.body['stopPrice'], req.body['fullname']]);
             } else{
                 if(req.body.Filled == 1) {
                     connection.execute('UPDATE CURRENCY_OWNED set CURRENCY_AMOUNT = CURRENCY_AMOUNT + ? where USER_ID = ? and CURRENCY_NAME = ?', [req.body['Currency_Owned'], req.body['userID'], req.body['CurrencyName'] ])
                     connection.execute('UPDATE CURRENCY_OWNED set DOLLAR_AMOUNT = DOLLAR_AMOUNT + ? where USER_ID = ? and CURRENCY_NAME = ?', [req.body['DollarAmount'], req.body['userID'], req.body['CurrencyName'] ])
                 }
-                connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, Filled, STOP_LIMIT) values (?, ?, ?, ?, ?, ?,?,?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['Filled'], req.body['stopPrice']]);
+                connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, Filled, STOP_LIMIT, CURRENCY_FULLNAME) values (?, ?, ?, ?, ?, ?, ?, ?, ?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['Filled'], req.body['stopPrice'], req.body['fullname']]);
         }
     } else if(req.body['Type'] === 1){
         if(results.length === 0){
             console.log("cannot place sell if you dont own this currency")
         } else{
-            if(req.body.Filled == 1){
+            if(req.body.Filled == 1 && Number(req.body['Currency_Owned']) <= results[0].Currency_Amount){
                 connection.execute('UPDATE CURRENCY_OWNED set CURRENCY_AMOUNT = CURRENCY_AMOUNT - ? where USER_ID = ? and CURRENCY_NAME = ?', [req.body['Currency_Owned'], req.body['userID'], req.body['CurrencyName'] ])
                 connection.execute('UPDATE CURRENCY_OWNED set DOLLAR_AMOUNT = DOLLAR_AMOUNT - ? where USER_ID = ? and CURRENCY_NAME = ?', [req.body['DollarAmount'], req.body['userID'], req.body['CurrencyName'] ])
             }
-        connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, Filled, STOP_LIMIT) values (?, ?, ?, ?, ?, ?,?,?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['Filled'], req.body['stopPrice']]);
+            if(Number(req.body['Currency_Owned']) <= results[0].Currency_Amount){
+                connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, Filled, STOP_LIMIT, CURRENCY_FULLNAME) values (?, ?, ?, ?, ?, ?, ?, ?, ?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['Filled'], req.body['stopPrice'], req.body['fullname']]);
+            }
       
         }
     }
@@ -193,8 +195,56 @@ app.post("/register", (req, res) =>{
             res.send(result);
         });
       });
+
+
+
+
       app.post("/Portfolio4", (req, res) => {
-        connection.execute('UPDATE TRANSACTIONS set Filled = 1 where TRANSACTION_ID = ?', [req.body['TRANSACTION_ID']])
+        connection.execute('UPDATE TRANSACTIONS set Filled = 1 where TRANSACTION_ID = ?', [req.body['TRANSACTION_ID']], (res) =>{
+            connection.execute('SELECT * from CURRENCY_OWNED where USER_ID = ? and CURRENCY_NAME = ?', [req.body['userID'], req.body['CURRENCY_NAME']],(err, results, fields) =>{
+                console.log(req.body)
+                console.log('this is req body')
+                if(req.body['TYPE'] == 0){
+                    if(results.length === 0){
+                        if(req.body.Filled == 1) {
+                            console.log('line 207')
+                            currAmt = Number(req.body['DOLLAR_AMOUNT']) / Number(req.body['PRICE_AT_EXECUTION']);
+                            connection.execute('INSERT into CURRENCY_OWNED (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, CURRENCY_FULLNAME) values (?, ?, ?, ?, ?, ?, ?)', [req.body['userID'], req.body['CURRENCY_NAME'], req.body['DOLLAR_AMOUNT'], req.body['PRICE_AT_EXECUTION'], currAmt, req.body['TYPE'], req.body['FULLNAME']]);
+                        }
+                    } else{
+                        if(req.body.Filled == 1) {
+                            currAmt = Number(req.body['DOLLAR_AMOUNT']) / Number(req.body['PRICE_AT_EXECUTION']);
+                            connection.execute('UPDATE CURRENCY_OWNED set CURRENCY_AMOUNT = CURRENCY_AMOUNT + ? where USER_ID = ? and CURRENCY_NAME = ?', [currAmt, req.body['userID'], req.body['CURRENCY_NAME'] ])
+                            connection.execute('UPDATE CURRENCY_OWNED set DOLLAR_AMOUNT = DOLLAR_AMOUNT + ? where USER_ID = ? and CURRENCY_NAME = ?', [req.body['DOLLAR_AMOUNT'], req.body['userID'], req.body['CURRENCY_NAME'] ])
+                        }
+                        
+                    }
+                } else if(req.body['TYPE'] === '1'){
+                    console.log('equals 1')
+                    if(results.length === 0){
+                        console.log("cannot place sell if you dont own this currency")
+                    } else{
+                        if(req.body.Filled == 1){
+                            
+                            
+                            currAmt = Number(req.body['DOLLAR_AMOUNT']) / Number(req.body['PRICE_AT_EXECUTION']);
+                            if(currAmt > results[0].Currency_Amount){
+                                console.log('cant do that')
+                                connection.execute('UPDATE TRANSACTIONS set Filled = 0 where TRANSACTION_ID = ?', [req.body['TRANSACTION_ID']])
+                            } else{
+                                connection.execute('UPDATE CURRENCY_OWNED set CURRENCY_AMOUNT = CURRENCY_AMOUNT - ? where USER_ID = ? and CURRENCY_NAME = ?', [currAmt, req.body['userID'], req.body['CURRENCY_NAME'] ])
+                                connection.execute('UPDATE CURRENCY_OWNED set DOLLAR_AMOUNT = DOLLAR_AMOUNT - ? where USER_ID = ? and CURRENCY_NAME = ?', [req.body['DOLLAR_AMOUNT'], req.body['userID'], req.body['CURRENCY_NAME'] ])
+                            }
+                            
+                        }
+                        
+                  
+                    }
+                }
+            })
+        })
+        console.log(req.body)
+        
       });
 
     //   app.post('/OwnerID', (req, res) =>{
