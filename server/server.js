@@ -120,28 +120,29 @@ app.post("/register", (req, res) =>{
       });
     });
     app.post("/coins", (req, res) => {
+        console.log(req.body)
         connection.execute('SELECT * from CURRENCY_OWNED where USER_ID = ? and CURRENCY_NAME = ?', [req.body['userID'], req.body['CurrencyName']],(err, results, fields) =>{
             console.log(results);
-            if(req.body['Type'] === 0){
+    if(req.body['Type'] === 0){
             if(results.length === 0){
                 if(req.body.Filled == 1) {
                     connection.execute('INSERT into CURRENCY_OWNED (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, CURRENCY_FULLNAME) values (?, ?, ?, ?, ?, ?, ?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['fullname']]);
                 }
                 console.log('inside here')
-                connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, Filled, STOP_LIMIT) values (?, ?, ?, ?, ?, ?, ?, ?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['executed'], req.body['stopPrice']]);
+                connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, Filled, STOP_LIMIT) values (?, ?, ?, ?, ?, ?, ?, ?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['Filled'], req.body['stopPrice']]);
             } else{
                 if(req.body.Filled == 1) {
                     connection.execute('UPDATE CURRENCY_OWNED set CURRENCY_AMOUNT = CURRENCY_AMOUNT + ? where USER_ID = ? and CURRENCY_NAME = ?', [req.body['Currency_Owned'], req.body['userID'], req.body['CurrencyName'] ])
                     connection.execute('UPDATE CURRENCY_OWNED set DOLLAR_AMOUNT = DOLLAR_AMOUNT + ? where USER_ID = ? and CURRENCY_NAME = ?', [req.body['DollarAmount'], req.body['userID'], req.body['CurrencyName'] ])
                 }
-                connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, Filled, STOP_LIMIT) values (?, ?, ?, ?, ?, ?,?,?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['executed'], req.body['stopPrice']]);
+                connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, Filled, STOP_LIMIT) values (?, ?, ?, ?, ?, ?,?,?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['Filled'], req.body['stopPrice']]);
         }
-    }else if(req.body['Type'] === 1){
+    } else if(req.body['Type'] === 1){
         if(results.length === 0){
             console.log("cannot place sell if you dont own this currency")
         } else{
             if(req.body.Filled == 1) connection.execute('UPDATE CURRENCY_OWNED set CURRENCY_AMOUNT = CURRENCY_AMOUNT - ? where USER_ID = ? and CURRENCY_NAME = ?', [req.body['Currency_Owned'], req.body['userID'], req.body['CurrencyName'] ])
-        connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, Filled, STOP_LIMIT) values (?, ?, ?, ?, ?, ?,?,?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['executed'], req.body['stopPrice']]);
+        connection.execute('INSERT into TRANSACTIONS (USER_ID, CURRENCY_NAME, DOLLAR_AMOUNT, CURRENCY_PRICE, Currency_Amount, Type, Filled, STOP_LIMIT) values (?, ?, ?, ?, ?, ?,?,?)', [req.body['userID'], req.body['CurrencyName'], req.body['DollarAmount'], req.body['Currency_price'], req.body['Currency_Owned'], req.body['Type'], req.body['Filled'], req.body['stopPrice']]);
         }
     }
         })

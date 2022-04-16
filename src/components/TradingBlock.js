@@ -49,6 +49,8 @@ const TradingBlock = () => {
       setOwned(arr);
     })
   }, [])
+
+
   const checkType = () => {
     if(type == 0) handleOpen();
     if(type == 1) errorMessage();
@@ -87,6 +89,16 @@ const TradingBlock = () => {
 
     const axiosCall = () => {
       if(visible == false) {
+        console.log('happened here')
+        console.log({userID: user.id,
+          Type : type,
+          CurrencyName: coin?.symbol.toUpperCase(),
+          DollarAmount: amount,
+          Currency_price: price,
+          Currency_Owned: totalToken,
+          fullname: coin?.id,
+          stopPrice: 0,
+          executed: 1})
         axios({
           method:"POST",
           data:{
@@ -98,30 +110,30 @@ const TradingBlock = () => {
             Currency_Owned: totalToken,
             fullname: coin?.id,
             stopPrice: 0,
-            executed: 1
+            Filled: 1
             
           },
           url: "http://localhost:4000/coins"})
       }
       else {
-      alert("run");
-      console.log(stopPrice);
-      axios({
-        method:"POST",
-        data:{
-          userID: user.id,
-          Type : type,
-          CurrencyName: coin?.symbol.toUpperCase(),
-          DollarAmount: amount,
-          Currency_price: price,
-          Currency_Owned: totalToken,
-          fullname: coin?.id,
-          stopPrice: stopPrice,
-          executed: executed
-          
-        },
-        url: "http://localhost:4000/coins"})
-        setOpen(false) 
+        alert("run");
+        console.log(stopPrice);
+        axios({
+          method:"POST",
+          data:{
+            userID: user.id,
+            Type : type,
+            CurrencyName: coin?.symbol.toUpperCase(),
+            DollarAmount: amount,
+            Currency_price: price,
+            Currency_Owned: totalToken,
+            fullname: coin?.id,
+            stopPrice: stopPrice,
+            Filled: executed
+            
+          },
+          url: "http://localhost:4000/coins"})
+          setOpen(false) 
       }
     }
     console.log(visible);
