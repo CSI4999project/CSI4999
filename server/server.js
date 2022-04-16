@@ -176,6 +176,11 @@ app.post("/register", (req, res) =>{
             res.send(result);
         });
       });
+      app.post("/deleteUser", (req, res) => {
+        connection.execute('DELETE FROM MEMBERS WHERE USER_ID = ?', [req.body['userID']], (err, result) => {
+            res.send("hellooo");
+        });
+      });
 
       app.post("/Portfolio2", (req, res) => {
         connection.execute('SELECT * FROM TRANSACTIONS where USER_ID = ?', [req.body['userID']], (err, result) => {

@@ -45,6 +45,13 @@ const TeacherPage = () => {
       })
     }, [])
 
+
+    const deleteUser = async (id) => {
+      Axios.post('http://localhost:4000/deleteUser', {userID: id}).then((res) =>{
+        window.location.reload();
+      })
+    };
+
     const useStyles = makeStyles((theme) => ({
       gridClassName: {
         boxShadow: "2px 2px 4px rgb(255 238 51 / 100%)",
@@ -135,7 +142,7 @@ const TeacherPage = () => {
                   <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio', {state: {id: val.USER_ID}})}>{val.USER_LASTNAME}</TableCell>
                   <TableCell className={classes.tableCellFont} align="right" onClick = {() => navigate('/Portfolio', {state: {id: val.USER_ID}} )}>{val.USER_EMAIL}</TableCell>
                   <TableCell className={classes.tableCellFont} align="right" >
-                    <button onClick ={() => navigate('/Chat',{state: {name: val.USER_NAME}})}>Chat</button> | <button>Delete</button></TableCell>
+                    <button onClick ={() => navigate('/Chat',{state: {name: val.USER_NAME}})}>Chat</button> | <button onClick ={() => deleteUser(val.USER_ID)}>Delete</button></TableCell>
                 </TableRow>
               ))}
             </TableBody>
