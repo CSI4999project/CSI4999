@@ -2,6 +2,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
+  margin-top: 240px;
   transform: translate(-50%, -50%);
 }
 
@@ -18,9 +19,9 @@
 }
 
 .submit {
-  width: 10vh;
+  width: 15vh;
   margin-top: 5rem;
-  margin-left: 12.5vh;
+  margin-left: 10vh;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }

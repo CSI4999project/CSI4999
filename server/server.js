@@ -57,6 +57,9 @@ app.post("/login", (req, res, next) =>{
                         username: req.user[0]['USER_NAME'],
                         email: req.user[0]['USER_EMAIL'],
                         type: req.user[0]['USER_TYPE'],
+                        firstname: req.user[0]['USER_FIRSTNAME'],
+                        lastname: req.user[0]['USER_LASTNAME'],
+
                       }});
             });
         }
@@ -98,8 +101,8 @@ app.post("/register", (req, res) =>{
         } else if(!results[0]){
             // if new user add user to database and return message
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
-            connection.execute('INSERT INTO Users (USER_EMAIL, USER_NAME, USER_PASSWORD, USER_TYPE) VALUES (?, ?, ?, ?)',
-                [req.body['email'], req.body['username'], hashedPassword, req.body['usertype']], (err, results, fields) =>{
+            connection.execute('INSERT INTO Users (USER_EMAIL, USER_NAME, USER_PASSWORD, USER_TYPE, USER_FIRSTNAME, USER_LASTNAME) VALUES (?, ?, ?, ?, ?, ?)',
+                [req.body['email'], req.body['username'], hashedPassword, req.body['usertype'], req.body['firstname'], req.body['lastname']], (err, results, fields) =>{
                     if(req.body['usertype'] === 'Instructor'){
                         connection.execute('SELECT USER_ID FROM Users WHERE USER_EMAIL = ?', [req.body['email']],(err, results,fields) =>{
                             connection.execute('INSERT INTO PARTY (OWNER_ID, PARTY_CODE, PARTY_NAME) VALUES (?, ?, ?)',

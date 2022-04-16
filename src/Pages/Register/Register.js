@@ -12,6 +12,8 @@ const Register = () => {
   let [errorMessage, setError] = useState("");
   let [userType, setUserType] = useState("Instructor");
   let [error2, setError2] = useState("");
+  let [firstName, setFirstName] = useState("");
+  let [lastName, setLastName] = useState("");
 
   var register = () => {
     const authObject = {
@@ -25,6 +27,8 @@ const Register = () => {
         password: password,
         username: userName,
         usertype: userType,
+        firstname: firstName,
+        lastname: lastName
       },
       withCredentials: true,
       url: "http://localhost:4000/register",
@@ -53,6 +57,30 @@ const Register = () => {
       <form>
         {errorMessage === "" ? null : <p>{errorMessage}</p>}
         {error2 === "" ? null : <p>{error2}</p>}
+        <br></br>
+        <label>
+          <br></br>
+          <h3>First Name:</h3>
+          <br></br>
+          <input
+            className="formReg"
+            type="text"
+            name="firstname"
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </label>
+        <br></br>
+        <label>
+          <br></br>
+          <h3>Last Name:</h3>
+          <br></br>
+          <input
+            className="formReg"
+            type="text"
+            name="lastname"
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </label>
         <br></br>
         <label>
           <br></br>
