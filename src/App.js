@@ -21,18 +21,23 @@ import Chat from './Pages/Chat/Chat';
 function App() {
   //Get current user from COOKIES
   const [user, setUser] = useState('')
+  
   const [isLoading, setLoading] = useState(true);
   console.log(user + 'this is user')
+
   useEffect( () =>{
     axios({
       method:"GET",
       withCredentials: true,
       url: "http://localhost:4000/user",
     }).then((res) => {
+      
       setUser(res.data)
       setLoading(false)}
       )
   }, [])
+
+  
   const useStyles = makeStyles(() => ({
     App: {
       color: "white",
