@@ -23,11 +23,13 @@ const TradingBlock = () => {
     const [type, setType] = useState();
     const [open, setOpen] = useState(false);
     const [plusOrMinus, setPlusOrMinus] = useState();
+    const [isLoading, setLoading] = useState(true);
     const handleOpen = () => {setOpen(true)};
     const handleClose = () => {setOpen(false)};
     const fetchCoin = async () => {
         const { data } = await axios.get(SingleCoin(id));
         setCoin(data);
+        setLoading(false);
       };
       useEffect(() => {
         fetchCoin();
@@ -36,13 +38,16 @@ const TradingBlock = () => {
     color : fontColor
   }
   useEffect(()=>{
+    if(isLoading == false){
+      console.log(coin);
     axios.post('http://localhost:4000/Portfolio', {userID: user.id}).then((res) =>{
       let arr = [];
-      (res.data).forEach((number) => arr.push([number.CURRENCY_FULLNAME, number.Currency_Amount, number.DOLLAR_AMOUNT]));
+      (res.data).forEach((number) => arr.push([number.CURRENCY_FULLNAME, number.Currency_Amount, (number.Currency_Amount * coin?.market_data.current_price.usd)]));
       console.log(arr);
       setOwned(arr);
     })
-  }, [])
+  }
+  }, [isLoading])
   const checkType = () => {
     if(type == 0) handleOpen();
     if(type == 1) errorMessage();
