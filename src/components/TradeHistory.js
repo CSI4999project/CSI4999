@@ -116,7 +116,7 @@ const TradeHistory = (props) => {
             justifyContent: "center",
           }}
           color="primary"
-          count={10}
+          count={Math.ceil(tradeHistory.length/10)}
           classes={{ ul: classes.pagination }}
           onChange={(_, value) => {
              setPage(value);

@@ -231,7 +231,7 @@ if(isMember.length == 0 && user.type !== 'Instructor'){
         justifyContent: "center",
       }}
       color="primary"
-      count={10}
+      count={Math.ceil(portfolioList.length / 10)}
       classes={{ ul: classes.pagination }}
       onChange={(_, value) => {
          setPage(value);
