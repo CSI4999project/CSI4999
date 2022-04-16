@@ -35,6 +35,7 @@ const [namesArray, setNames] = useState([]);
 const [totalBalance, setTotalBalance] = useState(0);
 const [totalProfitLoss, setTotalProfitLoss] = useState(0);
 const [isLoading, setLoading] = useState(true);
+const [page, setPage] = useState(1);
 const delay = ms => new Promise(res => setTimeout(res, ms));
 let array = [];
 
@@ -181,9 +182,9 @@ if(isMember.length == 0 && user.type !== 'Instructor'){
       </Item>
       </Grid>
       <Grid item xs={2}>
-        <Item className={classes.gridClassName} style={{padding: 15}}>
+        <Item className={classes.gridClassName} style={{padding: 14}}>
           <div className={classes.boxFont} style={{color: totalProfitLoss.toFixed(2) > 0 ? "rgb(14, 203, 129)" : "red"}}> ${numberWithCommas(totalProfitLoss.toFixed(2))}</div>
-          <div className={classes.boxFontUnder}>Total Profit Loss</div>
+          <div className={classes.boxFontUnder}>All Time Profit Loss</div>
       </Item>
       </Grid>
       </Grid>
@@ -200,7 +201,7 @@ if(isMember.length == 0 && user.type !== 'Instructor'){
       </TableRow>
     </TableHead>
     <TableBody>
-      {portfolioList.map((row) => (
+      {portfolioList.slice((page - 1) * 10, (page - 1) * 10 + 10).map((row) => (
         <TableRow
           key={row.name}
           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -229,10 +230,10 @@ if(isMember.length == 0 && user.type !== 'Instructor'){
       color="primary"
       count={10}
       classes={{ ul: classes.pagination }}
-      // onChange={(_, value) => {
-      //    setPage(value);
-      //   window.scroll(0, 450);
-      // }}
+      onChange={(_, value) => {
+         setPage(value);
+        //window.scroll(0, 450);
+      }}
     />
 </Container>
 <div style={{margin: 30}}>
