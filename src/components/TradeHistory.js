@@ -24,6 +24,7 @@ const TradeHistory = (props) => {
 
   let {user, setUser} = useContext(UserContext);
   const [tradeHistory, setTradeHistory] = useState([]);
+  const [page, setPage] = useState(1);
 
   const id = user.type == 'Instructor' ? props.id : user.id;
   useEffect(() =>{
@@ -87,7 +88,7 @@ const TradeHistory = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-          {tradeHistory.map((row) => (
+          {tradeHistory.slice((page - 1) * 10, (page - 1) * 10 + 10).map((row) => (
               <TableRow
                 key={row.name}
                 sx={{ border: "2px solid black", '&:last-child td, &:last-child th': { border: 0 } }}
@@ -117,10 +118,10 @@ const TradeHistory = (props) => {
           color="primary"
           count={10}
           classes={{ ul: classes.pagination }}
-          // onChange={(_, value) => {
-          //    setPage(value);
-          //   window.scroll(0, 450);
-          // }}
+          onChange={(_, value) => {
+             setPage(value);
+            window.scroll(0, 450);
+          }}
         />
         </Container>
      </div>
