@@ -2,14 +2,14 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  margin-top: 240px;
   transform: translate(-50%, -50%);
+  /* margin-top: 240px; */
 }
+
 
 .formReg {
   height: 35px;
   width: 35vh;
-
   font-size: large;
   font-weight: bold;
 }
@@ -20,8 +20,11 @@
 
 .submit {
   width: 15vh;
-  margin-top: 5rem;
-  margin-left: 10vh;
+  margin-top: 5rem; 
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
