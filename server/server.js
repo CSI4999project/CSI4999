@@ -241,7 +241,7 @@ app.post("/register", (req, res) =>{
                                 connection.execute('UPDATE TRANSACTIONS set Filled = 0 where TRANSACTION_ID = ?', [req.body['TRANSACTION_ID']])
                             } else{
                                 connection.execute('UPDATE CURRENCY_OWNED set CURRENCY_AMOUNT = CURRENCY_AMOUNT - ? where USER_ID = ? and CURRENCY_NAME = ?', [currAmt, req.body['userID'], req.body['CURRENCY_NAME'] ])
-                                connection.execute('UPDATE CURRENCY_OWNED set DOLLAR_AMOUNT = DOLLAR_AMOUNT - ? where USER_ID = ? and CURRENCY_NAME = ?', [req.body['DOLLAR_AMOUNT'], req.body['userID'], req.body['CURRENCY_NAME'] ])
+                                connection.execute('UPDATE CURRENCY_OWNED set DOLLAR_AMOUNT = DOLLAR_AMOUNT - ? where USER_ID = ? and CURRENCY_NAME = ?', [req.body['DOLLAR_AMOUNT'], req.body['userID'], req.body['CURRENCY_NAME']])
                             }
                             
                         }
@@ -251,6 +251,9 @@ app.post("/register", (req, res) =>{
                 }
             })
         })
+        console.log('fffff')
+        res.send('FF');
+        
         console.log(req.body)
         
       });
