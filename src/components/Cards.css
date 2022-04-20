@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo&family=Montserrat&display=swap');
 .cards {
-  padding: 4rem;
+  padding: 16px;
   font-family: 'Exo', serif;
   background: #131111;
 }

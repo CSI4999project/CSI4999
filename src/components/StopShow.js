@@ -49,9 +49,7 @@ const TradeHistory = () => {
     
             },
             url: "http://localhost:4000/Portfolio4"})
-        }).then((res) => {
-          window.location.reload();
-        })
+        }).then(() => {window.location.reload(false);})
     
   }
   useEffect(() =>{

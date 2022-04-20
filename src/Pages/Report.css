@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo&family=Montserrat&display=swap');
+.report {
+    display: block;
+    text-align: center;
+    
+}
+.reportHeader {
+    font-size: 2.5rem;
+    font-family: "Monteserrat", sans-serif;
+}
+.fields{
+    margin-top : 40px;
+    padding: 5px;
+
+}
+.fieldText {
+    height: 30px;
+    width: 400px;
+}
+.labels {
+    font-family : "Monteserrat", serif;
+    font-size: 1.5rem;
+}
+.messageLabel {
+    font-family : "Monteserrat", serif;
+    font-size: 1.5rem;
+}
+.reportDescription{
+    margin-top: 50px;
+    font-size: 1rem;
+}
+.textBox {
+    height: 100px;
+    width : 500px;
+    resize: none;
+}

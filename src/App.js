@@ -16,6 +16,7 @@ import { UserContext } from "./context/userContext";
 import axios from 'axios'
 import Navbar from './components/Navbar';
 import Chat from './Pages/Chat/Chat';
+import Report from "./Pages/Report";
 
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
             <Route path="/portfolio" element={user ? <Portfolio /> : <Navigate to='/login'/>} exact/>
             <Route path="/Students" element={user ? <TeacherPage /> : <Navigate to='/login'/>} exact/>
             <Route path="/chat" element={user ? <Chat /> : <Navigate to='/login'/>} exact/>
+            <Route path="/Report" element={user ? <Report /> : <Navigate to='/login'/>} exact/>
           </Routes>
         </div>
       </BrowserRouter>
