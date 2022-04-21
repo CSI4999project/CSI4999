@@ -112,7 +112,7 @@ const TradeHistory = (props) => {
               <TableCell className={classes.headFont} align="right">Transaction Amount</TableCell>
               <TableCell className={classes.headFont} align="right">Total</TableCell>
               <TableCell className={classes.headFont} align="right">Stop Limit</TableCell>
-              <TableCell className={classes.headFont} align="right">Execute?</TableCell>
+              {user.type == 'Instructor' ? null : <TableCell className={classes.headFont} align="right">Execute?</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -131,7 +131,7 @@ const TradeHistory = (props) => {
                 <TableCell className={classes.kms} align="right">{row.Currency_Amount}</TableCell>
                 <TableCell className={classes.kms} align="right">${numberWithCommas(row.DOLLAR_AMOUNT)}</TableCell>
                 <TableCell className={classes.kms} align="right">{row.STOP_LIMIT}</TableCell>
-                <TableCell className={classes.kms} align="right"><Button onClick = {() => {axiosCall(row)}}>Execute</Button ></TableCell>
+                {user.type == 'Instructor' ? null : <TableCell className={classes.kms} align="right"><Button onClick = {() => {axiosCall(row)}}>Execute</Button ></TableCell>}
                 
               </TableRow>
             ))}

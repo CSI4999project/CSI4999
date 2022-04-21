@@ -40,8 +40,10 @@ const TradingBlock = () => {
         fetchCoin();
       }, []);
     const typeButton = {
-    color : fontColor,
-    zIndex : 5
+      color : fontColor,
+      zIndex : 5,
+      marginLeft: "auto",
+      marginRight: "auto"
   }
   useEffect(()=>{
     if(isLoading == false){
@@ -156,14 +158,13 @@ const TradingBlock = () => {
         <FormControl fullWidth>
         {StopLimitShow}
         <p className = "desc">Price:</p>
-        <TextField variant = "outlined"  placeholder = "ex: 12.00" defaultValue = {(coin?.market_data.current_price[currency.toLowerCase()])} className = "transactionAmount" onChange= {(e) => displayPrice(e.target.value)}  ></TextField>
+        <TextField variant = "outlined"  placeholder = "ex: 12.00" defaultValue = {(coin?.market_data.current_price[currency.toLowerCase()])} className = "transactionAmount" disabled={true} onChange= {(e) => displayPrice(e.target.value)}  ></TextField>
         <p className = "desc">Amount:</p>
         <TextField variant = "outlined" placeholder = "ex. 120.00" className = "transactionAmount" onChange={(e) => displayAmount(e.target.value)}></TextField>
         <p className = "desc">Total:</p> 
-        <p className = "totalEquation">(${amount} / ${price}) = {(amount / price).toFixed(6)} {coin?.symbol.toUpperCase()}</p>
+        <p className = "totalEquation">(${amount} / ${price}) = {Number.isNaN((amount / price)) ? 0 : (amount / price).toFixed(6)} {coin?.symbol.toUpperCase()}</p>
         <Button onClick = {() => {checkType(); showPrice();}} color = "primary" variant = "contained" style = {{marginTop : "3px", width: "250px"}}>Record Order</Button>
         </FormControl>
-        <p>{stopPrice}</p>
         <Modal 
          open = {open}
          onClose = {handleClose}>

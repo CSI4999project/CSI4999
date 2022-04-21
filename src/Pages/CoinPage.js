@@ -42,11 +42,12 @@ const CoinPage = () => {
       <div className = "coin">
         <img
           className = "coinImage"
+          style={{textAlign:"center"}}
           src={coin?.image.large}
           alt={coin?.name}/>
-        <h3 className = "coinHeader">
+        <h1 className = "coinHeader" style={{textAlign:"center"}}> 
           {coin?.name}
-        </h3>
+        </h1>
         <p className = "coinDescription" style = {{
         }}>
           {htmlparse("" + coin?.description.en.split(". ")[0])}.
