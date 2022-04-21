@@ -106,8 +106,8 @@ app.post("/register", (req, res) =>{
                 [req.body['email'], req.body['username'], hashedPassword, req.body['usertype'], req.body['firstname'], req.body['lastname']], (err, results, fields) =>{
                     if(req.body['usertype'] === 'Instructor'){
                         connection.execute('SELECT USER_ID FROM Users WHERE USER_EMAIL = ?', [req.body['email']],(err, results,fields) =>{
-                            connection.execute('INSERT INTO PARTY (OWNER_ID, PARTY_CODE, PARTY_NAME) VALUES (?, ?, ?)',
-                            [results[0]['USER_ID'], Date.now(), 'random'])
+                            connection.execute('INSERT INTO PARTY (OWNER_ID, PARTY_CODE, PARTY_NAME, PARTY_LIMIT) VALUES (?, ?, ?, ?)',
+                            [results[0]['USER_ID'], Date.now(), 'random', 25])
                         })
                     } 
                     res.send('User Created')
@@ -258,6 +258,25 @@ app.post("/register", (req, res) =>{
         
       });
 
+
+      app.post('/userName', (req, res) =>{
+        connection.execute('SELECT USER_NAME FROM Users where USER_ID = ?', [req.body['userID']], (err, result) => {
+            res.send(result);
+        });
+      })
+
+
+      app.post('/getLimitNumber', (req,res)=> {
+        connection.execute('SELECT PARTY_LIMIT FROM PARTY where OWNER_ID = ?', [req.body['id']], (err, result) => {
+            res.send(result[0]);
+        });
+      })
+
+      app.post('/updateLimit', (req,res)=> {
+        connection.execute('UPDATE PARTY SET PARTY_LIMIT = ? WHERE OWNER_ID = ?', [req.body['limit'], req.body['id']], (err, result) => {
+            res.send('updated');
+        });
+      })
     //   app.post('/OwnerID', (req, res) =>{
     //       console.log(req.body.id)
     //       connection.execute('SELECT OWNER_ID from PARTY where PARTY_ID = (select GROUP_ID from MEMBERS WHERE USER_ID = ?)', [req.body.id], (err, res) => {

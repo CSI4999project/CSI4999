@@ -18,7 +18,6 @@ import Navbar from './components/Navbar';
 import Chat from './Pages/Chat/Chat';
 import Report from "./Pages/Report";
 
-
 function App() {
   //Get current user from COOKIES
   const [user, setUser] = useState('')
@@ -70,6 +69,7 @@ function App() {
             <Route path="/chat" element={user ? <Chat /> : <Navigate to='/login'/>} exact/>
             <Route path="/Report" element={user ? <Report /> : <Navigate to='/login'/>} exact/>
           </Routes>
+        
         </div>
       </BrowserRouter>
     </UserContext.Provider>

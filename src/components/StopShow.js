@@ -21,11 +21,12 @@ import { numberWithCommas } from "./CoinTable";
 import {UserContext} from '../context/userContext';
 
 
-const TradeHistory = () => {
+const TradeHistory = (props) => {
 
   let {user, setUser} = useContext(UserContext);
   const [tradeHistory, setTradeHistory] = useState([]);
   const [page, setPage] = useState(1);
+  const id = user.type == 'Instructor' ? props.id : user.id;
   const axiosCall = (row) => {
       console.log(row);
       Axios({
@@ -56,7 +57,7 @@ const TradeHistory = () => {
     Axios({
       method:"POST",
       data:{
-        userID: user.id
+        userID: id
       },
       url: "http://localhost:4000/Portfolio3"}).then((response) =>{
   console.log(response.data);
@@ -130,7 +131,7 @@ const TradeHistory = () => {
                 <TableCell className={classes.kms} align="right">{row.Currency_Amount}</TableCell>
                 <TableCell className={classes.kms} align="right">${numberWithCommas(row.DOLLAR_AMOUNT)}</TableCell>
                 <TableCell className={classes.kms} align="right">{row.STOP_LIMIT}</TableCell>
-                <TableCell className={classes.kms} align="right"><Button onClick = {() => {axiosCall(row)}}>Execute</Button></TableCell>
+                <TableCell className={classes.kms} align="right"><Button onClick = {() => {axiosCall(row)}}>Execute</Button ></TableCell>
                 
               </TableRow>
             ))}
