@@ -42,10 +42,10 @@ body {
     right : 40px;
     width : 100%;
     z-index: 4;
+    text-align: center;
 }
 .page {
     display: block;
-    text-align: center;
 }
 .popUp{
     background-color: #3F72AF;
