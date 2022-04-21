@@ -57,11 +57,14 @@ function Navbar(){
                                 Home
                             </Link>
                         </li>
+
+                        { user ? 
                         <li className='nav-item'>
                             <Link to='/Tracker' className='nav-links' onClick={closeMobileMenu}>
                                 Tracker
                             </Link>
-                        </li>
+                        </li> : ''}
+                        
                         {
                             user?.type == 'User'
                             ?
@@ -86,12 +89,6 @@ function Navbar(){
                             ''
                         }
                         
-                        { user ? 
-                        <li className='nav-item'>
-                            <Link to='/me' className='nav-links' onClick={closeMobileMenu}>
-                                Profile
-                            </Link>
-                        </li> : ''}
                         
                         { user ? 
                         <li className='nav-item'>

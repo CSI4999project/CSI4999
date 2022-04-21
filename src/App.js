@@ -7,7 +7,6 @@ import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
 import Portfolio from "./Pages/Portfolio";
 import TeacherPage from "./Pages/TeacherPage";
-import Me from "./Pages/Me/me";
 import Home from "./Pages/Home.js"
 import { makeStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
@@ -58,7 +57,6 @@ function App() {
         <Navbar />
           <Routes>
               {/* IF USER IS LOGGED IN RENDER A PAGE ELSE REDIRECT TO A LINK */}
-            <Route path="/me" element={user ? <Me /> : <Navigate to='/login'/>} />
             <Route path="/CSI4999" element={user ? <Home/> : <Navigate to='/login'/>} exact />
             <Route path="/Tracker" element={user ? <TrackerPage/> : <Navigate to='/login'/>} exact />
             <Route path="/coins/:id" element={user? <CoinPage/> : <Navigate to='/login'/>} />
