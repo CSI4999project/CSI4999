@@ -170,15 +170,19 @@ const TradingBlock = () => {
          onClose = {handleClose}>
          <div className = "popUp">
          <h2>Are you sure you would like to record this order?</h2>
+         <br />
+         <p>{plusOrMinus}{(amount / price).toFixed(6)} {coin?.symbol.toUpperCase()}</p>
+         <br />
          <Button onClick = {() => {axiosCall(); setOpen(false);}} color = "primary" style = {{marginTop: "3px"}} variant="contained">Yes</Button>
          <Button onClick = {() => {setOpen(false)}} color ="primary" style = {{marginLeft: "10px"}} variant="contained">Cancel</Button>
-         <p>{plusOrMinus}{(amount / price).toFixed(6)} {coin?.symbol.toUpperCase()}</p>
+         
          </div>
          </Modal>
          <Modal 
          open = {error}>
          <div className = "popUp">
          <h2>The amount you are attempting to sell exceeds available holdings</h2>
+         <br />
          <Button onClick = {() => {setError(false)}} color ="primary" style = {{marginLeft: "10px"}} variant="contained">Cancel</Button>
          </div>
          </Modal>

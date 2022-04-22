@@ -21,14 +21,14 @@ function Cards() {
                 <div className='Cards__wrapper'>
                     <ul className='cards__items'>
                        <CardItem src={Tracker}
-                        text='See whats top of the market with our cryto tracker.'
+                        text="See what's top of the market with our crypto tracker."
                         label='Tracker'
                         path='/Tracker'/>
                         {user?.type == "User" ? 
                         <CardItem src={Trade}
-                        text='Make a Simluated Trade.'
+                        text='Make a Simulated Trade.'
                         label='Trade'
-                        path='/'/> : ""
+                        path='/Tracker'/> : ""
                         }
                     </ul>
                     <ul className='cards__items'>
@@ -39,9 +39,9 @@ function Cards() {
                         path='/Portfolio'/>: ""}
                         {user?.type == "User" ?                         
                         <CardItem src={Classroom}
-                        text='Join a creators classroom now!'
+                        text="Join a creator's classroom now!"
                         label='Classroom'
-                        path='/'/>: ""}
+                        path='/Portfolio'/>: ""}
                     </ul>
 
                     <ul className='cards__items'>
@@ -49,13 +49,13 @@ function Cards() {
                         <CardItem src={Classroom}
                         text='Set up a classroom for your students!'
                         label='Classroom'
-                        path='/'/>
+                        path='/Students'/>
                         : ""}
                         {user?.type == "Instructor" ?
                         <CardItem src={Students}
                         text='Look at all the trades your students are making.'
                         label='Interaction'
-                        path='/'/>
+                        path='/Students'/>
                         :""}
                     </ul>
                 </div>
