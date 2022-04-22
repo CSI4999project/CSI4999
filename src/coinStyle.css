@@ -51,14 +51,17 @@ body {
     display: block;
 }
 .popUp{
-    background-color: #3F72AF;
+    background-color: #111317;
+    color: white;
     border-radius:5px;
-    position: absolute;
-    height: 200px;
+    border: 2px solid white;
+    margin: auto;
+    height: 235px;
     padding:30px;
     top : 40%;
     left: 50%;
     width: 400px;
+    transform: translate(0%, 100%);
 
 }
 .stats {
