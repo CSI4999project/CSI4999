@@ -181,8 +181,8 @@ if(isMember.length == 0 && user.type !== 'Instructor'){
     <div>
 <Container style={{ textAlign: "center" }}>
   <Typography variant="h4" style={{ padding: 30 }}>
-    {user.type == 'Instructor' ? userName[0].toUpperCase() + userName.toLowerCase().slice(1): user.username[0].toUpperCase() + user.username.toLowerCase().slice(1)}'s Portfolio
-    </Typography>
+    {user.type == 'Instructor' ? userName.toUpperCase() + userName.toLowerCase().slice(1): user.username[0].toUpperCase() + user.username.toLowerCase().slice(1)}'s Portfolio
+  </Typography>
     <div style={{margin: 30}}>
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       <Grid item xs={2}>
