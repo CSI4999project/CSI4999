@@ -6,7 +6,6 @@ import { UserContext } from "../../context/userContext";
 import {useLocation} from 'react-router-dom';
 
 const projectID = process.env.REACT_APP_PROJECT_ID;
-console.log(projectID)
 const Chat = () => {
   let { user, setUser } = useContext(UserContext);
   const [username, setUsername] = useState("");
@@ -24,7 +23,6 @@ const Chat = () => {
 
   useEffect(() =>{
     if(isLoaded && location.state !== null){
-      console.log("ce-chat-card-title-" + location.state.name)
       if(document.getElementById("ce-chat-card-title-" + location.state.name) !== null){
         document.getElementById("ce-chat-card-title-" + location.state.name).click();
       } else{

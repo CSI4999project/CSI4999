@@ -17,7 +17,6 @@ const Report = () => {
   const [message, setMessage] = useState('');
   const [sent, setSent] = useState('');
 
-console.log(user)
   var params = {
     name:user.username,
     reportedName: name,
@@ -28,7 +27,6 @@ console.log(user)
 
     emailjs.send('service_x4s2wzi', 'template_pjv54yi', params, 'y2LQSOmAxun_K2Pc-')
       .then((result) => {
-          console.log(result.text);
           setSent('Your report was sent. It will be reviewed later.')
       }, (error) => {
           console.log(error.text);

@@ -38,8 +38,6 @@ function Navbar(){
 
 
 
-    console.log(user.type)
-    console.log('from navbar')
     return(
         <>
             <nav className='navbar'>

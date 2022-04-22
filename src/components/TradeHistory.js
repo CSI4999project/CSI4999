@@ -34,7 +34,6 @@ const TradeHistory = (props) => {
         userID: id
       },
       url: "http://localhost:4000/Portfolio2"}).then((response) =>{
-  console.log(response.data);
   setTradeHistory(response.data);
   })
 }, [])

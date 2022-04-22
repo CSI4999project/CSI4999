@@ -28,10 +28,8 @@ const Login = () => {
       withCredentials: true,
       url: "http://localhost:4000/login",
     }).then((res) => {
-      console.log(res.data["login"] == "Successfully Authenticated");
       if (res.data["login"] === "Successfully Authenticated") {
         setUser(res.data["user"]);
-        console.log(user);
         navigate("/CSI4999");
       } else {
         setError("Wrong Email or Password");

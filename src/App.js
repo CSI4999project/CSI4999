@@ -22,7 +22,6 @@ function App() {
   const [user, setUser] = useState('')
   
   const [isLoading, setLoading] = useState(true);
-  console.log(user + 'this is user')
 
   useEffect( () =>{
     axios({

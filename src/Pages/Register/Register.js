@@ -35,7 +35,6 @@ const Register = () => {
     }).then((res) => {
       if (res.data === "User With Email Already Exists") {
         setError("User With Email Already Exists");
-        console.log(res);
       } else {
         navigate("/login");
       }
@@ -48,7 +47,6 @@ const Register = () => {
         { headers: authObject } // Headers object
       )
       .catch((error) => {
-        console.log(error);
         setError2(
           "Oops, something went wrong with the chat engine server. Please try again."
         );

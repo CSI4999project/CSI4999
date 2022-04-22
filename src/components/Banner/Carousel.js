@@ -36,7 +36,6 @@ const Carousel = () => {
     const { data } = await axios.get(TrendingCoins(currency));
 
     setTrending(data);
-    console.log(trending);
   };
 
   useEffect(() => {

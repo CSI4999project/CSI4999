@@ -42,7 +42,6 @@ const CoinTable = () => {
     setLoading(false);
   };
 
-  console.log(coins);
 
   useEffect(() => {
     fetchCoins();

@@ -39,7 +39,6 @@ const TeacherPage = () => {
     //the get request we made in server.js
     //All im doing is getting the response, console logging it, then putting it in setStudentsList array that i made above.
 
-    console.log(newStudentLimit)
 
     const updateLimit = () =>{
       Axios.post("http://localhost:4000/updateLimit", {id:user.id, limit: newStudentLimit}).then((res)=>{
@@ -50,7 +49,6 @@ const TeacherPage = () => {
       
         
         Axios.post("http://localhost:4000/Students", {id: user.id}).then((response) =>{
-        console.log(response.data);
         setStudentsList(response.data);
         })
     }, [])
@@ -63,7 +61,6 @@ const TeacherPage = () => {
     },[])
     useEffect(() =>{
       Axios.post('http://localhost:4000/getCode', {id: user.id}).then((res) =>{
-        console.log(res.data)
         setCode(res.data)
       })
     }, [])

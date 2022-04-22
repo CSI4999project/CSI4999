@@ -44,8 +44,6 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 let array = [];
 
 const location = useLocation();
-console.log('this is props')
-console.log()
 const id = user.type == 'Instructor' ? location.state.id : user.id;
 
 useEffect(() =>{
@@ -55,14 +53,12 @@ useEffect(() =>{
         userID: id
       },
       url: "http://localhost:4000/Portfolio"}).then((response) =>{
-        console.log(response.data);
   setPortfolioList(response.data);
   const doubled = (response.data).forEach((number) => array.push(number.CURRENCY_FULLNAME));
   }).then((res) => {
     Axios({
       method:"GET",
       url: `https://api.coingecko.com/api/v3/simple/price?ids=${array}&vs_currencies=usd`}).then(response =>{
-        console.log(response.data);
         setNames(response.data);
         setLoading(false);
   })
@@ -102,7 +98,6 @@ useEffect(() =>{
   });
 
   axios.post('http://localhost:4000/userName', {userID: id}).then((res) =>{
-    console.log(res.data.USER_NAME)
     setUserName(res.data[0].USER_NAME);
   })
 }, [])
@@ -181,7 +176,7 @@ if(isMember.length == 0 && user.type !== 'Instructor'){
     <div>
 <Container style={{ textAlign: "center" }}>
   <Typography variant="h4" style={{ padding: 30 }}>
-    {user.type == 'Instructor' ? userName.toUpperCase() + userName.toLowerCase().slice(1): user.username[0].toUpperCase() + user.username.toLowerCase().slice(1)}'s Portfolio
+    {user.type == 'Instructor' ? userName.charAt(0).toUpperCase() + userName.toLowerCase().slice(1): user.username[0].toUpperCase() + user.username.toLowerCase().slice(1)}'s Portfolio
   </Typography>
     <div style={{margin: 30}}>
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

@@ -9,11 +9,9 @@ const JoinClass = (props) => {
   const [code, setCode] = useState('');
   const [error, setError] = useState('')
   const navigate = useNavigate();
-  console.log(props.id)
 
   const join = () => {
     axios.post('http://localhost:4000/joinClass', {id: props.id, code: code}).then((res) =>{
-      console.log(res.data)
       if(res.data == 'not found'){
         setError('Code Incorrect')
       } else{

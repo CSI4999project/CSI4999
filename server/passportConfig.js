@@ -26,7 +26,6 @@ module.exports = function (passport, connection) {
       passport.deserializeUser((user, cb) => {
         //User.findOne({ _id: id }, (err, user) => {
         connection.execute('SELECT * from Users WHERE USER_ID = ?', [user[0]['USER_ID']], async (err, user) =>{
-          console.log(user[0])
           let obj = {
             id: user[0]['USER_ID'],
             username: user[0]['USER_NAME'],

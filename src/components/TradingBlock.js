@@ -47,11 +47,9 @@ const TradingBlock = () => {
   }
   useEffect(()=>{
     if(isLoading == false){
-      console.log(coin);
     axios.post('http://localhost:4000/Portfolio', {userID: user.id}).then((res) =>{
       let arr = [];
       (res.data).forEach((number) => arr.push([number.CURRENCY_FULLNAME, number.Currency_Amount, (number.Currency_Amount * coin?.market_data.current_price.usd)]));
-      console.log(arr);
       setOwned(arr);
     })
   }
@@ -96,16 +94,6 @@ const TradingBlock = () => {
 
     const axiosCall = () => {
       if(visible == false) {
-        console.log('happened here')
-        console.log({userID: user.id,
-          Type : type,
-          CurrencyName: coin?.symbol.toUpperCase(),
-          DollarAmount: amount,
-          Currency_price: price,
-          Currency_Owned: totalToken,
-          fullname: coin?.id,
-          stopPrice: 0,
-          executed: 1})
         axios({
           method:"POST",
           data:{
@@ -123,8 +111,6 @@ const TradingBlock = () => {
           url: "http://localhost:4000/coins"})
       }
       else {
-        alert("run");
-        console.log(stopPrice);
         axios({
           method:"POST",
           data:{
@@ -143,8 +129,6 @@ const TradingBlock = () => {
           setOpen(false) 
       }
     }
-    console.log(visible);
-    console.log(stopPrice);
 
     if(user.type == 'Instructor'){
       return (<div></div>)

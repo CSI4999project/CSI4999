@@ -28,11 +28,9 @@ const TradeHistory = (props) => {
   const [page, setPage] = useState(1);
   const id = user.type == 'Instructor' ? props.id : user.id;
   const axiosCall = (row) => {
-      console.log(row);
       Axios({
         method:"GET",
         url: `https://api.coingecko.com/api/v3/simple/price?ids=${row.CURRENCY_FULLNAME}&vs_currencies=usd`}).then(res =>{
-          console.log()
           Axios({
             method:"POST",
             data:{
@@ -60,7 +58,6 @@ const TradeHistory = (props) => {
         userID: id
       },
       url: "http://localhost:4000/Portfolio3"}).then((response) =>{
-  console.log(response.data);
   setTradeHistory(response.data);
   })
 }, [])
