@@ -25,6 +25,8 @@ const TradeHistory = (props) => {
   let {user, setUser} = useContext(UserContext);
   const [tradeHistory, setTradeHistory] = useState([]);
   const [page, setPage] = useState(1);
+  const current = new Date();
+  const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
 
   const id = user.type == 'Instructor' ? props.id : user.id;
   useEffect(() =>{
@@ -94,7 +96,7 @@ const TradeHistory = (props) => {
                 className={classes.row}
               >
                 <TableCell className={classes.kms} component="th" scope="row">
-                  4/4/2022
+                  {date}
                 </TableCell>
                 <TableCell className={classes.kms} align="right">{row.CURRENCY_NAME}</TableCell>
                 <TableCell className={classes.kms} align="right">{row.Type === "0" ? "Buy" : "Sell"}</TableCell>
