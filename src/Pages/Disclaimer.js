@@ -25,7 +25,7 @@ const Disclaimer = () =>  {
             be soon be a thing of the past once Ethereum 2.0 is released. This will change the majority of cryptocurrency mining from proof of work to proof
             of stake (which does not emphasize on computing power to mine cryptocurrency). </p>
             <br />
-            <a className = "powLink" href = "https://www.coinbase.com/learn/crypto-basics/what-is-proof-of-work-or-proof-of-stake">POW vs POS</a>
+            <a className = "powLink" target="_blank" href = "https://www.coinbase.com/learn/crypto-basics/what-is-proof-of-work-or-proof-of-stake">Click here to view POW vs POS</a>
         </div>
     )
 }
