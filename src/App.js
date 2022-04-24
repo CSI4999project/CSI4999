@@ -16,6 +16,7 @@ import axios from 'axios'
 import Navbar from './components/Navbar';
 import Chat from './Pages/Chat/Chat';
 import Report from "./Pages/Report";
+import Disclaimer from "./Pages/Disclaimer";
 
 function App() {
   //Get current user from COOKIES
@@ -65,6 +66,7 @@ function App() {
             <Route path="/Students" element={user ? <TeacherPage /> : <Navigate to='/login'/>} exact/>
             <Route path="/chat" element={user ? <Chat /> : <Navigate to='/login'/>} exact/>
             <Route path="/Report" element={user ? <Report /> : <Navigate to='/login'/>} exact/>
+            <Route path="/Disclaimer" element={user ? <Disclaimer /> : <Navigate to='/login'/>} exact/>
           </Routes>
         
         </div>

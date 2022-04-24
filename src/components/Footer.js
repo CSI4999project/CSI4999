@@ -10,12 +10,10 @@ function Footer() {
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
             <h2>About Us</h2>
-            <Link to='/'>Terms of Service</Link>
+            <Link to='/Disclaimer'>Disclaimer</Link>
           </div>
           <div className='footer-link-items'>
             <h2>Contact Us</h2>
-            <Link to='/'>Contact</Link>
-            <Link to='/'>Support</Link>
             <Link to='/Report'>Report</Link>
           </div>
         </div>
@@ -28,10 +26,10 @@ function Footer() {
         </div>
       </div>
           <div className='footer-logo'>
-            <Link to='/' className='social-logo'>
+            <p className='social-logo'>
               idkCrypto
               <i className='fab fa-typo3' />
-            </Link>
+            </p>
           </div>
           <small className='website-rights'>idkCrypto © 2022</small>
         </div>
