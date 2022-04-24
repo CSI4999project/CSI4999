@@ -20,10 +20,11 @@ const Disclaimer = () =>  {
             <p className = "question">What can be done if an Instructor is scamming/misleading students for malicious purposes?</p>
             <p className = "answer"> &emsp; &emsp; &emsp; We have a report system at the footer at our page which allows you to report instructors for malicious activity.
             Our team will then review the instance and make a final judgement</p>
-            <p className = "question" >Will this application further assist cryptocurrency's negative impact on the enviorment(cryptocurrency mining)?</p>
-            <p className = "answer"> &emsp; &emsp; &emsp; We understand cryptocurrencies current effect on the enviornment, it is our teams belief that cryptocurrency mining will
+            <p className = "question" >Will this application further assist cryptocurrency's negative impact on the environment (cryptocurrency mining)?</p>
+            <p className = "answer"> &emsp; &emsp; &emsp; We understand cryptocurrency's current effect on the environment, it is our teams belief that cryptocurrency mining will
             be soon be a thing of the past once Ethereum 2.0 is released. This will change the majority of cryptocurrency mining from proof of work to proof
-            of stake(which does not emphasize on computing power to mine cryptocurrency). </p>
+            of stake (which does not emphasize on computing power to mine cryptocurrency). </p>
+            <br />
             <a className = "powLink" href = "https://www.coinbase.com/learn/crypto-basics/what-is-proof-of-work-or-proof-of-stake">POW vs POS</a>
         </div>
     )
