@@ -13,8 +13,7 @@ const Disclaimer = () =>  {
             <p className = "question">What if someone makes a big trade while paper trading and tries to do the same with real money and loses big?</p>
             <p className = "answer"> &emsp; &emsp; &emsp; This platform is designed to prevent this because students will get direct feedback for each trade they place, risk management, 
             and the overall state of their portfolio from their mentor. Decreasing the chance someone makes a rookie mistake when they'
-            re on their own. Disclaimers will be put in place as a warning that results in our simulation
-             do not always equal to results in real life.</p>
+            re on their own.</p>
             <p className = "question">Are we responsible for teaching people how to trade?</p>
             <p className = "answer"> &emsp; &emsp; &emsp; No, this is simply a platform that already established mentors can use to further help their students.</p>
             <p className = "question">What can be done if an Instructor is scamming/misleading students for malicious purposes?</p>
